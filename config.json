@@ -1,0 +1,44 @@
+{
+    "accounts": {
+        "main": {
+            "login": 12345678,
+            "password": "encrypted_password",
+            "server": "MetaQuotes-Demo"
+        },
+        "test": {
+            "login": 87654321,
+            "password": "encrypted_password",
+            "server": "MetaQuotes-Demo"
+        }
+    },
+    "symbols": {
+        "EURUSD": {
+            "timeframe": "M30",
+            "min_factor": 1.0,
+            "max_factor": 5.0,
+            "risk_percent": 1.0,
+            "sl_multiplier": 2.0,
+            "tp_multiplier": 3.0
+        },
+        "GBPUSD": {
+            "timeframe": "H1",
+            "min_factor": 1.5,
+            "max_factor": 4.5,
+            "risk_percent": 0.75,
+            "sl_multiplier": 2.5,
+            "tp_multiplier": 3.5
+        }
+    },
+    "global_settings": {
+        "max_daily_loss_percent": 5.0,
+        "max_positions_per_symbol": 1,
+        "max_total_positions": 3,
+        "trading_hours": {
+            "start": "08:00",
+            "end": "22:00"
+        },
+        "avoid_news": true,
+        "news_minutes_before": 30,
+        "news_minutes_after": 30
+    }
+}

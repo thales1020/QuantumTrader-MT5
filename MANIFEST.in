@@ -1,0 +1,14 @@
+include README.md
+include LICENSE
+include requirements.txt
+include CONTRIBUTING.md
+include QUICKSTART.md
+recursive-include config *.json
+recursive-include docs *.md *.rst
+recursive-exclude * __pycache__
+recursive-exclude * *.py[co]
+recursive-exclude logs *
+recursive-exclude reports *
+recursive-exclude tests/.pytest_cache *
+global-exclude *.log
+global-exclude .DS_Store

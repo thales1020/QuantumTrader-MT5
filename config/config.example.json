@@ -1,0 +1,102 @@
+{
+    "accounts": {
+        "demo": {
+            "login": 12345678,
+            "password": "your_demo_password",
+            "server": "MetaQuotes-Demo"
+        },
+        "live": {
+            "login": 87654321,
+            "password": "your_live_password",
+            "server": "YourBroker-Live"
+        }
+    },
+    "symbols": {
+        "EURUSD": {
+            "enabled": true,
+            "timeframe": "M30",
+            "min_factor": 1.0,
+            "max_factor": 5.0,
+            "factor_step": 0.5,
+            "risk_percent": 1.0,
+            "sl_multiplier": 2.0,
+            "tp_multiplier": 3.0,
+            "volume_multiplier": 1.2,
+            "cluster_choice": "Average"
+        },
+        "GBPUSD": {
+            "enabled": true,
+            "timeframe": "H1",
+            "min_factor": 1.5,
+            "max_factor": 4.5,
+            "factor_step": 0.5,
+            "risk_percent": 0.75,
+            "sl_multiplier": 2.5,
+            "tp_multiplier": 3.5,
+            "volume_multiplier": 1.3,
+            "cluster_choice": "Average"
+        },
+        "USDJPY": {
+            "enabled": false,
+            "timeframe": "M15",
+            "min_factor": 1.0,
+            "max_factor": 4.0,
+            "factor_step": 0.5,
+            "risk_percent": 0.5,
+            "sl_multiplier": 1.5,
+            "tp_multiplier": 2.5,
+            "volume_multiplier": 1.1,
+            "cluster_choice": "Worst"
+        }
+    },
+    "global_settings": {
+        "max_daily_loss_percent": 5.0,
+        "max_positions_per_symbol": 1,
+        "max_total_positions": 3,
+        "use_trailing_stop": true,
+        "trail_activation_atr": 1.5,
+        "trading_hours": {
+            "start": "08:00",
+            "end": "22:00",
+            "timezone": "UTC"
+        },
+        "avoid_news": true,
+        "news_minutes_before": 30,
+        "news_minutes_after": 30,
+        "performance_alpha": 10.0,
+        "volume_ma_period": 20,
+        "atr_period": 10
+    },
+    "notifications": {
+        "telegram": {
+            "enabled": false,
+            "bot_token": "your_telegram_bot_token",
+            "chat_id": "your_chat_id"
+        },
+        "email": {
+            "enabled": false,
+            "smtp_server": "smtp.gmail.com",
+            "smtp_port": 587,
+            "sender": "your_email@gmail.com",
+            "password": "your_app_password",
+            "recipient": "recipient@example.com"
+        }
+    },
+    "logging": {
+        "level": "INFO",
+        "file_rotation": {
+            "enabled": true,
+            "max_bytes": 10485760,
+            "backup_count": 5
+        },
+        "console_output": true
+    },
+    "backtest": {
+        "initial_balance": 10000,
+        "commission_per_lot": 7,
+        "spread_points": 1.5,
+        "slippage_points": 0.5,
+        "start_date": "2023-01-01",
+        "end_date": "2024-01-01"
+    }
+}
