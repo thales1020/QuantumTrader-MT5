@@ -1,14 +1,24 @@
-# 🤖 ML-SuperTrend-MT5
+<div align="center">
+
+# 🚀 QuantumTrader-MT5
+
+**Next-Generation Algorithmic Trading Platform for MetaTrader 5**
+
+*Powered by Machine Learning | ICT/SMC Strategies | Fully Customizable*
 
 [![Python](https://img.shields.io/badge/Python-3.8%2B-blue.svg)](https://www.python.org/)
-[![PyPI](https://img.shields.io/pypi/v/ml-supertrend-mt5.svg)](https://pypi.org/project/ml-supertrend-mt5/)
 [![MetaTrader5](https://img.shields.io/badge/MetaTrader-5-orange.svg)](https://www.metatrader5.com/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Author](https://img.shields.io/badge/Author-thales1020-blue)](https://github.com/thales1020)
+[![Version](https://img.shields.io/badge/Version-2.0.0-success.svg)](https://github.com/thales1020/QuantumTrader-MT5/releases)
 
-An advanced SuperTrend trading bot for MetaTrader 5 that leverages Machine Learning (K-means clustering) for dynamic parameter optimization, featuring adaptive risk management and comprehensive performance monitoring.
+</div>
 
-> 📜 **ATTRIBUTION**: This project was inspired by open-source MT5-SuperTrend community implementations and has been substantially developed (95%+ original code) with ML optimization, ICT strategies, dual orders, and advanced architecture. See [ATTRIBUTION.md](docs/ATTRIBUTION.md) for full details.
+---
+
+QuantumTrader-MT5 is a professional algorithmic trading platform that combines cutting-edge Machine Learning with advanced trading strategies (SuperTrend, ICT, SMC) to deliver institutional-grade automated trading for MetaTrader 5.
+
+> 📜 **ATTRIBUTION**: This project was inspired by open-source MT5-SuperTrend community implementations and has been substantially developed (95%+ original code) by Trần Trọng Hiếu with ML optimization, ICT strategies, dual orders, and advanced architecture. See [ATTRIBUTION.md](docs/ATTRIBUTION.md) for full details.
 
 > ⚠️ **DISCLAIMER**: This project is for **EDUCATIONAL PURPOSES ONLY**. Trading forex/CFDs involves substantial risk of loss and is not suitable for all investors. Past performance is not indicative of future results.
 

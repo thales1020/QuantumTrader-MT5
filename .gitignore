@@ -1,0 +1,68 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+ENV/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+logs/*.log
+*.log
+
+# Reports
+reports/*.html
+reports/*.png
+
+# Data
+data/*.csv
+data/*.json
+!data/ta_lib-*.whl
+
+# Statistics
+statistic/*.json
+statistic/*.csv
+
+# Config (keep example, ignore actual)
+config.json
+!config/config.example.json
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# MetaTrader5
+*.ex5
+*.mq5~
+
+# Temporary files
+*.tmp
+*.bak
+*.backup

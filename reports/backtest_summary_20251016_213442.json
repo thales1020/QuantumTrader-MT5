@@ -1,0 +1,24 @@
+{
+  "timestamp": "2025-10-16T21:34:42.533460",
+  "total_execution_time": 145.85941362380981,
+  "symbols_tested": 4,
+  "successful": 4,
+  "failed": 0,
+  "failed_symbols": [],
+  "results": [
+    {
+      "total_trades": 372,
+      "winning_trades": 104,
+      "losing_trades": 268,
+      "win_rate": 27.956989247311824,
+      "initial_balance": 10000,
+      "final_balance": 14448.900578571529,
+      "net_profit": 4448.900578571522,
+      "profit_factor": 1.130112874373878,
+      "max_drawdown": -20.522776253029228,
+      "sharpe_ratio": 0.08595009102915425,
+      "trades_with_ob": 238,
+      "avg_conditions": 2.1693548387096775,
+      "trades": [
+        {
+          "entry_time": 

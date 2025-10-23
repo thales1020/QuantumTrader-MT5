@@ -7,19 +7,19 @@ with open("requirements.txt", "r", encoding="utf-8") as fh:
     requirements = [line.strip() for line in fh if line.strip() and not line.startswith("#")]
 
 setup(
-    name="ml-supertrend-mt5",
-    version="1.0.0",
-    author="xPOURY4",
+    name="quantumtrader-mt5",
+    version="2.0.0",
+    author="Trần Trọng Hiếu",
     author_email="",
-    description="Advanced SuperTrend trading bot for MetaTrader 5 with Machine Learning clustering",
+    description="Next-Generation Algorithmic Trading Platform for MetaTrader 5 with ML, ICT/SMC Strategies",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/xPOURY4/ML-SuperTrend-MT5",
+    url="https://github.com/thales1020/QuantumTrader-MT5",
     project_urls={
-        "Bug Tracker": "https://github.com/xPOURY4/ML-SuperTrend-MT5/issues",
-        "Documentation": "https://github.com/xPOURY4/ML-SuperTrend-MT5#readme",
-        "Source Code": "https://github.com/xPOURY4/ML-SuperTrend-MT5",
-        "Twitter": "https://twitter.com/TheRealPourya",
+        "Bug Tracker": "https://github.com/thales1020/QuantumTrader-MT5/issues",
+        "Documentation": "https://github.com/thales1020/QuantumTrader-MT5#readme",
+        "Source Code": "https://github.com/thales1020/QuantumTrader-MT5",
+        "Author": "https://github.com/thales1020",
     },
     classifiers=[
         "Development Status :: 4 - Beta",
@@ -38,10 +38,10 @@ setup(
     install_requires=requirements,
     entry_points={
         "console_scripts": [
-            "ml-supertrend=run_bot:main",
+            "quantumtrader=run_bot:main",
         ],
     },
-    keywords="trading forex metatrader5 mt5 supertrend machine-learning algorithmic-trading",
+    keywords="trading forex metatrader5 mt5 quantum machine-learning algorithmic-trading ict smc supertrend",
     include_package_data=True,
     package_data={
         "": ["*.json", "*.md", "*.txt"],

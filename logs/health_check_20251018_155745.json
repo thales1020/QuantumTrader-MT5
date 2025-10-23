@@ -1,0 +1,112 @@
+{
+  "timestamp": "2025-10-18T15:57:45.384971",
+  "checks": {
+    "mt5_connection": {
+      "status": "PASS",
+      "message": "MT5 connected",
+      "connected": true,
+      "trade_allowed": true,
+      "build": 5328
+    },
+    "account_status": {
+      "status": "PASS",
+      "balance": 8604.22,
+      "equity": 8799.42,
+      "margin": 95.48,
+      "free_margin": 8703.94,
+      "margin_level": "9215.98%",
+      "login": 270192254,
+      "server": "Exness-MT5Trial17"
+    },
+    "open_positions": {
+      "status": "PASS",
+      "count": 7,
+      "total_profit": 195.2,
+      "positions": [
+        {
+          "ticket": 436300477,
+          "symbol": "XAUUSDm",
+          "type": "SELL",
+          "volume": 0.01,
+          "price_open": 4237.987,
+          "price_current": 4251.096,
+          "profit": -13.11,
+          "time": "2025-10-16T19:50:51"
+        },
+        {
+          "ticket": 450308672,
+          "symbol": "BTCUSDm",
+          "type": "BUY",
+          "volume": 0.01,
+          "price_open": 107306.09,
+          "price_current": 106827.56,
+          "profit": -4.78,
+          "time": "2025-10-18T09:06:59"
+        },
+        {
+          "ticket": 450308675,
+          "symbol": "BTCUSDm",
+          "type": "BUY",
+          "volume": 0.01,
+          "price_open": 107306.09,
+          "price_current": 106827.56,
+          "profit": -4.78,
+          "time": "2025-10-18T09:06:59"
+        },
+        {
+          "ticket": 450417494,
+          "symbol": "BTCUSDm",
+          "type": "BUY",
+          "volume": 0.53,
+          "price_open": 106667.90000000001,
+          "price_current": 106827.56,
+          "profit": 84.62,
+          "time": "2025-10-18T11:05:20"
+        },
+        {
+          "ticket": 450653981,
+          "symbol": "BTCUSDm",
+          "type": "BUY",
+          "volume": 0.56,
+          "price_open": 106702.15000000001,
+          "price_current": 106827.56,
+          "profit": 70.23,
+          "time": "2025-10-18T14:59:36"
+        },
+        {
+          "ticket": 450667102,
+          "symbol": "BTCUSDm",
+          "type": "SELL",
+          "volume": 0.38,
+          "price_open": 106928.48,
+          "price_current": 106845.56,
+          "profit": 31.51,
+          "time": "2025-10-18T15:08:37"
+        },
+        {
+          "ticket": 450667109,
+          "symbol": "BTCUSDm",
+          "type": "SELL",
+          "volume": 0.38,
+          "price_open": 106928.48,
+          "price_current": 106845.56,
+          "profit": 31.51,
+          "time": "2025-10-18T15:08:37"
+        }
+      ]
+    },
+    "recent_logs": {
+      "status": "PASS",
+      "latest_log": "logs\\bot_20251018.log",
+      "error_count": 0,
+      "warning_count": 0,
+      "recent_errors": []
+    },
+    "disk_space": {
+      "status": "PASS",
+      "free_gb": "229.04",
+      "percent_free": "55.1%"
+    }
+  },
+  "overall_status": "PASS"
+}
