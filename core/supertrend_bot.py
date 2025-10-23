@@ -174,11 +174,15 @@ class SuperTrendBot(BaseTradingBot):
         
         # Bullish signal: Trend changes from 0 (down) to 1 (up)
         if previous_trend == 0 and current_trend == 1:
+            # Calculate TP using RR ratio: TP = price + (SL_distance * rr_ratio)
+            sl_distance = abs(current_price - st_level)
+            tp_distance = sl_distance * self.config.rr_ratio
+            
             signal = {
                 'type': 'BUY',
                 'price': current_price,
                 'stop_loss': st_level,
-                'take_profit': current_price + (self.config.tp_multiplier * atr),
+                'take_profit': current_price + tp_distance,
                 'confidence': min(100.0, abs(self.cluster_performance) * 10) if self.cluster_performance else 50.0,
                 'reason': f'SuperTrend bullish crossover (factor={self.optimal_factor:.1f})',
                 'atr': atr,
@@ -195,11 +199,15 @@ class SuperTrendBot(BaseTradingBot):
         
         # Bearish signal: Trend changes from 1 (up) to 0 (down)
         elif previous_trend == 1 and current_trend == 0:
+            # Calculate TP using RR ratio: TP = price - (SL_distance * rr_ratio)
+            sl_distance = abs(current_price - st_level)
+            tp_distance = sl_distance * self.config.rr_ratio
+            
             signal = {
                 'type': 'SELL',
                 'price': current_price,
                 'stop_loss': st_level,
-                'take_profit': current_price - (self.config.tp_multiplier * atr),
+                'take_profit': current_price - tp_distance,
                 'confidence': min(100.0, abs(self.cluster_performance) * 10) if self.cluster_performance else 50.0,
                 'reason': f'SuperTrend bearish crossover (factor={self.optimal_factor:.1f})',
                 'atr': atr,
