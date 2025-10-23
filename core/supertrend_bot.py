@@ -1,3 +1,16 @@
+"""
+SuperTrend Bot - Refactored Version
+Inherits from BaseTradingBot for improved architecture
+
+Features:
+- Multi-factor SuperTrend calculation
+- K-means clustering for factor optimization
+- Volume-adjusted performance tracking
+- Normalized volatility adjustment
+- Trailing stop logic
+- Hook system for extensibility
+"""
+
 import MetaTrader5 as mt5
 import pandas as pd
 import numpy as np
@@ -5,125 +18,230 @@ from datetime import datetime, timedelta
 import talib
 from sklearn.cluster import KMeans
 import logging
-import json
-import time
-from dataclasses import dataclass
-from typing import List, Tuple, Optional
+from dataclasses import dataclass, field
+from typing import List, Tuple, Optional, Dict
 import warnings
+
+from core.base_bot import BaseTradingBot, BaseConfig
+
 warnings.filterwarnings('ignore')
 
+
+# ============================================================================
+# DATA CLASSES
+# ============================================================================
+
 @dataclass
-class Trade:
-    entry_price: float
-    stop_loss: float
-    take_profit: float
-    direction: int
-    volume: float
-    ticket: int = 0
-    entry_time: datetime = None
-    ticket1: int = 0  # Quick profit order (RR 1:1)
-    ticket2: int = 0  # Main RR order
-    tp1_hit: bool = False  # Track if Order 1 hit TP
-    sl_moved_to_breakeven: bool = False  # Track if SL moved to BE
-    
-@dataclass
-class Config:
-    symbol: str = "EURUSD"
-    timeframe: int = mt5.TIMEFRAME_M30
+class SuperTrendConfig(BaseConfig):
+    """
+    Configuration for SuperTrend Bot - extends BaseConfig
+    """
+    # SuperTrend parameters
     atr_period: int = 10
     min_factor: float = 1.0
     max_factor: float = 5.0
     factor_step: float = 0.5
-    perf_alpha: float = 10.0
-    cluster_choice: str = "Best"
+    
+    # ML optimization
+    perf_alpha: float = 10.0  # EMA smoothing for performance
+    cluster_choice: str = "Best"  # "Best", "Average", or "Worst"
+    
+    # Volume filter
     volume_ma_period: int = 20
     volume_multiplier: float = 1.2
-    sl_multiplier: float = 2.0
-    tp_multiplier: float = 3.0
-    use_trailing: bool = True
-    trail_activation: float = 1.5
-    risk_percent: float = 1.0
-    max_positions: int = 1
-    magic_number: int = 123456
-    move_sl_to_breakeven: bool = True  # Move SL to BE when Order 1 hits TP
     
-class SuperTrendBot:
-    def __init__(self, config: Config):
-        self.config = config
-        self.current_trade = None
-        self.trade_history = []
-        self.logger = self._setup_logger()
-        self.is_connected = False
+    # Trailing stop
+    use_trailing: bool = True
+    trail_activation: float = 1.5  # ATR multiplier for activation
+
+
+# ============================================================================
+# SUPERTREND BOT CLASS
+# ============================================================================
+
+class SuperTrendBot(BaseTradingBot):
+    """
+    SuperTrend Strategy Bot with ML Optimization
+    
+    Uses K-means clustering to select optimal SuperTrend factor
+    from a range of possible factors, optimizing for best performance.
+    """
+    
+    def __init__(self, config: SuperTrendConfig):
+        super().__init__(config)
         
-    def _setup_logger(self):
-        logger = logging.getLogger('SuperTrendBot')
-        logger.setLevel(logging.INFO)
-        handler = logging.FileHandler('supertrend_bot.log')
-        formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-        handler.setFormatter(formatter)
-        logger.addHandler(handler)
-        console_handler = logging.StreamHandler()
-        console_handler.setFormatter(formatter)
-        logger.addHandler(console_handler)
-        return logger
+        # SuperTrend-specific state
+        self.supertrends: Dict[float, pd.DataFrame] = {}
+        self.optimal_factor: Optional[float] = None
+        self.cluster_performance: Optional[float] = None
         
-    def connect(self, login: int, password: str, server: str) -> bool:
-        if not mt5.initialize():
-            self.logger.error("MT5 initialization failed")
-            return False
+        self.logger.info("SuperTrend Bot initialized with ML optimization")
+        self.logger.info(f"Factor range: {config.min_factor}-{config.max_factor} (step {config.factor_step})")
+        self.logger.info(f"Cluster choice: {config.cluster_choice}")
+    
+    def calculate_indicators(self, df: pd.DataFrame) -> pd.DataFrame:
+        """
+        Calculate all SuperTrend indicators with ML optimization
+        
+        Steps:
+        1. Calculate basic indicators (ATR, volume MA, volatility)
+        2. Calculate multiple SuperTrend indicators (min_factor to max_factor)
+        3. Perform K-means clustering to select optimal factor
+        4. Add optimal SuperTrend to dataframe
+        
+        Args:
+            df: DataFrame with OHLCV data
             
-        if not mt5.login(login, password=password, server=server):
-            self.logger.error(f"Login failed: {mt5.last_error()}")
-            mt5.shutdown()
-            return False
-            
-        self.is_connected = True
-        self.logger.info(f"Connected to MT5: {mt5.account_info().server}")
-        return True
+        Returns:
+            DataFrame with added indicators
+        """
+        if len(df) < 50:
+            self.logger.warning("Not enough data for indicators")
+            return df
         
-    def get_data(self, bars: int = 1000) -> pd.DataFrame:
-        rates = mt5.copy_rates_from_pos(self.config.symbol, self.config.timeframe, 0, bars)
-        if rates is None or len(rates) == 0:
-            error = mt5.last_error()
-            self.logger.error(f"[ERROR] Failed to get rates for {self.config.symbol}: {error}")
-            self.logger.error(f"   Symbol info: {mt5.symbol_info(self.config.symbol)}")
-            
-            # Try to enable symbol in Market Watch
-            if not mt5.symbol_select(self.config.symbol, True):
-                self.logger.error(f"   Cannot enable symbol {self.config.symbol}")
-            else:
-                self.logger.info(f"   Symbol {self.config.symbol} enabled in Market Watch, retry...")
-                rates = mt5.copy_rates_from_pos(self.config.symbol, self.config.timeframe, 0, bars)
-                if rates is None or len(rates) == 0:
-                    self.logger.error(f"   Still no data after enabling symbol")
-                    return None
-        
-        self.logger.info(f"[OK] Loaded {len(rates)} bars for {self.config.symbol}")
-            
-        df = pd.DataFrame(rates)
-        df['time'] = pd.to_datetime(df['time'], unit='s')
-        df.set_index('time', inplace=True)
-        
+        # 1. Basic indicators
         df['hl2'] = (df['high'] + df['low']) / 2
-        df['atr'] = talib.ATR(df['high'], df['low'], df['close'], timeperiod=self.config.atr_period)
+        df['atr'] = talib.ATR(df['high'].values, df['low'].values, df['close'].values, 
+                              timeperiod=self.config.atr_period)
         df['volume_ma'] = df['tick_volume'].rolling(window=self.config.volume_ma_period).mean()
         df['volatility'] = df['close'].rolling(window=self.config.atr_period).std()
         df['norm_volatility'] = df['volatility'] / df['volatility'].rolling(window=50).mean()
         
         # Fill NaN values
-        df['norm_volatility'].fillna(1.0, inplace=True)  # Default to 1.0 if NaN
-        df['atr'].fillna(method='bfill', inplace=True)  # Backfill ATR
-        df['volume_ma'].fillna(df['tick_volume'].mean(), inplace=True)  # Use average volume
+        df['norm_volatility'].fillna(1.0, inplace=True)
+        df['atr'].fillna(method='bfill', inplace=True)
+        df['volume_ma'].fillna(df['tick_volume'].mean(), inplace=True)
         
-        # Log NaN count for debugging
-        nan_count = df.isna().sum().sum()
-        if nan_count > 0:
-            self.logger.debug(f"[WARNING] Filled {nan_count} NaN values in indicators")
+        # 2. Calculate multi-factor SuperTrends
+        self.supertrends = self.calculate_supertrends(df)
+        
+        # 3. ML Clustering for factor optimization
+        self.optimal_factor, self.cluster_performance = self.perform_clustering(self.supertrends)
+        
+        self.logger.debug(f"Optimal factor: {self.optimal_factor:.2f}, Performance: {self.cluster_performance:.4f}")
+        
+        # 4. Add optimal SuperTrend to dataframe
+        if self.optimal_factor and self.optimal_factor in self.supertrends:
+            optimal_st = self.supertrends[self.optimal_factor]
+            df['st_trend'] = optimal_st['trend']
+            df['st_output'] = optimal_st['output']
+            df['st_perf'] = optimal_st['vol_adj_perf']
         
         return df
+    
+    def generate_signal(self, df: pd.DataFrame) -> Optional[Dict]:
+        """
+        Generate trading signal based on optimal SuperTrend
         
-    def calculate_supertrends(self, df: pd.DataFrame) -> dict:
-        factors = np.arange(self.config.min_factor, self.config.max_factor + self.config.factor_step, self.config.factor_step)
+        Signal generation logic:
+        1. Check volume condition (must have sufficient volume)
+        2. Get optimal SuperTrend from clustering
+        3. Detect trend change (0→1 for BUY, 1→0 for SELL)
+        4. Calculate SL/TP based on SuperTrend level and ATR
+        
+        Args:
+            df: DataFrame with calculated indicators
+            
+        Returns:
+            Signal dict or None
+        """
+        if len(df) < 50:
+            return None
+        
+        # 1. Check volume condition
+        if not self.check_volume_condition(df):
+            self.logger.debug("Volume condition not met")
+            return None
+        
+        # 2. Get optimal SuperTrend
+        if not self.optimal_factor or self.optimal_factor not in self.supertrends:
+            self.logger.warning("Optimal factor not available")
+            return None
+        
+        optimal_st = self.supertrends[self.optimal_factor]
+        
+        # 3. Check for trend change
+        if len(optimal_st) < 2:
+            return None
+        
+        current_trend = optimal_st['trend'].iloc[-1]
+        previous_trend = optimal_st['trend'].iloc[-2]
+        current_price = df['close'].iloc[-1]
+        st_level = optimal_st['output'].iloc[-1]
+        atr = df['atr'].iloc[-1]
+        
+        signal = None
+        
+        # Bullish signal: Trend changes from 0 (down) to 1 (up)
+        if previous_trend == 0 and current_trend == 1:
+            signal = {
+                'type': 'BUY',
+                'price': current_price,
+                'stop_loss': st_level,
+                'take_profit': current_price + (self.config.tp_multiplier * atr),
+                'confidence': min(100.0, abs(self.cluster_performance) * 10) if self.cluster_performance else 50.0,
+                'reason': f'SuperTrend bullish crossover (factor={self.optimal_factor:.1f})',
+                'atr': atr,
+                'metadata': {
+                    'optimal_factor': self.optimal_factor,
+                    'cluster_performance': self.cluster_performance,
+                    'cluster_choice': self.config.cluster_choice,
+                    'st_level': st_level,
+                    'volume_ok': True,
+                    'strategy': 'ML_SUPERTREND'
+                }
+            }
+            self.logger.info(f"🔵 BUY signal generated at {current_price:.5f}")
+        
+        # Bearish signal: Trend changes from 1 (up) to 0 (down)
+        elif previous_trend == 1 and current_trend == 0:
+            signal = {
+                'type': 'SELL',
+                'price': current_price,
+                'stop_loss': st_level,
+                'take_profit': current_price - (self.config.tp_multiplier * atr),
+                'confidence': min(100.0, abs(self.cluster_performance) * 10) if self.cluster_performance else 50.0,
+                'reason': f'SuperTrend bearish crossover (factor={self.optimal_factor:.1f})',
+                'atr': atr,
+                'metadata': {
+                    'optimal_factor': self.optimal_factor,
+                    'cluster_performance': self.cluster_performance,
+                    'cluster_choice': self.config.cluster_choice,
+                    'st_level': st_level,
+                    'volume_ok': True,
+                    'strategy': 'ML_SUPERTREND'
+                }
+            }
+            self.logger.info(f"🔴 SELL signal generated at {current_price:.5f}")
+        
+        return signal
+    
+    # ========================================================================
+    # SUPERTREND-SPECIFIC METHODS
+    # ========================================================================
+    
+    def calculate_supertrends(self, df: pd.DataFrame) -> Dict[float, pd.DataFrame]:
+        """
+        Calculate multiple SuperTrend indicators with different factors
+        
+        For each factor from min_factor to max_factor:
+        1. Calculate basic SuperTrend (upper/lower bands)
+        2. Determine trend direction
+        3. Calculate performance metrics (raw and volume-adjusted)
+        4. Apply EMA smoothing to performance
+        
+        Args:
+            df: DataFrame with OHLCV and basic indicators
+            
+        Returns:
+            Dict mapping factor to SuperTrend DataFrame
+        """
+        factors = np.arange(
+            self.config.min_factor, 
+            self.config.max_factor + self.config.factor_step, 
+            self.config.factor_step
+        )
+        
         supertrends = {}
         
         for factor in factors:
@@ -135,56 +253,83 @@ class SuperTrendBot:
             st['perf'] = 0.0
             st['vol_adj_perf'] = 0.0
             
+            # Calculate trend and output
             for i in range(1, len(df)):
+                # Determine trend
                 if df['close'].iloc[i] > st['upper'].iloc[i-1]:
-                    st.loc[st.index[i], 'trend'] = 1
+                    st.iloc[i, st.columns.get_loc('trend')] = 1
                 elif df['close'].iloc[i] < st['lower'].iloc[i-1]:
-                    st.loc[st.index[i], 'trend'] = 0
+                    st.iloc[i, st.columns.get_loc('trend')] = 0
                 else:
-                    st.loc[st.index[i], 'trend'] = st['trend'].iloc[i-1]
+                    st.iloc[i, st.columns.get_loc('trend')] = st['trend'].iloc[i-1]
                 
+                # Calculate bands (maintaining direction)
                 if st['trend'].iloc[i] == 1:
-                    st.loc[st.index[i], 'lower'] = max(st['lower'].iloc[i], st['lower'].iloc[i-1]) if st['trend'].iloc[i-1] == 1 else st['lower'].iloc[i]
-                    st.loc[st.index[i], 'output'] = st['lower'].iloc[i]
+                    new_lower = max(st['lower'].iloc[i], st['lower'].iloc[i-1]) if st['trend'].iloc[i-1] == 1 else st['lower'].iloc[i]
+                    st.iloc[i, st.columns.get_loc('lower')] = new_lower
+                    st.iloc[i, st.columns.get_loc('output')] = new_lower
                 else:
-                    st.loc[st.index[i], 'upper'] = min(st['upper'].iloc[i], st['upper'].iloc[i-1]) if st['trend'].iloc[i-1] == 0 else st['upper'].iloc[i]
-                    st.loc[st.index[i], 'output'] = st['upper'].iloc[i]
+                    new_upper = min(st['upper'].iloc[i], st['upper'].iloc[i-1]) if st['trend'].iloc[i-1] == 0 else st['upper'].iloc[i]
+                    st.iloc[i, st.columns.get_loc('upper')] = new_upper
+                    st.iloc[i, st.columns.get_loc('output')] = new_upper
                 
+                # Calculate performance
                 price_change = df['close'].iloc[i] - df['close'].iloc[i-1]
                 direction = np.sign(df['close'].iloc[i-1] - st['output'].iloc[i-1])
                 raw_perf = price_change * direction
                 
+                # Apply EMA smoothing
                 alpha = 2 / (self.config.perf_alpha + 1)
-                st.loc[st.index[i], 'perf'] = alpha * raw_perf + (1 - alpha) * st['perf'].iloc[i-1]
+                st.iloc[i, st.columns.get_loc('perf')] = alpha * raw_perf + (1 - alpha) * st['perf'].iloc[i-1]
                 
+                # Volume-adjusted performance
                 vol_adj = raw_perf / (1 + df['norm_volatility'].iloc[i])
-                st.loc[st.index[i], 'vol_adj_perf'] = alpha * vol_adj + (1 - alpha) * st['vol_adj_perf'].iloc[i-1]
+                st.iloc[i, st.columns.get_loc('vol_adj_perf')] = alpha * vol_adj + (1 - alpha) * st['vol_adj_perf'].iloc[i-1]
             
             supertrends[factor] = st
-            
-        return supertrends
         
-    def perform_clustering(self, supertrends: dict) -> Tuple[float, float]:
+        self.logger.debug(f"Calculated {len(supertrends)} SuperTrend indicators")
+        return supertrends
+    
+    def perform_clustering(self, supertrends: Dict[float, pd.DataFrame]) -> Tuple[float, float]:
+        """
+        Use K-means clustering to select optimal SuperTrend factor
+        
+        Process:
+        1. Extract volume-adjusted performance for each factor
+        2. Apply K-means clustering (3 clusters: Worst, Average, Best)
+        3. Select cluster based on config.cluster_choice
+        4. Return mean factor from selected cluster
+        
+        Args:
+            supertrends: Dict of calculated SuperTrend DataFrames
+            
+        Returns:
+            Tuple of (optimal_factor, cluster_performance)
+        """
         performances = []
         factors = []
         
+        # Extract performances (last 100 bars average)
         for factor, st in supertrends.items():
+            if len(st) < 100:
+                continue
             perf = st['vol_adj_perf'].iloc[-100:].mean()
-            # Skip if NaN
+            
+            # Skip NaN or inf values
             if not np.isnan(perf) and not np.isinf(perf):
                 performances.append(perf)
                 factors.append(factor)
         
-        # Check if we have valid performances
+        # Validate we have data
         if len(performances) == 0:
-            self.logger.error("No valid performance data - all NaN values")
-            # Return first factor as fallback
+            self.logger.error("No valid performance data for clustering")
             first_factor = list(supertrends.keys())[0]
             return first_factor, 0.0
-            
+        
         performances = np.array(performances).reshape(-1, 1)
         
-        # Remove any remaining NaN values
+        # Remove any remaining NaN
         valid_mask = ~np.isnan(performances).any(axis=1)
         performances = performances[valid_mask]
         factors = [f for i, f in enumerate(factors) if valid_mask[i]]
@@ -194,477 +339,117 @@ class SuperTrendBot:
             first_factor = list(supertrends.keys())[0]
             return first_factor, 0.0
         
+        # Check if we have enough variation for clustering
         if len(set(performances.flatten())) < 3:
-            self.logger.warning("Not enough variation for clustering")
-            return factors[np.argmax(performances)], performances.max()
-            
+            self.logger.warning("Not enough variation for clustering, using best performer")
+            best_idx = np.argmax(performances)
+            return factors[best_idx], performances[best_idx][0]
+        
+        # K-means clustering (3 clusters)
         kmeans = KMeans(n_clusters=3, random_state=42, n_init=10)
         kmeans.fit(performances)
         
+        # Sort clusters by performance
         cluster_centers = kmeans.cluster_centers_.flatten()
         sorted_indices = np.argsort(cluster_centers)
         
+        # Map cluster choice to index
         cluster_map = {"Worst": 0, "Average": 1, "Best": 2}
-        target_cluster = cluster_map[self.config.cluster_choice]
+        target_cluster = cluster_map.get(self.config.cluster_choice, 2)  # Default to Best
         target_label = sorted_indices[target_cluster]
         
+        # Get factors in target cluster
         cluster_factors = [factors[i] for i, label in enumerate(kmeans.labels_) if label == target_label]
         
         if not cluster_factors:
-            self.logger.warning("No factors in target cluster")
-            return factors[np.argmax(performances)], performances.max()
-            
-        return np.mean(cluster_factors), cluster_centers[target_label]
+            self.logger.warning("No factors in target cluster, using best overall")
+            best_idx = np.argmax(performances)
+            return factors[best_idx], performances[best_idx][0]
         
-    def calculate_position_size(self, stop_loss_points: float) -> float:
-        """Calculate position size based on risk management with crypto support"""
-        account_info = mt5.account_info()
-        if account_info is None:
-            self.logger.warning("Account info not available, using minimum lot")
-            return 0.01
-            
-        balance = account_info.balance
-        risk_amount = balance * (self.config.risk_percent / 100)
+        # Return mean factor from cluster
+        optimal_factor = np.mean(cluster_factors)
+        cluster_perf = cluster_centers[target_label]
         
-        symbol_info = mt5.symbol_info(self.config.symbol)
-        if symbol_info is None:
-            self.logger.warning(f"Symbol {self.config.symbol} info not available")
-            return 0.01
+        self.logger.info(f"ML Optimization: Selected factor {optimal_factor:.2f} from '{self.config.cluster_choice}' cluster")
+        self.logger.info(f"Cluster performance: {cluster_perf:.4f}")
         
-        # Get current price for crypto calculation
-        tick = mt5.symbol_info_tick(self.config.symbol)
-        if tick is None:
-            self.logger.warning("Tick info not available")
-            return 0.01
-        
-        current_price = (tick.ask + tick.bid) / 2
-        
-        # Check if this is a crypto pair (BTC, ETH, etc.)
-        is_crypto = any(crypto in self.config.symbol.upper() for crypto in ['BTC', 'ETH', 'LTC', 'XRP', 'ADA'])
-        
-        if is_crypto:
-            # For crypto: Calculate based on contract size and actual USD value
-            # Most crypto: 1 lot = 1 BTC or 1 ETH, but check trade_contract_size
-            contract_size = symbol_info.trade_contract_size
-            
-            # Calculate risk in USD per lot
-            # stop_loss_points is in price units (e.g., $500 for BTC)
-            risk_per_lot = stop_loss_points * contract_size
-            
-            # Calculate lot size based on risk
-            if risk_per_lot > 0:
-                position_size = risk_amount / risk_per_lot
-            else:
-                self.logger.warning(f"Invalid risk_per_lot: {risk_per_lot}")
-                position_size = symbol_info.volume_min
-            
-            self.logger.info(f"[CRYPTO] {self.config.symbol}: SL={stop_loss_points:.2f} USD, Contract={contract_size}, Risk/lot=${risk_per_lot:.2f}, Calculated={position_size:.4f} lots")
-        else:
-            # For forex: Use standard point value calculation
-            point_value = symbol_info.trade_tick_value / symbol_info.trade_tick_size
-            position_size = risk_amount / (stop_loss_points * point_value)
-            
-            self.logger.debug(f"[FOREX] {self.config.symbol}: SL points={stop_loss_points:.5f}, Point value={point_value:.2f}, Calculated={position_size:.2f} lots")
-        
-        # Apply min/max limits
-        position_size = max(symbol_info.volume_min, min(position_size, symbol_info.volume_max))
-        
-        # Round to volume step
-        position_size = round(position_size / symbol_info.volume_step) * symbol_info.volume_step
-        
-        self.logger.info(f"[POSITION SIZE] Symbol: {self.config.symbol}, Balance: ${balance:.2f}, Risk: ${risk_amount:.2f} ({self.config.risk_percent}%), Final lot: {position_size:.4f}")
-        
-        return position_size
-        
+        return optimal_factor, cluster_perf
+    
     def check_volume_condition(self, df: pd.DataFrame) -> bool:
-        current_volume = df['tick_volume'].iloc[-1]
-        avg_volume = df['volume_ma'].iloc[-1]
-        return current_volume > avg_volume * self.config.volume_multiplier
-        
-    def place_order(self, order_type: int, volume: float, price: float, sl: float, tp: float, comment: str = "SuperTrend Bot") -> int:
-        symbol_info = mt5.symbol_info(self.config.symbol)
-        if symbol_info is None:
-            self.logger.error("Symbol info not found")
-            return None
-            
-        point = symbol_info.point
-        
-        request = {
-            "action": mt5.TRADE_ACTION_DEAL,
-            "symbol": self.config.symbol,
-            "volume": volume,
-            "type": order_type,
-            "price": price,
-            "sl": sl,
-            "tp": tp,
-            "deviation": 20,
-            "magic": self.config.magic_number,
-            "comment": comment,
-            "type_time": mt5.ORDER_TIME_GTC,
-            "type_filling": mt5.ORDER_FILLING_IOC,
-        }
-        
-        result = mt5.order_send(request)
-        
-        if result.retcode != mt5.TRADE_RETCODE_DONE:
-            self.logger.error(f"Order failed: {result.comment}")
-            return None
-            
-        self.logger.info(f"Order placed: {result.order}")
-        return result.order
-    
-    def place_dual_orders(self, order_type: int, volume: float, price: float, sl: float, atr: float) -> Tuple[Optional[int], Optional[int]]:
         """
-        Place dual orders for SuperTrend strategy
-        Order 1: RR 1:1 (quick profit)
-        Order 2: Main RR (from config tp_multiplier)
+        Check if current volume meets the threshold
         
+        Args:
+            df: DataFrame with volume data
+            
         Returns:
-            Tuple of (ticket1, ticket2) or (None, None) if failed
+            True if volume condition is met
         """
-        symbol_info = mt5.symbol_info(self.config.symbol)
-        if symbol_info is None:
-            self.logger.error("Symbol info not found for dual orders")
-            return None, None
-        
-        # Calculate risk distance (SL distance)
-        if order_type == mt5.ORDER_TYPE_BUY:
-            risk = price - sl
-            # Order 1: RR 1:1 (quick profit)
-            tp1 = price + risk * 1.0
-            # Order 2: Main RR
-            tp2 = price + risk * (self.config.tp_multiplier / self.config.sl_multiplier)
-            direction_str = "BUY"
-        else:  # SELL
-            risk = sl - price
-            # Order 1: RR 1:1 (quick profit)
-            tp1 = price - risk * 1.0
-            # Order 2: Main RR
-            tp2 = price - risk * (self.config.tp_multiplier / self.config.sl_multiplier)
-            direction_str = "SELL"
-        
-        # Place Order 1 (RR 1:1 - Quick Profit)
-        comment1 = f"ST_{direction_str}_RR1"
-        ticket1 = self.place_order(order_type, volume, price, sl, tp1, comment1)
-        
-        if ticket1 is None:
-            self.logger.error("Failed to place Order 1 (RR 1:1)")
-            return None, None
-        
-        # Place Order 2 (Main RR)
-        comment2 = f"ST_{direction_str}_RR2"
-        ticket2 = self.place_order(order_type, volume, price, sl, tp2, comment2)
-        
-        if ticket2 is None:
-            self.logger.error("Failed to place Order 2 (Main RR)")
-            # Close Order 1 if Order 2 fails
-            self.logger.warning("Closing Order 1 due to Order 2 failure")
-            # Note: In production, you might want to close Order 1 here
-            return ticket1, None
-        
-        self.logger.info(f"DUAL ORDERS placed: Ticket1={ticket1} (RR 1:1 @ {tp1:.5f}), Ticket2={ticket2} (Main RR @ {tp2:.5f})")
-        
-        return ticket1, ticket2
-    
-    def modify_sl(self, ticket: int, new_sl: float) -> bool:
-        """Modify stop loss of an open position"""
-        position = mt5.positions_get(ticket=ticket)
-        
-        if not position or len(position) == 0:
-            self.logger.warning(f"Position {ticket} not found for SL modification")
+        if len(df) < 2:
             return False
         
-        position = position[0]
+        current_volume = df['tick_volume'].iloc[-1]
+        volume_ma = df['volume_ma'].iloc[-1]
         
-        request = {
-            "action": mt5.TRADE_ACTION_SLTP,
-            "symbol": self.config.symbol,
-            "position": ticket,
-            "sl": new_sl,
-            "tp": position.tp,
-            "magic": self.config.magic_number,
-        }
-        
-        result = mt5.order_send(request)
-        
-        if result.retcode != mt5.TRADE_RETCODE_DONE:
-            self.logger.error(f"Failed to modify SL for ticket {ticket}: {result.retcode} - {result.comment}")
-            return False
-        
-        self.logger.info(f"✅ SL modified for ticket {ticket}: {position.sl:.5f} → {new_sl:.5f}")
-        return True
+        return current_volume >= (volume_ma * self.config.volume_multiplier)
     
-    def check_and_move_sl_to_breakeven(self):
-        """Check if Order 1 hit TP and move Order 2's SL to breakeven"""
-        if self.current_trade is None:
-            return
-        
-        # Skip if already moved to breakeven
-        if self.current_trade.sl_moved_to_breakeven:
-            return
-        
-        # Skip if feature disabled
-        if not self.config.move_sl_to_breakeven:
-            return
-        
-        # Check if Order 1 (Quick Profit) still exists
-        position1 = mt5.positions_get(ticket=self.current_trade.ticket1)
-        
-        # If Order 1 closed (hit TP), move Order 2's SL to breakeven
-        if not position1 or len(position1) == 0:
-            if not self.current_trade.tp1_hit:
-                self.current_trade.tp1_hit = True
-                self.logger.info(f"🎯 Order 1 (RR 1:1) closed! Moving Order 2's SL to breakeven...")
-                
-                # Check if Order 2 still exists
-                position2 = mt5.positions_get(ticket=self.current_trade.ticket2)
-                
-                if position2 and len(position2) > 0:
-                    # Move SL to entry price (breakeven)
-                    breakeven_sl = self.current_trade.entry_price
-                    
-                    if self.modify_sl(self.current_trade.ticket2, breakeven_sl):
-                        self.current_trade.sl_moved_to_breakeven = True
-                        self.current_trade.stop_loss = breakeven_sl
-                        self.logger.info(f"✅ Order 2 now at BREAKEVEN (SL = Entry = {breakeven_sl:.5f})")
-                        self.logger.info(f"🔒 Trade is now RISK-FREE! Letting profits run to TP2={self.current_trade.take_profit:.5f}")
-                else:
-                    self.logger.info("⚠️ Order 2 already closed")
-        
     def update_trailing_stop(self, position, current_price: float, atr: float) -> bool:
+        """
+        Update trailing stop based on SuperTrend levels
+        
+        Args:
+            position: MT5 position object
+            current_price: Current market price
+            atr: Current ATR value
+            
+        Returns:
+            True if stop was updated successfully
+        """
         if not self.config.use_trailing:
             return False
-            
-        symbol_info = mt5.symbol_info(self.config.symbol)
-        point = symbol_info.point
         
+        if not self.optimal_factor or self.optimal_factor not in self.supertrends:
+            return False
+        
+        optimal_st = self.supertrends[self.optimal_factor]
+        st_level = optimal_st['output'].iloc[-1]
+        
+        # Calculate new stop loss based on SuperTrend
         if position.type == mt5.ORDER_TYPE_BUY:
-            if current_price - position.price_open > atr * self.config.trail_activation:
-                new_sl = current_price - atr * self.config.sl_multiplier
-                if new_sl > position.sl:
-                    request = {
-                        "action": mt5.TRADE_ACTION_SLTP,
-                        "position": position.ticket,
-                        "sl": new_sl,
-                        "tp": position.tp,
-                        "symbol": self.config.symbol,
-                        "magic": self.config.magic_number,
-                    }
-                    result = mt5.order_send(request)
-                    if result.retcode == mt5.TRADE_RETCODE_DONE:
-                        self.logger.info(f"Trailing stop updated for position {position.ticket}")
-                        return True
-                        
+            # For long positions, trail stop upward
+            new_sl = st_level
+            
+            # Only move stop if it's higher than current
+            if new_sl > position.sl and new_sl < current_price:
+                return self.modify_sl(position.ticket, new_sl)
+        
         elif position.type == mt5.ORDER_TYPE_SELL:
-            if position.price_open - current_price > atr * self.config.trail_activation:
-                new_sl = current_price + atr * self.config.sl_multiplier
-                if new_sl < position.sl:
-                    request = {
-                        "action": mt5.TRADE_ACTION_SLTP,
-                        "position": position.ticket,
-                        "sl": new_sl,
-                        "tp": position.tp,
-                        "symbol": self.config.symbol,
-                        "magic": self.config.magic_number,
-                    }
-                    result = mt5.order_send(request)
-                    if result.retcode == mt5.TRADE_RETCODE_DONE:
-                        self.logger.info(f"Trailing stop updated for position {position.ticket}")
-                        return True
-                        
+            # For short positions, trail stop downward
+            new_sl = st_level
+            
+            # Only move stop if it's lower than current
+            if new_sl < position.sl and new_sl > current_price:
+                return self.modify_sl(position.ticket, new_sl)
+        
         return False
-        
-    def run_cycle(self):
-        if not self.is_connected:
-            self.logger.error("Not connected to MT5")
-            return
-            
-        df = self.get_data()
-        if df is None or len(df) < 200:
-            self.logger.warning(f"[WARNING] Not enough data: {len(df) if df is not None else 0} bars (need 200+)")
-            return
-        
-        self.logger.debug(f"[ANALYZING] Processing {len(df)} bars...")
-        
-        # Check if Order 1 hit TP and move SL to breakeven
-        if self.current_trade is not None:
-            self.check_and_move_sl_to_breakeven()
-            
-        supertrends = self.calculate_supertrends(df)
-        optimal_factor, perf_score = self.perform_clustering(supertrends)
-        
-        current_st = supertrends[min(supertrends.keys(), key=lambda x: abs(x - optimal_factor))]
-        current_trend = current_st['trend'].iloc[-1]
-        prev_trend = current_st['trend'].iloc[-2]
-        current_price = df['close'].iloc[-1]
-        current_atr = df['atr'].iloc[-1]
-        
-        positions = mt5.positions_get(symbol=self.config.symbol)
-        if positions:
-            for position in positions:
-                if position.magic == self.config.magic_number:
-                    self.update_trailing_stop(position, current_price, current_atr)
-                    
-        buy_signal = current_trend > prev_trend and self.check_volume_condition(df)
-        sell_signal = current_trend < prev_trend and self.check_volume_condition(df)
-        
-        open_positions = len([p for p in positions if p.magic == self.config.magic_number]) if positions else 0
-        
-        if buy_signal and open_positions < self.config.max_positions:
-            sl = current_price - current_atr * self.config.sl_multiplier
-            sl_points = (current_price - sl) / mt5.symbol_info(self.config.symbol).point
-            volume = self.calculate_position_size(sl_points)
-            
-            # Place dual orders (RR 1:1 + Main RR)
-            ticket1, ticket2 = self.place_dual_orders(mt5.ORDER_TYPE_BUY, volume, current_price, sl, current_atr)
-            
-            if ticket1 and ticket2:
-                # Calculate TPs for logging
-                risk = current_price - sl
-                tp1 = current_price + risk * 1.0
-                tp2 = current_price + risk * (self.config.tp_multiplier / self.config.sl_multiplier)
-                
-                self.current_trade = Trade(
-                    entry_price=current_price,
-                    stop_loss=sl,
-                    take_profit=tp2,  # Store main TP
-                    direction=1,
-                    volume=volume * 2,  # Total volume (2 orders)
-                    ticket=ticket1,  # Primary ticket (for backward compatibility)
-                    ticket1=ticket1,  # Quick profit order
-                    ticket2=ticket2,  # Main RR order
-                    entry_time=datetime.now(),
-                    tp1_hit=False,
-                    sl_moved_to_breakeven=False
-                )
-                self.logger.info(f"BUY DUAL ORDERS executed at {current_price:.5f}")
-                self.logger.info(f"  Order 1 (RR 1:1): SL={sl:.5f}, TP={tp1:.5f}, Vol={volume:.2f}, Ticket={ticket1}")
-                self.logger.info(f"  Order 2 (Main RR): SL={sl:.5f}, TP={tp2:.5f}, Vol={volume:.2f}, Ticket={ticket2}")
-                self.logger.info(f"  Total Risk: {self.config.risk_percent * 2:.2f}% (2 orders)")
-            elif ticket1:
-                # Only first order placed (fallback)
-                tp = current_price + current_atr * self.config.tp_multiplier
-                self.logger.warning("Only Order 1 placed, Order 2 failed")
-                
-        elif sell_signal and open_positions < self.config.max_positions:
-            sl = current_price + current_atr * self.config.sl_multiplier
-            sl_points = (sl - current_price) / mt5.symbol_info(self.config.symbol).point
-            volume = self.calculate_position_size(sl_points)
-            
-            # Place dual orders (RR 1:1 + Main RR)
-            ticket1, ticket2 = self.place_dual_orders(mt5.ORDER_TYPE_SELL, volume, current_price, sl, current_atr)
-            
-            if ticket1 and ticket2:
-                # Calculate TPs for logging
-                risk = sl - current_price
-                tp1 = current_price - risk * 1.0
-                tp2 = current_price - risk * (self.config.tp_multiplier / self.config.sl_multiplier)
-                
-                self.current_trade = Trade(
-                    entry_price=current_price,
-                    stop_loss=sl,
-                    take_profit=tp2,  # Store main TP
-                    direction=-1,
-                    volume=volume * 2,  # Total volume (2 orders)
-                    ticket=ticket1,  # Primary ticket (for backward compatibility)
-                    ticket1=ticket1,  # Quick profit order
-                    ticket2=ticket2,  # Main RR order
-                    entry_time=datetime.now(),
-                    tp1_hit=False,
-                    sl_moved_to_breakeven=False
-                )
-                self.logger.info(f"SELL DUAL ORDERS executed at {current_price:.5f}")
-                self.logger.info(f"  Order 1 (RR 1:1): SL={sl:.5f}, TP={tp1:.5f}, Vol={volume:.2f}, Ticket={ticket1}")
-                self.logger.info(f"  Order 2 (Main RR): SL={sl:.5f}, TP={tp2:.5f}, Vol={volume:.2f}, Ticket={ticket2}")
-                self.logger.info(f"  Total Risk: {self.config.risk_percent * 2:.2f}% (2 orders)")
-            elif ticket1:
-                # Only first order placed (fallback)
-                tp = current_price - current_atr * self.config.tp_multiplier
-                self.logger.warning("Only Order 1 placed, Order 2 failed")
-                
-    def calculate_statistics(self) -> dict:
-        if not self.trade_history:
-            return {"total_trades": 0, "win_rate": 0, "profit_factor": 0}
-            
-        wins = sum(1 for t in self.trade_history if t['profit'] > 0)
-        losses = sum(1 for t in self.trade_history if t['profit'] < 0)
-        total_profit = sum(t['profit'] for t in self.trade_history if t['profit'] > 0)
-        total_loss = abs(sum(t['profit'] for t in self.trade_history if t['profit'] < 0))
-        
-        win_rate = (wins / len(self.trade_history)) * 100 if self.trade_history else 0
-        profit_factor = total_profit / total_loss if total_loss > 0 else float('inf')
-        
-        return {
-            "total_trades": len(self.trade_history),
-            "wins": wins,
-            "losses": losses,
-            "win_rate": win_rate,
-            "profit_factor": profit_factor,
-            "total_profit": total_profit,
-            "total_loss": total_loss,
-            "avg_win": total_profit / wins if wins > 0 else 0,
-            "avg_loss": total_loss / losses if losses > 0 else 0
-        }
-        
-    def run(self, interval_seconds: int = 60):
-        self.logger.info("Starting SuperTrend Bot...")
-        
-        try:
-            while True:
-                self.run_cycle()
-                
-                stats = self.calculate_statistics()
-                self.logger.info(f"Stats: Win Rate: {stats['win_rate']:.2f}%, PF: {stats['profit_factor']:.2f}")
-                
-                time.sleep(interval_seconds)
-                
-        except KeyboardInterrupt:
-            self.logger.info("Bot stopped by user")
-        except Exception as e:
-            self.logger.error(f"Unexpected error: {e}")
-        finally:
-            self.shutdown()
-            
-    def shutdown(self):
-        if self.is_connected:
-            positions = mt5.positions_get(symbol=self.config.symbol)
-            if positions:
-                for position in positions:
-                    if position.magic == self.config.magic_number:
-                        request = {
-                            "action": mt5.TRADE_ACTION_DEAL,
-                            "symbol": self.config.symbol,
-                            "volume": position.volume,
-                            "type": mt5.ORDER_TYPE_SELL if position.type == mt5.ORDER_TYPE_BUY else mt5.ORDER_TYPE_BUY,
-                            "position": position.ticket,
-                            "price": mt5.symbol_info_tick(self.config.symbol).bid if position.type == mt5.ORDER_TYPE_BUY else mt5.symbol_info_tick(self.config.symbol).ask,
-                            "deviation": 20,
-                            "magic": self.config.magic_number,
-                            "comment": "Bot shutdown",
-                            "type_time": mt5.ORDER_TIME_GTC,
-                            "type_filling": mt5.ORDER_FILLING_IOC,
-                        }
-                        mt5.order_send(request)
-                        
-            mt5.shutdown()
-            self.logger.info("MT5 connection closed")
-
-def main():
-    config = Config(
-        symbol="EURUSD",
-        timeframe=mt5.TIMEFRAME_M30,
-        risk_percent=1.0,
-        max_positions=1
-    )
     
-    bot = SuperTrendBot(config)
+    # ========================================================================
+    # HOOKS
+    # ========================================================================
     
-    login = 12345678
-    password = "your_password"
-    server = "your_broker_server"
+    def hook_post_signal_generation(self, signal: Optional[Dict]) -> Optional[Dict]:
+        """Log ML optimization details after signal generation"""
+        if signal:
+            self.logger.info(f"📊 ML Factor: {self.optimal_factor:.2f}")
+            self.logger.info(f"📈 Cluster Performance: {self.cluster_performance:.4f}")
+            self.logger.info(f"🎯 Cluster Choice: {self.config.cluster_choice}")
+        return signal
     
-    if bot.connect(login, password, server):
-        bot.run(interval_seconds=30)
-
-if __name__ == "__main__":
-    main()
+    def hook_post_cycle(self, cycle_data: Dict):
+        """Log clustering status after each cycle"""
+        if self.optimal_factor:
+            self.logger.debug(f"Using ML-optimized factor: {self.optimal_factor:.2f} ({self.config.cluster_choice})")
+        
+        # Log number of supertrends calculated
+        if self.supertrends:
+            self.logger.debug(f"Tracking {len(self.supertrends)} SuperTrend variants")
