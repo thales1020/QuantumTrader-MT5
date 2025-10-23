@@ -1,0 +1,29 @@
+{
+  "timestamp": "2025-10-23T18:10:11.615889",
+  "symbols": {
+    "EURUSDm": {
+      "symbol": "EURUSDm",
+      "tests": {},
+      "status": "ERROR",
+      "error": "'norm_volatility'"
+    },
+    "XAUUSDm": {
+      "symbol": "XAUUSDm",
+      "tests": {},
+      "status": "ERROR",
+      "error": "'norm_volatility'"
+    },
+    "AUDUSDm": {
+      "symbol": "AUDUSDm",
+      "tests": {},
+      "status": "ERROR",
+      "error": "'norm_volatility'"
+    }
+  },
+  "summary": {
+    "total_tests": 0,
+    "passed": 0,
+    "failed": 3,
+    "warnings": 0
+  }
+}

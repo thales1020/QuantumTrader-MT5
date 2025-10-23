@@ -5,8 +5,6 @@
 **Trần Trọng Hiếu**
 
 - 🌐 **Personal GitHub**: [@thales1020](https://github.com/thales1020)
-- 🐦 **Twitter**: [@TheRealPourya](https://twitter.com/TheRealPourya)
-
 ## 📂 Repository Structure
 
 ### This Repository

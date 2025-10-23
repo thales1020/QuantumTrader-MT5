@@ -1,0 +1,149 @@
+{
+  "timestamp": "2025-10-23T18:10:59.071163",
+  "symbols": {
+    "EURUSDm": {
+      "symbol": "EURUSDm",
+      "tests": {
+        "supertrend_calc": {
+          "status": "PASS",
+          "details": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.5,
+              0.0
+            ],
+            [
+              2.0,
+              0.0
+            ],
+            [
+              2.5,
+              0.0
+            ],
+            [
+              3.0,
+              0.0
+            ]
+          ],
+          "match": true
+        },
+        "clustering": {
+          "status": "PASS",
+          "details": {
+            "factor_match": "True",
+            "orig_factor": 1.5,
+            "refac_factor": 1.5,
+            "factor_diff": 0.0,
+            "perf_match": "True",
+            "orig_perf": 3.70891414251775e-05,
+            "refac_perf": 3.70891414251775e-05,
+            "perf_diff": 0.0
+          }
+        }
+      },
+      "status": "ERROR",
+      "error": "Cannot set a DataFrame with multiple columns to the single column supertrend_1.5"
+    },
+    "XAUUSDm": {
+      "symbol": "XAUUSDm",
+      "tests": {
+        "supertrend_calc": {
+          "status": "PASS",
+          "details": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.5,
+              0.0
+            ],
+            [
+              2.0,
+              0.0
+            ],
+            [
+              2.5,
+              0.0
+            ],
+            [
+              3.0,
+              0.0
+            ]
+          ],
+          "match": true
+        },
+        "clustering": {
+          "status": "PASS",
+          "details": {
+            "factor_match": "True",
+            "orig_factor": 1.25,
+            "refac_factor": 1.25,
+            "factor_diff": 0.0,
+            "perf_match": "True",
+            "orig_perf": -0.007011919480002238,
+            "refac_perf": -0.007011919480002238,
+            "perf_diff": 0.0
+          }
+        }
+      },
+      "status": "ERROR",
+      "error": "'SuperTrendBot' object has no attribute 'generate_signal'"
+    },
+    "AUDUSDm": {
+      "symbol": "AUDUSDm",
+      "tests": {
+        "supertrend_calc": {
+          "status": "PASS",
+          "details": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.5,
+              0.0
+            ],
+            [
+              2.0,
+              0.0
+            ],
+            [
+              2.5,
+              0.0
+            ],
+            [
+              3.0,
+              0.0
+            ]
+          ],
+          "match": true
+        },
+        "clustering": {
+          "status": "PASS",
+          "details": {
+            "factor_match": "True",
+            "orig_factor": 2.0,
+            "refac_factor": 2.0,
+            "factor_diff": 0.0,
+            "perf_match": "True",
+            "orig_perf": -9.824863362245343e-06,
+            "refac_perf": -9.824863362245343e-06,
+            "perf_diff": 0.0
+          }
+        }
+      },
+      "status": "ERROR",
+      "error": "Cannot set a DataFrame with multiple columns to the single column supertrend_2.0"
+    }
+  },
+  "summary": {
+    "total_tests": 6,
+    "passed": 6,
+    "failed": 3,
+    "warnings": 0
+  }
+}

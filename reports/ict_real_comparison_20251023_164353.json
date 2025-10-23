@@ -1,0 +1,175 @@
+[
+  {
+    "timestamp": "2025-10-23T16:43:53.167929",
+    "symbol": "EURUSDm",
+    "data_bars": 500,
+    "original": {
+      "order_blocks": 5,
+      "fair_value_gaps": 1,
+      "market_structure": {
+        "highs": [
+          1.16109,
+          1.1614200000000001,
+          1.16059,
+          1.15984,
+          1.16059
+        ],
+        "lows": [
+          1.15948,
+          1.15903,
+          1.15901,
+          1.15906,
+          1.15926
+        ],
+        "trend": "bullish",
+        "last_high": 1.16059,
+        "last_low": 1.15926
+      },
+      "signal": {
+        "type": "BUY",
+        "price": 1.15953,
+        "atr": 0.0006235714285714218,
+        "order_block": "OrderBlock(price_high=1.15967, price_low=1.15906, direction='bullish', time=491, strength=0.09231618725520045)",
+        "conditions": 2,
+        "time": 499
+      }
+    },
+    "refactored": {
+      "order_blocks": 6,
+      "fair_value_gaps": 0,
+      "market_structure": {
+        "highs": [
+          1.16109,
+          1.1614200000000001,
+          1.16059,
+          1.15984,
+          1.16059
+        ],
+        "lows": [
+          1.15948,
+          1.15903,
+          1.15901,
+          1.15906,
+          1.15926
+        ],
+        "trend": "bullish",
+        "last_high": 1.16059,
+        "last_low": 1.15926
+      },
+      "signal": null
+    }
+  },
+  {
+    "timestamp": "2025-10-23T16:43:53.266932",
+    "symbol": "AUDUSDm",
+    "data_bars": 500,
+    "original": {
+      "order_blocks": 5,
+      "fair_value_gaps": 1,
+      "market_structure": {
+        "highs": [
+          0.64879,
+          0.64867,
+          0.65072,
+          0.65116,
+          0.65119
+        ],
+        "lows": [
+          0.64876,
+          0.64863,
+          0.6483,
+          0.64804,
+          0.64785
+        ],
+        "trend": "neutral",
+        "last_high": 0.65119,
+        "last_low": 0.64785
+      },
+      "signal": null
+    },
+    "refactored": {
+      "order_blocks": 8,
+      "fair_value_gaps": 0,
+      "market_structure": {
+        "highs": [
+          0.64879,
+          0.64867,
+          0.65072,
+          0.65116,
+          0.65119
+        ],
+        "lows": [
+          0.64876,
+          0.64863,
+          0.6483,
+          0.64804,
+          0.64785
+        ],
+        "trend": "neutral",
+        "last_high": 0.65119,
+        "last_low": 0.64785
+      },
+      "signal": null
+    }
+  },
+  {
+    "timestamp": "2025-10-23T16:43:53.353935",
+    "symbol": "XAUUSDm",
+    "data_bars": 500,
+    "original": {
+      "order_blocks": 5,
+      "fair_value_gaps": 10,
+      "market_structure": {
+        "highs": [
+          4096.868,
+          4092.824,
+          4100.761,
+          4137.712,
+          4119.027
+        ],
+        "lows": [
+          4072.192,
+          4079.656,
+          4083.866,
+          4110.513,
+          4091.793
+        ],
+        "trend": "bearish",
+        "last_high": 4119.027,
+        "last_low": 4091.793
+      },
+      "signal": {
+        "type": "SELL",
+        "price": 4114.881,
+        "atr": 11.735928571428433,
+        "order_block": "OrderBlock(price_high=4120.281, price_low=4113.426, direction='bearish', time=490, strength=0.6316316775482083)",
+        "conditions": 2,
+        "time": 499
+      }
+    },
+    "refactored": {
+      "order_blocks": 7,
+      "fair_value_gaps": 0,
+      "market_structure": {
+        "highs": [
+          4096.868,
+          4092.824,
+          4100.761,
+          4137.712,
+          4119.027
+        ],
+        "lows": [
+          4072.192,
+          4079.656,
+          4083.866,
+          4110.513,
+          4091.793
+        ],
+        "trend": "bearish",
+        "last_high": 4119.027,
+        "last_low": 4091.793
+      },
+      "signal": null
+    }
+  }
+]

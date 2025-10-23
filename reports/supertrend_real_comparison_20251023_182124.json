@@ -1,0 +1,170 @@
+{
+  "timestamp": "2025-10-23T18:21:08.764783",
+  "symbols": {
+    "EURUSDm": {
+      "symbol": "EURUSDm",
+      "tests": {
+        "supertrend_calc": {
+          "status": "PASS",
+          "details": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.5,
+              0.0
+            ],
+            [
+              2.0,
+              0.0
+            ],
+            [
+              2.5,
+              0.0
+            ],
+            [
+              3.0,
+              0.0
+            ]
+          ],
+          "match": true
+        },
+        "clustering": {
+          "status": "PASS",
+          "details": {
+            "factor_match": "True",
+            "orig_factor": 1.5,
+            "refac_factor": 1.5,
+            "factor_diff": 0.0,
+            "perf_match": "True",
+            "orig_perf": 3.7035635364258615e-05,
+            "refac_perf": 3.7035635364258615e-05,
+            "perf_diff": 0.0
+          }
+        },
+        "ml_optimization": {
+          "status": "PASS",
+          "orig_factor": 1.5,
+          "refac_factor": 1.5,
+          "orig_perf": 3.7035635364258615e-05,
+          "refac_perf": 3.7035635364258615e-05,
+          "match": "True"
+        }
+      },
+      "status": "PASS"
+    },
+    "XAUUSDm": {
+      "symbol": "XAUUSDm",
+      "tests": {
+        "supertrend_calc": {
+          "status": "PASS",
+          "details": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.5,
+              0.0
+            ],
+            [
+              2.0,
+              0.0
+            ],
+            [
+              2.5,
+              0.0
+            ],
+            [
+              3.0,
+              0.0
+            ]
+          ],
+          "match": true
+        },
+        "clustering": {
+          "status": "PASS",
+          "details": {
+            "factor_match": "True",
+            "orig_factor": 1.25,
+            "refac_factor": 1.25,
+            "factor_diff": 0.0,
+            "perf_match": "True",
+            "orig_perf": -0.007011919480002238,
+            "refac_perf": -0.007011919480002238,
+            "perf_diff": 0.0
+          }
+        },
+        "ml_optimization": {
+          "status": "PASS",
+          "orig_factor": 1.25,
+          "refac_factor": 1.25,
+          "orig_perf": -0.007011919480002238,
+          "refac_perf": -0.007011919480002238,
+          "match": "True"
+        }
+      },
+      "status": "PASS"
+    },
+    "AUDUSDm": {
+      "symbol": "AUDUSDm",
+      "tests": {
+        "supertrend_calc": {
+          "status": "PASS",
+          "details": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.5,
+              0.0
+            ],
+            [
+              2.0,
+              0.0
+            ],
+            [
+              2.5,
+              0.0
+            ],
+            [
+              3.0,
+              0.0
+            ]
+          ],
+          "match": true
+        },
+        "clustering": {
+          "status": "PASS",
+          "details": {
+            "factor_match": "True",
+            "orig_factor": 2.0,
+            "refac_factor": 2.0,
+            "factor_diff": 0.0,
+            "perf_match": "True",
+            "orig_perf": -9.8933173339626e-06,
+            "refac_perf": -9.8933173339626e-06,
+            "perf_diff": 0.0
+          }
+        },
+        "ml_optimization": {
+          "status": "PASS",
+          "orig_factor": 2.0,
+          "refac_factor": 2.0,
+          "orig_perf": -9.8933173339626e-06,
+          "refac_perf": -9.8933173339626e-06,
+          "match": "True"
+        }
+      },
+      "status": "PASS"
+    }
+  },
+  "summary": {
+    "total_tests": 9,
+    "passed": 9,
+    "failed": 0,
+    "warnings": 0
+  }
+}
