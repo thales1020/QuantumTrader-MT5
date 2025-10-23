@@ -1,0 +1,84 @@
+# NOTICE
+
+This project contains code from multiple sources:
+
+## Original Work
+This software was originally inspired by various open-source MT5-SuperTrend 
+implementations in the algorithmic trading community. The original concepts 
+were typically licensed under the MIT License.
+
+General Attribution:
+```
+Open-Source MT5-SuperTrend Community
+Various contributors, 2020-2024
+Concept: Basic SuperTrend indicator with MT5 integration
+```
+
+## Primary Development
+This is a substantially original implementation developed by:
+
+**Trần Trọng Hiếu (xPOURY4 | thales1020 | TheRealPourya)**
+Copyright (c) 2024-2025
+
+### Major Original Contributions (95%+ of codebase):
+- Machine Learning integration (K-means clustering) - **100% original**
+- ICT trading strategy implementation - **100% original**
+- Dual Orders system - **100% original**
+- Automatic Breakeven SL - **100% original**
+- Strategy Registry and Plugin System - **100% original**
+- Event-driven architecture - **100% original**
+- Comprehensive testing framework - **100% original**
+- Enhanced backtesting engine - **100% original**
+- Advanced risk management - **100% original**
+- Complete documentation suite - **100% original**
+- And 95%+ of current codebase - **Original work**
+
+## Third-Party Libraries
+This project uses the following third-party libraries:
+
+### Core Dependencies
+- **MetaTrader5** - Trading platform API
+  - License: Proprietary (MetaQuotes Software Corp.)
+  
+- **pandas** - Data analysis library
+  - License: BSD 3-Clause
+  - Copyright: AQR Capital Management, LLC, Lambda Foundry, Inc. and PyData Development Team
+  
+- **numpy** - Numerical computing library
+  - License: BSD 3-Clause
+  - Copyright: NumPy Developers
+  
+- **scikit-learn** - Machine learning library
+  - License: BSD 3-Clause
+  - Copyright: scikit-learn developers
+  
+- **TA-Lib** - Technical analysis library
+  - License: BSD 3-Clause
+  - Copyright: TA-Lib developers
+
+### Additional Dependencies
+- **PyYAML** - YAML parser (MIT License)
+- **matplotlib** - Plotting library (BSD-compatible)
+- **pytest** - Testing framework (MIT License)
+
+## License
+This entire project is distributed under the MIT License.
+See LICENSE file for full terms.
+
+## Trademarks
+- MetaTrader 5 is a trademark of MetaQuotes Software Corp.
+- All other trademarks are the property of their respective owners.
+
+## Disclaimer
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY ARISING FROM THE USE OF THIS SOFTWARE.
+
+This software is for educational purposes only. Trading involves risk.
+
+---
+
+For detailed attribution and project history, see docs/ATTRIBUTION.md
+
+Author: Trần Trọng Hiếu (xPOURY4 | thales1020 | TheRealPourya)
+Last Updated: October 23, 2025

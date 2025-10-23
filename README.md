@@ -4,11 +4,32 @@
 [![PyPI](https://img.shields.io/pypi/v/ml-supertrend-mt5.svg)](https://pypi.org/project/ml-supertrend-mt5/)
 [![MetaTrader5](https://img.shields.io/badge/MetaTrader-5-orange.svg)](https://www.metatrader5.com/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Twitter Follow](https://img.shields.io/twitter/follow/TheRealPourya?style=social)](https://twitter.com/TheRealPourya)
+[![Author](https://img.shields.io/badge/Author-thales1020-blue)](https://github.com/thales1020)
 
 An advanced SuperTrend trading bot for MetaTrader 5 that leverages Machine Learning (K-means clustering) for dynamic parameter optimization, featuring adaptive risk management and comprehensive performance monitoring.
 
+> 📜 **ATTRIBUTION**: This project was inspired by open-source MT5-SuperTrend community implementations and has been substantially developed (95%+ original code) with ML optimization, ICT strategies, dual orders, and advanced architecture. See [ATTRIBUTION.md](docs/ATTRIBUTION.md) for full details.
+
 > ⚠️ **DISCLAIMER**: This project is for **EDUCATIONAL PURPOSES ONLY**. Trading forex/CFDs involves substantial risk of loss and is not suitable for all investors. Past performance is not indicative of future results.
+
+## 🎉 What's New - Dual Orders Strategy
+
+**Latest Update**: All trading bots now support **Dual Orders** feature!
+
+Each trading signal now opens **2 positions** instead of 1:
+- 🎯 **Order 1**: Quick profit at **RR 1:1** (Risk:Reward = 1:1)
+- 🚀 **Order 2**: Main profit at configured RR ratio (e.g., RR 2:1, RR 3:1)
+
+**Benefits**:
+- ✅ Secure quick profits while maintaining exposure to larger moves
+- ✅ Better win rate optimization (RR 1:1 has ~60-70% success rate)
+- ✅ Reduced psychological pressure ("I should have held longer")
+
+**⚠️ Important**: Total risk per signal is now **2 × risk_percent**. Adjust your configuration accordingly!
+
+See [docs/DUAL_ORDERS_IMPLEMENTATION.md](docs/DUAL_ORDERS_IMPLEMENTATION.md) for full details.
+
+---
 
 ## 🌟 Features
 
@@ -25,6 +46,7 @@ An advanced SuperTrend trading bot for MetaTrader 5 that leverages Machine Learn
 - **⚡ Daily Loss Limits**: Prevents excessive drawdown
 
 ### Trading Features
+- **🎯 Dual Orders Strategy**: Each signal opens 2 orders (RR 1:1 + Main RR) for profit optimization
 - **📊 Volume Confirmation**: Filters low-quality signals
 - **🕐 Session Management**: Trade during optimal market hours
 - **📰 News Filter Ready**: Framework for economic event filtering
@@ -45,10 +67,39 @@ An advanced SuperTrend trading bot for MetaTrader 5 that leverages Machine Learn
 - [Usage Examples](#-usage-examples)
 - [Performance Metrics](#-performance-metrics)
 - [Troubleshooting](#-troubleshooting)
-- [Contributing](#-contributing)
 - [License](#-license)
 
-## 🚀 Installation
+## 📚 Documentation
+
+All documentation has been organized in the [`docs/`](docs/) folder:
+
+### Getting Started
+- 📖 [Quick Start Guide](docs/QUICKSTART.md) - Get up and running in minutes
+- ❓ [FAQ](docs/FAQ.md) - Frequently asked questions
+- 🤝 [Contributing](docs/CONTRIBUTING.md) - How to contribute to the project
+- 📜 [Attribution & Credits](docs/ATTRIBUTION.md) - **Project history and original author credits**
+
+### Strategy Guides
+- 🎯 [ICT Bot](docs/ICT_README.md) - Inner Circle Trader strategy
+- ₿ [Crypto Trading Guide](docs/CRYPTO_TRADING_GUIDE.md) - BTC, ETH trading specifics
+
+### Customization & Architecture
+- 🔧 [Customization Guide](docs/CUSTOMIZATION_GUIDE.md) - Make the project your own
+- 🏗️ [Project Scope](docs/PROJECT_SCOPE.md) - Vision and boundaries
+
+### Features & Implementation
+- 🎯 [Dual Orders Implementation](docs/DUAL_ORDERS_IMPLEMENTATION.md) - RR 1:1 + Main RR strategy
+- 🔧 [Dual Orders Changes](docs/DUAL_ORDERS_CHANGES.md) - Technical changelog
+- 🎯 [Breakeven SL Feature](docs/BREAKEVEN_SL_FEATURE.md) - Automatic risk-free trades
+
+### Performance & Optimization
+- 📈 [Performance Guide](docs/PERFORMANCE.md) - Optimization and metrics
+- ⚡ [Optimization Summary](docs/OPTIMIZATION_SUMMARY.md) - Performance improvements
+- 📝 [Changelog](docs/CHANGELOG.md) - Version history
+
+> 💡 **Tip**: Start with [QUICKSTART.md](docs/QUICKSTART.md) for a quick introduction!
+
+## �🚀 Installation
 
 ### Prerequisites
 
@@ -516,17 +567,30 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - SuperTrend indicator concept by Olivier Seban
 - K-means clustering implementation inspired by scikit-learn
 - MetaTrader 5 Python API by MetaQuotes
+- Open-source MT5-SuperTrend community for inspiration
 
-## 📞 Contact
+## �‍💻 Author
 
-**Pourya** - [@TheRealPourya](https://twitter.com/TheRealPourya)
+**Trần Trọng Hiếu**
+
+- 🌐 Personal GitHub: [@thales1020](https://github.com/thales1020)
+- 📂 This Project: [ML-SuperTrend-MT5](https://github.com/xPOURY4/ML-SuperTrend-MT5)
+- 🐦 Twitter: [@TheRealPourya](https://twitter.com/TheRealPourya)
+
+## �📞 Contact
+
+For questions, suggestions, or collaboration:
+
+- **GitHub Issues**: [Open an issue](https://github.com/xPOURY4/ML-SuperTrend-MT5/issues)
+- **GitHub Profile**: [@thales1020](https://github.com/thales1020)
+- **Twitter**: [@TheRealPourya](https://twitter.com/TheRealPourya)
 
 Project Link: [https://github.com/xPOURY4/ML-SuperTrend-MT5](https://github.com/xPOURY4/ML-SuperTrend-MT5)
 
 ---
 
 <p align="center">
-  Made with ❤️ by <a href="https://github.com/xPOURY4">xPOURY4</a>
+  Made with ❤️ by <a href="https://github.com/thales1020">Trần Trọng Hiếu</a> (thales1020)
 </p>
 
 <p align="center">
