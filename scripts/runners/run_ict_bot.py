@@ -19,7 +19,7 @@ except ImportError:
     print("Please install it using: pip install MetaTrader5")
     sys.exit(1)
 
-from core.ict_bot import ICTBot, Config
+from core.ict_bot import ICTBot, ICTConfig
 
 
 def setup_logging(log_level="INFO", backtest_mode=False):
@@ -219,7 +219,7 @@ def main():
         logger.info("="*60)
         
         # Create bot instance for backtest
-        bot_config = Config(
+        bot_config = ICTConfig(
             symbol=args.symbol,
             timeframe=timeframe,
             risk_percent=symbol_config.get("risk_percent", 1.0),
@@ -279,7 +279,7 @@ def main():
         "D1": mt5.TIMEFRAME_D1
     }
     
-    bot_config = Config(
+    bot_config = ICTConfig(
         symbol=args.symbol,
         timeframe=timeframe_map.get(symbol_config["timeframe"], mt5.TIMEFRAME_M15),
         risk_percent=symbol_config.get("risk_percent", 1.0),

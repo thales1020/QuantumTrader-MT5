@@ -19,7 +19,7 @@ except ImportError:
     print("Please install it using: pip install MetaTrader5")
     sys.exit(1)
 
-from core.supertrend_bot import SuperTrendBot, Config
+from core.supertrend_bot import SuperTrendBot, SuperTrendConfig
 from core.performance_monitor import PerformanceMonitor
 
 
@@ -247,7 +247,7 @@ def main():
         logger.info("="*60)
         
         # Create bot instance for backtest
-        bot_config = Config(
+        bot_config = SuperTrendConfig(
             symbol=args.symbol,
             timeframe=timeframe,
             atr_period=global_settings.get("atr_period", 10),
@@ -307,7 +307,7 @@ def main():
         "D1": mt5.TIMEFRAME_D1
     }
     
-    bot_config = Config(
+    bot_config = SuperTrendConfig(
         symbol=args.symbol,
         timeframe=timeframe_map.get(symbol_config["timeframe"], mt5.TIMEFRAME_M30),
         atr_period=config_data["global_settings"]["atr_period"],
