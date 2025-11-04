@@ -11,11 +11,21 @@ Version: 1.0.0
 
 from abc import ABC, abstractmethod
 from typing import Dict, Optional, List, Callable, Any
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime
+import traceback
 import pandas as pd
 import MetaTrader5 as mt5
 import logging
+
+# Import plugin system
+try:
+    from core.plugin_system import PluginManager, BasePlugin
+    PLUGIN_SYSTEM_AVAILABLE = True
+except ImportError:
+    PLUGIN_SYSTEM_AVAILABLE = False
+    PluginManager = None
+    BasePlugin = None
 
 
 @dataclass
@@ -44,6 +54,7 @@ class BaseConfig:
     max_positions: int = 1
     magic_number: int = 123456
     move_sl_to_breakeven: bool = True
+    plugins: List = field(default_factory=list)  # Plugin support
     
     def to_dict(self) -> Dict:
         """Convert to dictionary"""
@@ -104,6 +115,17 @@ class BaseTradingBot(ABC):
         self._post_trade_hooks: List[Callable] = []
         self._pre_cycle_hooks: List[Callable] = []
         self._post_cycle_hooks: List[Callable] = []
+        
+        # Initialize plugin system (Phase 2)
+        if PLUGIN_SYSTEM_AVAILABLE:
+            self.plugin_manager = PluginManager(self)
+            # Load plugins from config
+            if hasattr(config, 'plugins') and config.plugins:
+                for plugin in config.plugins:
+                    self.plugin_manager.register(plugin)
+                self.logger.info(f"Loaded {len(config.plugins)} plugin(s)")
+        else:
+            self.plugin_manager = None
         
         self.logger.info(f"Initialized {self.__class__.__name__}")
     
@@ -193,8 +215,23 @@ class BaseTradingBot(ABC):
         # Calculate indicators
         try:
             data = self.calculate_indicators(data)
+            
+            # Allow plugins to add indicators (Phase 2)
+            if self.plugin_manager:
+                data = self.plugin_manager.run_hook('on_data', data)
+                
         except Exception as e:
             self.logger.error(f"Error calculating indicators: {e}")
+            
+            # Notify plugins of error (Phase 2)
+            if self.plugin_manager:
+                error_info = {
+                    'type': 'indicator_calculation',
+                    'error': str(e),
+                    'traceback': traceback.format_exc()
+                }
+                self.plugin_manager.run_hook('on_error', error_info)
+            
             return
         
         # Pre-signal hooks
@@ -203,6 +240,10 @@ class BaseTradingBot(ABC):
         
         # Generate signal
         signal = self.generate_signal(data)
+        
+        # Allow plugins to filter/modify signal (Phase 2)
+        if self.plugin_manager and signal:
+            signal = self.plugin_manager.run_hook('on_signal', signal, data)
         
         if signal:
             # Post-signal hooks
@@ -261,7 +302,7 @@ class BaseTradingBot(ABC):
         
         self.is_connected = True
         account_info = mt5.account_info()
-        self.logger.info(f"✅ Connected to MT5: {account_info.server}")
+        self.logger.info(f" Connected to MT5: {account_info.server}")
         self.logger.info(f"   Account: {account_info.login}, Balance: ${account_info.balance:.2f}")
         return True
     
@@ -388,10 +429,26 @@ class BaseTradingBot(ABC):
             sl_moved_to_breakeven=False
         )
         
-        self.logger.info(f"✅ Opened {signal_type} position:")
+        self.logger.info(f" Opened {signal_type} position:")
         self.logger.info(f"   Order 1: Ticket #{ticket1}, TP={tp1:.5f} (RR 1:1)")
         self.logger.info(f"   Order 2: Ticket #{ticket2}, TP={tp2:.5f} (RR {self.config.rr_ratio}:1)")
         self.logger.info(f"   Entry={entry_price:.5f}, SL={sl:.5f}")
+        
+        # Notify plugins (Phase 2)
+        if self.plugin_manager:
+            trade_info = {
+                'ticket': ticket2,
+                'ticket1': ticket1,
+                'ticket2': ticket2,
+                'type': signal_type,
+                'symbol': self.config.symbol,
+                'price': entry_price,
+                'sl': sl,
+                'tp': tp2,
+                'tp1': tp1,
+                'volume': volume_per_order
+            }
+            self.plugin_manager.run_hook('on_trade_open', trade_info)
         
         return True
     
@@ -452,7 +509,7 @@ class BaseTradingBot(ABC):
         if position1 is None or len(position1) == 0:
             # Order 1 closed (TP hit)
             self.current_trade.tp1_hit = True
-            self.logger.info(f"✅ Order 1 hit TP! Moving Order 2's SL to breakeven...")
+            self.logger.info(f" Order 1 hit TP! Moving Order 2's SL to breakeven...")
             
             # Move Order 2's SL to breakeven
             new_sl = self.current_trade.entry_price
@@ -461,9 +518,9 @@ class BaseTradingBot(ABC):
             if success:
                 self.current_trade.sl_moved_to_breakeven = True
                 self.current_trade.stop_loss = new_sl
-                self.logger.info(f"   ✅ SL moved to breakeven: {new_sl:.5f}")
+                self.logger.info(f"    SL moved to breakeven: {new_sl:.5f}")
             else:
-                self.logger.error(f"   ❌ Failed to move SL to breakeven")
+                self.logger.error(f"    Failed to move SL to breakeven")
         
         # Check if Order 2 also closed
         position2 = mt5.positions_get(ticket=self.current_trade.ticket2)
@@ -588,6 +645,16 @@ class BaseTradingBot(ABC):
                     return True
             except Exception as e:
                 self.logger.error(f"Error in hook {hook.__name__}: {e}")
+                
+                # Notify plugins of hook error (Phase 2)
+                if self.plugin_manager:
+                    error_info = {
+                        'type': 'hook_execution',
+                        'hook_name': hook.__name__,
+                        'error': str(e),
+                        'traceback': traceback.format_exc()
+                    }
+                    self.plugin_manager.run_hook('on_error', error_info)
         
         return False
     
@@ -665,6 +732,16 @@ class BaseTradingBot(ABC):
         
         position = position[0]
         
+        # Store position info for plugin notification
+        position_info = {
+            'ticket': ticket,
+            'symbol': position.symbol,
+            'entry_price': position.price_open,
+            'profit': position.profit,
+            'volume': position.volume,
+            'type': 'BUY' if position.type == mt5.ORDER_TYPE_BUY else 'SELL'
+        }
+        
         # Prepare request
         request = {
             "action": mt5.TRADE_ACTION_DEAL,
@@ -686,6 +763,11 @@ class BaseTradingBot(ABC):
             self.logger.error(f"Failed to close position: {result.comment}")
             return False
         
+        # Notify plugins (Phase 2)
+        if self.plugin_manager:
+            position_info['exit_price'] = request['price']
+            self.plugin_manager.run_hook('on_trade_close', position_info)
+        
         return True
     
     def _round_volume(self, volume: float) -> float:
@@ -705,6 +787,12 @@ class BaseTradingBot(ABC):
     def shutdown(self):
         """Cleanup and shutdown"""
         self.logger.info(f"Shutting down {self.__class__.__name__}")
+        
+        # Notify plugins (Phase 2)
+        if self.plugin_manager:
+            self.plugin_manager.run_hook('on_shutdown')
+            self.plugin_manager.shutdown()
+        
         mt5.shutdown()
         self.is_connected = False
     
