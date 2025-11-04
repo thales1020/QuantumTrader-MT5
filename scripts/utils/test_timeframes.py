@@ -51,7 +51,7 @@ for name, tf in timeframes.items():
     rates = mt5.copy_rates_range(symbol, tf, start_date, end_date)
     
     if rates is not None and len(rates) > 0:
-        print(f"  ✓ Data available: {len(rates):,} bars")
+        print(f"   Data available: {len(rates):,} bars")
         print(f"    First: {datetime.fromtimestamp(rates[0]['time'])}")
         print(f"    Last:  {datetime.fromtimestamp(rates[-1]['time'])}")
         
@@ -60,7 +60,7 @@ for name, tf in timeframes.items():
         print(f"    Est. memory: {memory_mb:.2f} MB")
     else:
         error = mt5.last_error()
-        print(f"  ✗ No data available")
+        print(f"   No data available")
         print(f"    Error: {error}")
 
 print()
@@ -68,7 +68,7 @@ print("="*60)
 print("RECOMMENDATION")
 print("="*60)
 print("For 9-month backtest period:")
-print("  ✓ M5-H4: Recommended (reasonable data size)")
+print("   M5-H4: Recommended (reasonable data size)")
 print("  ⚠ M1: May be too much data or not available")
 print("  ⚠ D1: Too few bars for detailed analysis")
 

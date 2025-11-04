@@ -94,16 +94,16 @@ class BotWatchdog:
             time.sleep(5)
             
             if self.is_bot_running():
-                self.log(f"✅ Bot started successfully (PID: {self.bot_process.pid})", "SUCCESS")
+                self.log(f" Bot started successfully (PID: {self.bot_process.pid})", "SUCCESS")
                 self.restart_count += 1
                 self.last_restart_time = datetime.now()
                 return True
             else:
-                self.log("❌ Bot failed to start", "ERROR")
+                self.log(" Bot failed to start", "ERROR")
                 return False
                 
         except Exception as e:
-            self.log(f"❌ Failed to start bot: {e}", "ERROR")
+            self.log(f" Failed to start bot: {e}", "ERROR")
             return False
     
     def stop_bot(self):
@@ -135,7 +135,7 @@ class BotWatchdog:
                 time_since_restart = (datetime.now() - self.last_restart_time).total_seconds()
                 if time_since_restart < RESTART_COOLDOWN:
                     remaining = RESTART_COOLDOWN - time_since_restart
-                    self.log(f"⚠️ Max restart attempts reached. Cooldown: {remaining:.0f}s", "WARNING")
+                    self.log(f" Max restart attempts reached. Cooldown: {remaining:.0f}s", "WARNING")
                     return False
                 else:
                     # Reset counter after cooldown
@@ -149,7 +149,7 @@ class BotWatchdog:
         if info:
             uptime_str = f"{info['uptime']/3600:.1f}h"
             self.log(
-                f"📊 Bot Status: "
+                f" Bot Status: "
                 f"PID={info['pid']}, "
                 f"CPU={info['cpu_percent']:.1f}%, "
                 f"RAM={info['memory_mb']:.1f}MB, "
@@ -157,11 +157,11 @@ class BotWatchdog:
                 "INFO"
             )
         else:
-            self.log("⚠️ Cannot get bot info", "WARNING")
+            self.log(" Cannot get bot info", "WARNING")
     
     def run(self):
         """Main watchdog loop"""
-        self.log("🚀 Watchdog started", "INFO")
+        self.log(" Watchdog started", "INFO")
         self.log(f"Monitoring: {BOT_SCRIPT} {' '.join(BOT_ARGS)}", "INFO")
         
         # Start bot initially
@@ -171,7 +171,7 @@ class BotWatchdog:
             while True:
                 # Check if bot is running
                 if not self.is_bot_running():
-                    self.log("⚠️ Bot not running!", "WARNING")
+                    self.log(" Bot not running!", "WARNING")
                     
                     # Check restart limits
                     if self.check_restart_limit():
@@ -194,7 +194,7 @@ class BotWatchdog:
             self.log("\n🛑 Watchdog stopped by user", "INFO")
             self.stop_bot()
         except Exception as e:
-            self.log(f"❌ Watchdog error: {e}", "ERROR")
+            self.log(f" Watchdog error: {e}", "ERROR")
             self.stop_bot()
         finally:
             self.log("Watchdog shut down", "INFO")

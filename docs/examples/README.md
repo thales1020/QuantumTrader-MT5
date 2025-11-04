@@ -12,7 +12,7 @@ This folder contains **educational examples** demonstrating various trading conc
 - Symbol-specific news impact detection
 - Configurable time windows (before/after events)
 
-**Status:** ⚠️ Example only - requires API integration
+**Status:**  Example only - requires API integration
 
 **Usage:**
 ```python
@@ -34,7 +34,7 @@ if not news_filter.is_news_time("EURUSD"):
 - Correlation checks between currency pairs
 - Kelly Criterion position sizing
 
-**Status:** ⚠️ Example only - not used in production bots
+**Status:**  Example only - not used in production bots
 
 **Usage:**
 ```python
@@ -63,7 +63,7 @@ if risk_mgr.check_daily_loss_limit(account_balance):
 9. Parameter optimization
 10. Live monitoring dashboard
 
-**Status:** ⚠️ Educational - uses old SuperTrend bot for demonstration
+**Status:**  Educational - uses old SuperTrend bot for demonstration
 
 **Run:**
 ```powershell
@@ -72,19 +72,19 @@ python docs\examples\usage_examples.py
 
 ---
 
-## 🎯 Why These Are Examples
+##  Why These Are Examples
 
 These modules demonstrate **trading concepts** that could be integrated into production bots, but they are currently:
 
-- ❌ **Not imported** by active trading bots
-- ❌ **Not tested** in production environment
-- ❌ **Missing dependencies** (API keys, full implementations)
-- ✅ **Useful for learning** trading system architecture
-- ✅ **Show best practices** for risk management and filtering
+-  **Not imported** by active trading bots
+-  **Not tested** in production environment
+-  **Missing dependencies** (API keys, full implementations)
+-  **Useful for learning** trading system architecture
+-  **Show best practices** for risk management and filtering
 
 ---
 
-## 🚀 Production Bots
+##  Production Bots
 
 For **actual trading** with the ICT strategy, use:
 
@@ -97,7 +97,7 @@ See `ICT_README.md` and `ICT_SMC_README.md` for production documentation.
 
 ---
 
-## 📝 Notes
+##  Notes
 
 - These examples use the **old SuperTrend bot** architecture for demonstration
 - Production ICT bots have **built-in risk management** (not these modules)

@@ -12,17 +12,17 @@ This document explains the refactoring of `ICTBot` to inherit from `BaseTradingB
 
 ---
 
-## 🎯 Goals
+##  Goals
 
-1. ✅ **Reduce code duplication** - Reuse common functionality from `BaseTradingBot`
-2. ✅ **Improve maintainability** - Single source of truth for core logic
-3. ✅ **Enable extensibility** - Use hooks and template methods
-4. ✅ **Better separation of concerns** - Clear responsibilities for each method
-5. ✅ **Consistent interface** - All bots follow same pattern
+1.  **Reduce code duplication** - Reuse common functionality from `BaseTradingBot`
+2.  **Improve maintainability** - Single source of truth for core logic
+3.  **Enable extensibility** - Use hooks and template methods
+4.  **Better separation of concerns** - Clear responsibilities for each method
+5.  **Consistent interface** - All bots follow same pattern
 
 ---
 
-## 🏗️ Architecture Changes
+##  Architecture Changes
 
 ### Before (Original ICTBot)
 
@@ -72,10 +72,10 @@ class ICTBot:
 ```
 
 **Problems:**
-- ❌ Duplicates code from `SuperTrendBot`
-- ❌ Hard to maintain (changes needed in multiple places)
-- ❌ Difficult to add new strategies
-- ❌ No clear extension points
+-  Duplicates code from `SuperTrendBot`
+-  Hard to maintain (changes needed in multiple places)
+-  Difficult to add new strategies
+-  No clear extension points
 
 ---
 
@@ -134,15 +134,15 @@ class ICTBot(BaseTradingBot):
 ```
 
 **Benefits:**
-- ✅ Inherits all common functionality
-- ✅ Only implements strategy-specific logic
-- ✅ Clear extension points (hooks)
-- ✅ Consistent with other bots
-- ✅ ~400 lines of code removed (reused from base)
+-  Inherits all common functionality
+-  Only implements strategy-specific logic
+-  Clear extension points (hooks)
+-  Consistent with other bots
+-  ~400 lines of code removed (reused from base)
 
 ---
 
-## 📊 Code Comparison
+##  Code Comparison
 
 ### Lines of Code
 
@@ -335,7 +335,7 @@ def hook_pre_signal_generation(self, df: pd.DataFrame) -> pd.DataFrame:
 def hook_post_trade_execution(self, success: bool, signal: Signal):
     """Called after trade execution"""
     if success:
-        self.logger.info(f"✅ ICT trade: {signal.metadata.get('setup_type')}")
+        self.logger.info(f" ICT trade: {signal.metadata.get('setup_type')}")
 ```
 
 **Available hooks:**
@@ -348,7 +348,7 @@ def hook_post_trade_execution(self, success: bool, signal: Signal):
 
 ---
 
-## 🔍 Method-by-Method Comparison
+##  Method-by-Method Comparison
 
 ### Methods Removed (Now Inherited)
 
@@ -381,7 +381,7 @@ def hook_post_trade_execution(self, success: bool, signal: Signal):
 
 ---
 
-## 🎯 Migration Steps
+##  Migration Steps
 
 ### Step 1: Update Imports
 
@@ -528,7 +528,7 @@ def hook_post_trade_execution(self, success, signal):
 
 ---
 
-## ✅ Testing Checklist
+##  Testing Checklist
 
 After refactoring, verify:
 
@@ -557,7 +557,7 @@ After refactoring, verify:
 
 ---
 
-## 🚀 Usage Example
+##  Usage Example
 
 ### Before
 
@@ -598,36 +598,36 @@ bot.connect(login, password, server)
 bot.run(interval_seconds=60)  # Same interface!
 ```
 
-**Usage is identical!** 🎉
+**Usage is identical!** 
 
 ---
 
-## 📈 Benefits Summary
+##  Benefits Summary
 
 ### For Users
-- ✅ **Same interface** - No learning curve
-- ✅ **Better performance** - Optimized base code
-- ✅ **More features** - Hooks, events, plugins (coming)
-- ✅ **Better logging** - Structured, consistent
+-  **Same interface** - No learning curve
+-  **Better performance** - Optimized base code
+-  **More features** - Hooks, events, plugins (coming)
+-  **Better logging** - Structured, consistent
 
 ### For Developers
-- ✅ **Less code** - 54% reduction
-- ✅ **Easier to maintain** - Single source of truth
-- ✅ **Easier to test** - Clear responsibilities
-- ✅ **Easier to extend** - Hook system
-- ✅ **Consistent** - All bots follow same pattern
+-  **Less code** - 54% reduction
+-  **Easier to maintain** - Single source of truth
+-  **Easier to test** - Clear responsibilities
+-  **Easier to extend** - Hook system
+-  **Consistent** - All bots follow same pattern
 
 ### For Project
-- ✅ **Scalable** - Easy to add new strategies
-- ✅ **Professional** - Industry-standard architecture
-- ✅ **Modular** - Clear separation of concerns
-- ✅ **Documented** - Clear expectations
+-  **Scalable** - Easy to add new strategies
+-  **Professional** - Industry-standard architecture
+-  **Modular** - Clear separation of concerns
+-  **Documented** - Clear expectations
 
 ---
 
 ## 🔄 Next Steps
 
-1. ✅ Create `ict_bot_refactored.py` (Done!)
+1.  Create `ict_bot_refactored.py` (Done!)
 2. ⏳ Test refactored version
 3. ⏳ Compare outputs with original
 4. ⏳ Fix any discrepancies

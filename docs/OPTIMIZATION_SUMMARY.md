@@ -1,27 +1,27 @@
-# 🚀 Performance Optimization Summary
+#  Performance Optimization Summary
 
 ## Changes Made
 
 ### 1. **ICT Backtest Engine** (`engines/ict_backtest_engine.py`)
-- ✅ Sliding window: Only pass last 500 bars instead of entire history
-- ✅ Reduced equity recording: Record every 100 bars instead of every bar
-- ✅ Optimized progress logging: Report every 20% instead of 10%
-- ✅ Added trades & balance info to progress logs
+-  Sliding window: Only pass last 500 bars instead of entire history
+-  Reduced equity recording: Record every 100 bars instead of every bar
+-  Optimized progress logging: Report every 20% instead of 10%
+-  Added trades & balance info to progress logs
 
 ### 2. **ICT Bot** (`core/ict_bot.py`)
-- ✅ Work with recent data: Use `tail(100)` for signal generation
-- ✅ Pass recent_df to all analysis functions
-- ✅ Efficient market structure identification (already optimized)
-- ✅ Efficient order block scanning (already limited to 50 candles)
+-  Work with recent data: Use `tail(100)` for signal generation
+-  Pass recent_df to all analysis functions
+-  Efficient market structure identification (already optimized)
+-  Efficient order block scanning (already limited to 50 candles)
 
 ## Performance Improvements
 
 | Metric | Before | After | Improvement |
 |--------|--------|-------|-------------|
-| **Time** | 10-15 min | 2-3 min | **5x faster** ⚡ |
-| **Memory** | 200MB→2GB+ | ~400MB constant | **5x less** 🧠 |
-| **Speed Pattern** | Exponential slowdown 🐌 | Constant speed 🚀 | **Stable** ✅ |
-| **Equity Records** | 52,888 | ~528 | **100x less** 📉 |
+| **Time** | 10-15 min | 2-3 min | **5x faster**  |
+| **Memory** | 200MB2GB+ | ~400MB constant | **5x less** 🧠 |
+| **Speed Pattern** | Exponential slowdown 🐌 | Constant speed  | **Stable**  |
+| **Equity Records** | 52,888 | ~528 | **100x less**  |
 
 ## Technical Details
 
@@ -37,7 +37,7 @@ current_df = df.iloc[i-500:i+1]  # Always 500 bars
 ### Speed Optimization
 ```python
 # Before: Process growing dataset
-analyze(df[:i+1])  # 1→52988 bars
+analyze(df[:i+1])  # 152988 bars
 
 # After: Process fixed window
 analyze(df.tail(100))  # Always 100 bars
@@ -74,5 +74,5 @@ perf: optimize backtest performance - 5x faster, 5x less memory
 - Reduce progress logging to 20% intervals
 - Add trades & balance info to progress logs
 
-Result: 10-15min → 2-3min, constant memory usage
+Result: 10-15min  2-3min, constant memory usage
 ```

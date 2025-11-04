@@ -185,7 +185,7 @@ def main():
         sys.exit(1)
 
     account_info = mt5.account_info()
-    print(f"✓ Connected successfully")
+    print(f" Connected successfully")
     print(f"  Account: {account_info.login}")
     print(f"  Balance: {account_info.balance} {account_info.currency}")
     print()

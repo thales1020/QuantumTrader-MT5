@@ -167,7 +167,7 @@ class ConfigManager:
         # 6. Cache config
         self._configs[name] = config
         
-        logger.info(f"✅ Config '{name}' loaded successfully")
+        logger.info(f" Config '{name}' loaded successfully")
         return config
     
     def save(self, name: str, config: Any, format: str = "yaml", 
@@ -212,7 +212,7 @@ class ConfigManager:
         else:
             raise ValueError(f"Unsupported format: {format}")
         
-        logger.info(f"✅ Saved config to {filepath}")
+        logger.info(f" Saved config to {filepath}")
     
     def _load_file(self, filepath: Path) -> Dict:
         """
@@ -416,7 +416,7 @@ class ConfigManager:
         # Save to file
         self.save(name, config, format=format)
         
-        logger.info(f"✅ Created config template: {name}.{format}")
+        logger.info(f" Created config template: {name}.{format}")
 
 
 # Convenience function

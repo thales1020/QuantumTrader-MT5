@@ -145,7 +145,7 @@ class ICTLogAnalyzer:
                     'message': line.strip()
                 })
         
-        print(f"✅ Tìm thấy: {len(self.trades)} trades, {len(self.signals)} signals, {len(self.errors)} errors")
+        print(f" Tìm thấy: {len(self.trades)} trades, {len(self.signals)} signals, {len(self.errors)} errors")
     
     def calculate_statistics(self) -> Dict:
         """Tính toán thống kê từ trades"""
@@ -244,7 +244,7 @@ class ICTLogAnalyzer:
         stats = self.calculate_statistics()
         
         if not stats:
-            print("❌ Không có dữ liệu để phân tích!")
+            print(" Không có dữ liệu để phân tích!")
             return
         
         # Console report
@@ -266,27 +266,27 @@ class ICTLogAnalyzer:
     def _print_console_report(self, stats: Dict):
         """In báo cáo ra console"""
         print("\n" + "="*80)
-        print("📊 ICT BOT - BÁO CÁO THỐNG KÊ TRADING")
+        print(" ICT BOT - BÁO CÁO THỐNG KÊ TRADING")
         print("="*80)
         
-        print(f"\n📈 TỔNG QUAN:")
+        print(f"\n TỔNG QUAN:")
         print(f"   Tổng số trades      : {stats['total_trades']}")
         print(f"   Trades thắng        : {stats['winning_trades']} ({stats['win_rate']:.2f}%)")
         print(f"   Trades thua         : {stats['losing_trades']} ({100-stats['win_rate']:.2f}%)")
         print(f"   Trades hòa          : {stats['breakeven_trades']}")
         
-        print(f"\n💰 LỢI NHUẬN:")
+        print(f"\n LỢI NHUẬN:")
         print(f"   Tổng P/L            : ${stats['total_profit']:,.2f}")
         print(f"   Gross Profit        : ${stats['gross_profit']:,.2f}")
         print(f"   Gross Loss          : ${stats['gross_loss']:,.2f}")
         print(f"   Profit Factor       : {stats['profit_factor']:.2f}")
         
-        print(f"\n📊 TRUNG BÌNH:")
+        print(f"\n TRUNG BÌNH:")
         print(f"   Avg Win             : ${stats['avg_win']:,.2f}")
         print(f"   Avg Loss            : ${stats['avg_loss']:,.2f}")
         print(f"   Win/Loss Ratio      : {abs(stats['avg_win']/stats['avg_loss']):.2f}" if stats['avg_loss'] != 0 else "N/A")
         
-        print(f"\n🎯 RECORDS:")
+        print(f"\n RECORDS:")
         print(f"   Max Win             : ${stats['max_win']:,.2f}")
         print(f"   Max Loss            : ${stats['max_loss']:,.2f}")
         print(f"   Max Consecutive Wins : {stats['max_consecutive_wins']}")
@@ -305,12 +305,12 @@ class ICTLogAnalyzer:
         print(f"   Final Balance       : ${stats['final_balance']:,.2f}")
         print(f"   Total Return        : {stats['total_return']:.2f}%")
         
-        print(f"\n⚠️  ERRORS/WARNINGS:")
+        print(f"\n  ERRORS/WARNINGS:")
         print(f"   Tổng số errors      : {len(self.errors)}")
         
-        print(f"\n🎯 SIGNALS:")
+        print(f"\n SIGNALS:")
         print(f"   Tổng số signals     : {len(self.signals)}")
-        print(f"   Signals → Trades    : {(len(self.trades)/len(self.signals)*100):.2f}%" if self.signals else "N/A")
+        print(f"   Signals  Trades    : {(len(self.trades)/len(self.signals)*100):.2f}%" if self.signals else "N/A")
         
         print("\n" + "="*80)
     
@@ -323,7 +323,7 @@ class ICTLogAnalyzer:
         output_file = f"reports/ict_analysis_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv"
         Path("reports").mkdir(exist_ok=True)
         df.to_csv(output_file, index=False)
-        print(f"✅ CSV report saved: {output_file}")
+        print(f" CSV report saved: {output_file}")
     
     def _save_json_report(self, stats: Dict):
         """Lưu stats vào JSON"""
@@ -342,7 +342,7 @@ class ICTLogAnalyzer:
         with open(output_file, 'w', encoding='utf-8') as f:
             json.dump(report, f, indent=2, ensure_ascii=False)
         
-        print(f"✅ JSON report saved: {output_file}")
+        print(f" JSON report saved: {output_file}")
     
     def _save_html_report(self, stats: Dict):
         """Tạo báo cáo HTML"""
@@ -374,10 +374,10 @@ class ICTLogAnalyzer:
 </head>
 <body>
     <div class="container">
-        <h1>📊 ICT Bot Trading Report</h1>
+        <h1> ICT Bot Trading Report</h1>
         <p>Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}</p>
         
-        <h2>📈 Tổng Quan</h2>
+        <h2> Tổng Quan</h2>
         <div class="stats-grid">
             <div class="stat-card">
                 <div class="stat-label">Total Trades</div>
@@ -397,7 +397,7 @@ class ICTLogAnalyzer:
             </div>
         </div>
         
-        <h2>💰 Chi Tiết Lợi Nhuận</h2>
+        <h2> Chi Tiết Lợi Nhuận</h2>
         <table>
             <tr><th>Metric</th><th>Value</th></tr>
             <tr><td>Gross Profit</td><td class="positive">${stats['gross_profit']:,.2f}</td></tr>
@@ -430,7 +430,7 @@ class ICTLogAnalyzer:
         with open(output_file, 'w', encoding='utf-8') as f:
             f.write(html)
         
-        print(f"✅ HTML report saved: {output_file}")
+        print(f" HTML report saved: {output_file}")
 
 
 def main():
@@ -443,8 +443,8 @@ def main():
     
     # Check if log file exists
     if not Path(args.log).exists():
-        print(f"❌ Log file not found: {args.log}")
-        print("📁 Available log files:")
+        print(f" Log file not found: {args.log}")
+        print(" Available log files:")
         for log_file in Path('logs').glob('ict_bot_*.log'):
             print(f"   - {log_file}")
         return

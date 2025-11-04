@@ -1,4 +1,4 @@
-# 📊 Backtest Scripts
+#  Backtest Scripts
 
 Scripts để chạy backtest cho các chiến lược khác nhau.
 

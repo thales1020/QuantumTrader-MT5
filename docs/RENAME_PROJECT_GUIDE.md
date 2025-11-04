@@ -5,11 +5,11 @@
 
 ---
 
-## 🎯 Tên Mới Đề Xuất
+##  Tên Mới Đề Xuất
 
 ### Top 3 Recommendations:
 
-1. **`ML-SuperTrend-Pro-MT5`** ⭐ (Best Choice)
+1. **`ML-SuperTrend-Pro-MT5`**  (Best Choice)
    - Professional, clear evolution
    - Keeps core identity
    - SEO-friendly
@@ -72,18 +72,18 @@ from ml_supertrend_pro_mt5 import ...
 
 ---
 
-## 🔧 Step-by-Step Process
+##  Step-by-Step Process
 
-### Phase 1: Decide on Name ✅
+### Phase 1: Decide on Name 
 
 **My Top Pick:** `ML-SuperTrend-Pro-MT5`
 
 **Reasoning:**
-- ✅ Professional
-- ✅ Shows enhancement ("Pro")
-- ✅ Maintains recognition
-- ✅ Clear purpose
-- ✅ Good for marketing
+-  Professional
+-  Shows enhancement ("Pro")
+-  Maintains recognition
+-  Clear purpose
+-  Good for marketing
 
 **Alternative Names (Vote!):**
 
@@ -125,7 +125,7 @@ mv ml_supertrend_mt5/ ml_supertrend_pro_mt5/
 # Update all imports in codebase
 ```
 
-**⚠️ WARNING:** This breaks backward compatibility!
+** WARNING:** This breaks backward compatibility!
 
 **Recommendation:** Keep package name same, only change display name.
 
@@ -252,7 +252,7 @@ git push origin main
 
 ---
 
-## 🎨 Marketing & Branding Updates
+##  Marketing & Branding Updates
 
 ### After Renaming:
 
@@ -277,7 +277,7 @@ git push origin main
    ```markdown
    <div align="center">
    
-   # 🚀 ML-SuperTrend-Pro-MT5
+   #  ML-SuperTrend-Pro-MT5
    
    **Professional Machine Learning Trading Bot for MetaTrader 5**
    
@@ -292,7 +292,7 @@ git push origin main
 
 ---
 
-## ⚠️ Important Considerations
+##  Important Considerations
 
 ### Backward Compatibility
 
@@ -326,41 +326,41 @@ pip search ml-supertrend-pro-mt5
 
 ---
 
-## 📊 Impact Analysis
+##  Impact Analysis
 
 ### Low Impact (Safe to change):
-- ✅ Repository name on GitHub
-- ✅ README titles
-- ✅ Documentation
-- ✅ setup.py display name (if keeping package name same)
+-  Repository name on GitHub
+-  README titles
+-  Documentation
+-  setup.py display name (if keeping package name same)
 
 ### Medium Impact:
-- ⚠️ setup.py package name (affects pip install)
-- ⚠️ Package directory name
-- ⚠️ Some config files
+-  setup.py package name (affects pip install)
+-  Package directory name
+-  Some config files
 
 ### High Impact (Avoid):
-- ❌ Package import paths (breaks user code)
-- ❌ API endpoints (if any)
-- ❌ Database schemas (N/A for this project)
+-  Package import paths (breaks user code)
+-  API endpoints (if any)
+-  Database schemas (N/A for this project)
 
 ---
 
-## 🎯 Recommended Approach
+##  Recommended Approach
 
-### **Soft Rebrand** (Khuyến Nghị) ⭐
+### **Soft Rebrand** (Khuyến Nghị) 
 
 **Change:**
-- ✅ GitHub repo name: `ML-SuperTrend-Pro-MT5`
-- ✅ README title
-- ✅ Documentation
-- ✅ Marketing materials
-- ✅ setup.py display name
+-  GitHub repo name: `ML-SuperTrend-Pro-MT5`
+-  README title
+-  Documentation
+-  Marketing materials
+-  setup.py display name
 
 **Keep:**
-- ✅ Package name: `ml_supertrend_mt5` (in code)
-- ✅ Import paths
-- ✅ Backward compatibility
+-  Package name: `ml_supertrend_mt5` (in code)
+-  Import paths
+-  Backward compatibility
 
 **Result:**
 - New identity & branding
@@ -370,7 +370,7 @@ pip search ml-supertrend-pro-mt5
 
 ---
 
-## ✅ Checklist
+##  Checklist
 
 ### Pre-Rename:
 - [ ] Backup everything: `git tag v1.0.0-pre-rename`
@@ -392,7 +392,7 @@ pip search ml-supertrend-pro-mt5
 - [ ] Create release: v2.0.0
 - [ ] Announce on social media
 - [ ] Update portfolio/resume
-- [ ] Celebrate! 🎉
+- [ ] Celebrate! 
 
 ---
 
@@ -401,43 +401,43 @@ pip search ml-supertrend-pro-mt5
 Before you decide, answer these:
 
 1. **Will you publish on PyPI?**
-   - Yes → Choose unique name
-   - No → Less critical
+   - Yes  Choose unique name
+   - No  Less critical
 
 2. **Do you have users already?**
-   - Yes → Soft rebrand (keep imports)
-   - No → Free to fully rename
+   - Yes  Soft rebrand (keep imports)
+   - No  Free to fully rename
 
 3. **How much different from original?**
-   - 50-70% → Keep similar name
-   - 95%+ → (Your case) New name OK!
+   - 50-70%  Keep similar name
+   - 95%+  (Your case) New name OK!
 
 4. **Future plans?**
-   - Personal project → Personal branding OK
-   - Commercial → Professional name better
-   - Open-source community → Clear & descriptive
+   - Personal project  Personal branding OK
+   - Commercial  Professional name better
+   - Open-source community  Clear & descriptive
 
 ---
 
-## 🎬 My Final Recommendation
+##  My Final Recommendation
 
 **For Trần Trọng Hiếu (@thales1020):**
 
 ### **Option: Soft Rebrand to `ML-SuperTrend-Pro-MT5`**
 
 **Reasoning:**
-1. You have 95-98% original code → Deserves new identity
-2. Added major features (ICT/SMC) → "Pro" justified
-3. Personal project → Can rebrand freely
-4. No existing users → No breaking changes concern
-5. Better for portfolio/resume → Shows progression
+1. You have 95-98% original code  Deserves new identity
+2. Added major features (ICT/SMC)  "Pro" justified
+3. Personal project  Can rebrand freely
+4. No existing users  No breaking changes concern
+5. Better for portfolio/resume  Shows progression
 
 **Implementation:**
-- Change GitHub repo name ✅
-- Update all documentation ✅
-- Keep package name same (optional) ✅
-- Bump to v2.0.0 ✅
-- Create announcement ✅
+- Change GitHub repo name 
+- Update all documentation 
+- Keep package name same (optional) 
+- Bump to v2.0.0 
+- Create announcement 
 
 **Timeline:** 1-2 hours of work
 
@@ -451,4 +451,4 @@ Before you decide, answer these:
 - C. Rename to `Thales-SuperTrend-MT5` (personal brand)
 - D. Keep `ML-SuperTrend-MT5` (no change)
 
-Tell me your preference and I'll implement it! 🚀
+Tell me your preference and I'll implement it! 

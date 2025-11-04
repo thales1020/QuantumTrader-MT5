@@ -125,7 +125,7 @@ def run_symbol_backtest(symbol_name, symbol_config, backtest_config):
         execution_time = time.time() - start_time
         
         if result is None:
-            print(f"❌ Backtest failed for {symbol_name}")
+            print(f" Backtest failed for {symbol_name}")
             return None
         
         # Calculate additional metrics
@@ -160,7 +160,7 @@ def run_symbol_backtest(symbol_name, symbol_config, backtest_config):
         return result
         
     except Exception as e:
-        print(f"❌ Error during backtest: {e}")
+        print(f" Error during backtest: {e}")
         import traceback
         traceback.print_exc()
         return None
@@ -204,7 +204,7 @@ def main():
     if not connect_mt5(account_config):
         sys.exit(1)
     
-    print(f"✓ Connected to MT5: {account_config['server']}")
+    print(f" Connected to MT5: {account_config['server']}")
     print()
     
     # Filter enabled symbols
@@ -245,7 +245,7 @@ def main():
                 failed_symbols.append(symbol_name)
         
         except Exception as e:
-            print(f"❌ Error backtesting {symbol_name}: {e}")
+            print(f" Error backtesting {symbol_name}: {e}")
             failed_symbols.append(symbol_name)
             import traceback
             traceback.print_exc()

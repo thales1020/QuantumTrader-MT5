@@ -13,10 +13,10 @@ This project was **initially inspired by** various open-source MT5-SuperTrend im
 
 ### What Was Used as Reference
 The original implementations provided:
-- ✅ Basic SuperTrend indicator concept
-- ✅ MetaTrader 5 Python API usage patterns
-- ✅ Simple position management ideas
-- ✅ Basic project structure concept
+-  Basic SuperTrend indicator concept
+-  MetaTrader 5 Python API usage patterns
+-  Simple position management ideas
+-  Basic project structure concept
 
 ---
 
@@ -30,7 +30,7 @@ This project has been **substantially developed** from the ground up by **Trần
 - **NEW**: Performance-weighted signal filtering
 - **MODIFIED**: SuperTrend calculation enhanced with ML optimization
 
-### 🎯 Advanced Trading Features
+###  Advanced Trading Features
 - **NEW**: Dual Orders Strategy (RR 1:1 + Main RR)
 - **NEW**: Automatic Breakeven SL Movement
 - **NEW**: ICT Bot with Order Blocks, Fair Value Gaps, Liquidity Sweeps
@@ -39,7 +39,7 @@ This project has been **substantially developed** from the ground up by **Trần
 - **NEW**: Event-driven architecture with hooks
 - **MODIFIED**: Risk management completely rewritten
 
-### 🏗️ Architecture & Code Quality
+###  Architecture & Code Quality
 - **NEW**: Abstract base class pattern for all bots
 - **NEW**: Strategy Registry with decorator-based registration
 - **NEW**: Config Manager with YAML, profiles, env vars
@@ -48,7 +48,7 @@ This project has been **substantially developed** from the ground up by **Trần
 - **REWRITTEN**: Project structure following Clean Architecture principles
 - **REWRITTEN**: All core modules for maintainability
 
-### 📊 Analysis & Monitoring
+###  Analysis & Monitoring
 - **NEW**: Advanced backtesting engine with detailed metrics
 - **NEW**: Performance monitoring dashboard
 - **NEW**: Equity curve visualization
@@ -63,7 +63,7 @@ This project has been **substantially developed** from the ground up by **Trần
 - **NEW**: VPS deployment guide
 - **NEW**: Plugin development guide
 
-### 🔧 DevOps & Deployment
+###  DevOps & Deployment
 - **NEW**: PyPI package publication
 - **NEW**: VPS deployment scripts
 - **NEW**: Docker support (planned)
@@ -99,14 +99,14 @@ This project has been **substantially developed** from the ground up by **Trần
 This project is licensed under the **MIT License** (same as original).
 
 **MIT License** allows:
-- ✅ Commercial use
-- ✅ Modification
-- ✅ Distribution
-- ✅ Private use
+-  Commercial use
+-  Modification
+-  Distribution
+-  Private use
 
 **Requirements**:
-- ⚠️ Include original license and copyright notice
-- ⚠️ State changes made (covered in this file)
+-  Include original license and copyright notice
+-  State changes made (covered in this file)
 
 See [LICENSE](../LICENSE) for full text.
 
@@ -162,11 +162,11 @@ Project Repository: https://github.com/xPOURY4/ML-SuperTrend-MT5
 
 If you found this project helpful, please:
 
-1. ⭐ **Star this repository**
-2. 🐛 **Report bugs** via Issues
-3. 💡 **Suggest features** via Issues
+1.  **Star this repository**
+2.  **Report bugs** via Issues
+3.  **Suggest features** via Issues
 4. 🔀 **Submit pull requests**
-5. 📢 **Share with others**
+5.  **Share with others**
 6. 💬 **Follow on Twitter**: [@TheRealPourya](https://twitter.com/TheRealPourya)
 
 ---
@@ -175,7 +175,7 @@ If you found this project helpful, please:
 
 **Author & Maintainer**: Trần Trọng Hiếu
 
-- **Personal GitHub**: [@thales1020](https://github.com/thales1020) ⭐ Main Profile
+- **Personal GitHub**: [@thales1020](https://github.com/thales1020)  Main Profile
 - **Project Repository**: [@xPOURY4/ML-SuperTrend-MT5](https://github.com/xPOURY4/ML-SuperTrend-MT5)
 - **Twitter**: [@TheRealPourya](https://twitter.com/TheRealPourya)
 
@@ -198,21 +198,21 @@ If you found this project helpful, please:
 This project continues to evolve with planned features:
 
 - 🔮 Deep Learning integration (LSTM, Transformers)
-- 🌐 Multi-broker support
+-  Multi-broker support
 - 📱 Mobile app for monitoring
 - 🤖 Telegram bot for control
-- 🎨 Web dashboard
+-  Web dashboard
 - 🐳 Docker containerization
 - ☁️ Cloud deployment options
 - 🔄 Portfolio management
-- 📊 Advanced risk analytics
+-  Advanced risk analytics
 
 ---
 
 **Last Updated**: October 23, 2025  
-**Project Status**: ✅ Active Development  
+**Project Status**:  Active Development  
 **Author**: Trần Trọng Hiếu (xPOURY4 | thales1020)
 
 ---
 
-> 💡 **Note**: This is an original implementation inspired by open-source concepts. The vast majority (95%+) of the code is original work developed from scratch.
+>  **Note**: This is an original implementation inspired by open-source concepts. The vast majority (95%+) of the code is original work developed from scratch.

@@ -24,7 +24,7 @@ with open('engines/backtest_engine.py', 'r', encoding='utf-8') as f:
     }
     
     for check, result in checks.items():
-        status = "✅" if result else "❌"
+        status = "" if result else ""
         print(f"  {status} {check}")
 
 # Check SuperTrend Bot
@@ -39,7 +39,7 @@ with open('core/supertrend_bot.py', 'r', encoding='utf-8') as f:
     }
     
     for check, result in checks.items():
-        status = "✅" if result else "❌"
+        status = "" if result else ""
         print(f"  {status} {check}")
 
 # Check ICT Bot
@@ -54,7 +54,7 @@ with open('core/ict_bot.py', 'r', encoding='utf-8') as f:
     }
     
     for check, result in checks.items():
-        status = "✅" if result else "❌"
+        status = "" if result else ""
         print(f"  {status} {check}")
 
 # Check config
@@ -67,7 +67,7 @@ with open('config/config.json', 'r', encoding='utf-8') as f:
     for symbol in config.get('symbols', {}).keys():
         if any(c in symbol.upper() for c in ['BTC', 'ETH', 'LTC', 'XRP', 'ADA']):
             crypto_symbols.append(symbol)
-            print(f"  ✅ Found: {symbol}")
+            print(f"   Found: {symbol}")
             settings = config['symbols'][symbol]
             print(f"     - Risk: {settings['risk_percent']}% per order")
             print(f"     - Total risk per signal: {settings['risk_percent'] * 2}% (dual orders)")
@@ -81,7 +81,7 @@ print("\n" + "="*70)
 print("SUMMARY")
 print("="*70)
 
-print("\n✅ YES! Crypto HAS Dual Orders Implementation!")
+print("\n YES! Crypto HAS Dual Orders Implementation!")
 print("\nHow it works for BTC/ETH:")
 print("  1. Each signal opens 2 orders simultaneously")
 print("  2. Order 1: RR 1:1 (quick profit)")
@@ -99,15 +99,15 @@ print("  Risk per order: 0.5%")
 print("  Total risk: 1.0%")
 
 print("\nPossible Outcomes:")
-print("  ✅✅ Both TPs hit: +$500 + $1,400 = +$1,900 profit")
-print("  ✅❌ TP1 hit, Order 2 SL: +$500 - $500 = breakeven")
-print("  ❌❌ Both SL hit: -$500 - $500 = -$1,000 loss")
+print("   Both TPs hit: +$500 + $1,400 = +$1,900 profit")
+print("   TP1 hit, Order 2 SL: +$500 - $500 = breakeven")
+print("   Both SL hit: -$500 - $500 = -$1,000 loss")
 
 print("\nBacktest Results Confirm It:")
 print("  • Total Trades: 40 (BTC) + 76 (ETH) = 116")
 print("  • But these are DUAL orders, so:")
 print("  • Actual signals: 116 / 2 = 58 signals")
-print("  • Each signal = 2 orders = 116 total trades ✅")
+print("  • Each signal = 2 orders = 116 total trades ")
 
 print("\n" + "="*70)
 print("CONCLUSION: Crypto fully supports dual orders!")

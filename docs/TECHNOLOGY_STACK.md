@@ -1,4 +1,4 @@
-# 🛠️ DANH SÁCH CÔNG NGHỆ & KIẾN THỨC SỬ DỤNG TRONG PROJECT
+#  DANH SÁCH CÔNG NGHỆ & KIẾN THỨC SỬ DỤNG TRONG PROJECT
 
 ## 📋 MỤC LỤC
 1. [Ngôn Ngữ Lập Trình](#1-ngôn-ngữ-lập-trình)
@@ -41,7 +41,7 @@
 
 ---
 
-## 2. 📊 PLATFORM & API
+## 2.  PLATFORM & API
 
 ### **MetaTrader 5 (MT5)**
 ```python
@@ -148,7 +148,7 @@ import joblib
 
 ---
 
-## 4. 📈 PHÂN TÍCH KỸ THUẬT (TECHNICAL ANALYSIS)
+## 4.  PHÂN TÍCH KỸ THUẬT (TECHNICAL ANALYSIS)
 
 ### **TA-Lib (Technical Analysis Library)**
 ```python
@@ -346,7 +346,7 @@ import configparser
 
 ---
 
-## 6. 🧪 TESTING & QUALITY ASSURANCE
+## 6.  TESTING & QUALITY ASSURANCE
 
 ### **pytest**
 ```python
@@ -415,7 +415,7 @@ mypy *.py
 
 ---
 
-## 7. 📝 DOCUMENTATION & TOOLS
+## 7.  DOCUMENTATION & TOOLS
 
 ### **Sphinx**
 ```python
@@ -460,7 +460,7 @@ import json
 
 ---
 
-## 8. 🚀 DEVOPS & DEPLOYMENT
+## 8.  DEVOPS & DEPLOYMENT
 
 ### **Version Control**
 - **Git** - Version control system
@@ -654,7 +654,7 @@ api_url = f"https://api.telegram.org/bot{token}"
 
 ---
 
-## 10. 🏗️ DESIGN PATTERNS & ARCHITECTURE
+## 10.  DESIGN PATTERNS & ARCHITECTURE
 
 ### **Object-Oriented Programming (OOP)**
 
@@ -788,7 +788,7 @@ logger.error("Connection failed")
 
 ---
 
-## 11. 🖥️ WINDOWS TOOLS & AUTOMATION
+## 11.  WINDOWS TOOLS & AUTOMATION
 
 ### **Batch Scripting**
 ```batch
@@ -850,7 +850,7 @@ import gzip
 
 ---
 
-## 📊 KIẾN THỨC BỔ SUNG
+##  KIẾN THỨC BỔ SUNG
 
 ### **Algorithms & Data Structures**
 - Lists, Dictionaries, Sets
@@ -914,9 +914,9 @@ import gzip
 
 ---
 
-## 🎓 KIẾN THỨC CHUYÊN MÔN CẦN CÓ
+##  KIẾN THỨC CHUYÊN MÔN CẦN CÓ
 
-### **1. Python Programming** ⭐⭐⭐⭐⭐
+### **1. Python Programming** 
 - Intermediate to Advanced level
 - OOP mastery
 - Type hints
@@ -924,44 +924,44 @@ import gzip
 - Error handling
 - Testing
 
-### **2. Financial Markets** ⭐⭐⭐⭐⭐
+### **2. Financial Markets** 
 - Forex basics
 - Market structure
 - Trading sessions
 - Economic calendar
 - Risk management
 
-### **3. Technical Analysis** ⭐⭐⭐⭐
+### **3. Technical Analysis** 
 - Indicators
 - Chart patterns
 - Trend analysis
 - Support/Resistance
 
-### **4. Machine Learning** ⭐⭐⭐
+### **4. Machine Learning** 
 - Clustering (K-means)
 - Feature engineering
 - Model evaluation
 - Overfitting prevention
 
-### **5. Software Engineering** ⭐⭐⭐⭐
+### **5. Software Engineering** 
 - Clean code principles
 - Design patterns
 - Testing strategies
 - Version control (Git)
 
-### **6. Data Analysis** ⭐⭐⭐⭐
+### **6. Data Analysis** 
 - Pandas mastery
 - NumPy operations
 - Statistical analysis
 - Data visualization
 
-### **7. DevOps** ⭐⭐⭐
+### **7. DevOps** 
 - VPS management
 - Deployment strategies
 - Monitoring
 - Automation
 
-### **8. Smart Money Concepts (ICT)** ⭐⭐⭐⭐
+### **8. Smart Money Concepts (ICT)** 
 - Order blocks
 - FVG
 - Liquidity concepts
@@ -969,7 +969,7 @@ import gzip
 
 ---
 
-## 📈 THỐNG KÊ PROJECT
+##  THỐNG KÊ PROJECT
 
 ### **Codebase**
 - **Ngôn ngữ chính**: Python
@@ -992,19 +992,19 @@ import gzip
 
 ---
 
-## 🎯 KẾT LUẬN
+##  KẾT LUẬN
 
 Project **ML-SuperTrend-MT5** sử dụng một **tech stack rất toàn diện và hiện đại**:
 
 ### **Điểm Mạnh**
-✅ Machine Learning integration (K-means)
-✅ Professional architecture & design patterns
-✅ Comprehensive testing (85 tests)
-✅ Rich documentation (13 docs)
-✅ Modern Python features
-✅ Smart Money Concepts implementation
-✅ VPS deployment automation
-✅ Real-time monitoring với Telegram
+ Machine Learning integration (K-means)
+ Professional architecture & design patterns
+ Comprehensive testing (85 tests)
+ Rich documentation (13 docs)
+ Modern Python features
+ Smart Money Concepts implementation
+ VPS deployment automation
+ Real-time monitoring với Telegram
 
 ### **Công Nghệ Nổi Bật**
 1. **MetaTrader 5 API** - Platform integration
@@ -1017,11 +1017,11 @@ Project **ML-SuperTrend-MT5** sử dụng một **tech stack rất toàn diện 
 ### **Kiến Thức Cần Thiết**
 - 🐍 Python programming (Advanced)
 - 💹 Financial markets knowledge
-- 📊 Technical analysis expertise
+-  Technical analysis expertise
 - 🧠 Machine learning basics
-- 🏗️ Software architecture
-- 🚀 DevOps fundamentals
-- 💰 Smart Money Concepts (ICT)
+-  Software architecture
+-  DevOps fundamentals
+-  Smart Money Concepts (ICT)
 
 Project này là **một công trình kỹ thuật toàn diện**, kết hợp nhiều lĩnh vực từ finance, machine learning, software engineering đến DevOps!
 
@@ -1029,4 +1029,4 @@ Project này là **một công trình kỹ thuật toàn diện**, kết hợp n
 
 **📅 Tạo ngày**: 18 Tháng 10, 2025
 **👤 Phân tích bởi**: GitHub Copilot
-**📦 Project**: ML-SuperTrend-MT5 by xPOURY4
+** Project**: ML-SuperTrend-MT5 by xPOURY4

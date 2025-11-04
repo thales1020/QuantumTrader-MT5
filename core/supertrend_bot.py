@@ -136,7 +136,7 @@ class SuperTrendBot(BaseTradingBot):
         Signal generation logic:
         1. Check volume condition (must have sufficient volume)
         2. Get optimal SuperTrend from clustering
-        3. Detect trend change (0→1 for BUY, 1→0 for SELL)
+        3. Detect trend change (01 for BUY, 10 for SELL)
         4. Calculate SL/TP based on SuperTrend level and ATR
         
         Args:
@@ -220,7 +220,7 @@ class SuperTrendBot(BaseTradingBot):
                     'strategy': 'ML_SUPERTREND'
                 }
             }
-            self.logger.info(f"🔴 SELL signal generated at {current_price:.5f}")
+            self.logger.info(f" SELL signal generated at {current_price:.5f}")
         
         return signal
     
@@ -448,9 +448,9 @@ class SuperTrendBot(BaseTradingBot):
     def hook_post_signal_generation(self, signal: Optional[Dict]) -> Optional[Dict]:
         """Log ML optimization details after signal generation"""
         if signal:
-            self.logger.info(f"📊 ML Factor: {self.optimal_factor:.2f}")
-            self.logger.info(f"📈 Cluster Performance: {self.cluster_performance:.4f}")
-            self.logger.info(f"🎯 Cluster Choice: {self.config.cluster_choice}")
+            self.logger.info(f" ML Factor: {self.optimal_factor:.2f}")
+            self.logger.info(f" Cluster Performance: {self.cluster_performance:.4f}")
+            self.logger.info(f" Cluster Choice: {self.config.cluster_choice}")
         return signal
     
     def hook_post_cycle(self, cycle_data: Dict):

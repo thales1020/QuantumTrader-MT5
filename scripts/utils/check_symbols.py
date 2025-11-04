@@ -61,9 +61,9 @@ else:
         if not sym.visible:
             print(f"  Attempting to enable...")
             if mt5.symbol_select(sym.name, True):
-                print(f"  ✓ Enabled successfully")
+                print(f"   Enabled successfully")
             else:
-                print(f"  ✗ Failed to enable")
+                print(f"   Failed to enable")
         
         # Try to get data
         print(f"  Checking historical data...")
@@ -73,10 +73,10 @@ else:
         rates = mt5.copy_rates_range(sym.name, mt5.TIMEFRAME_M5, start_date, end_date)
         
         if rates is not None and len(rates) > 0:
-            print(f"  ✓ Data available: {len(rates)} bars (last 30 days)")
+            print(f"   Data available: {len(rates)} bars (last 30 days)")
             print(f"    Last bar time: {datetime.fromtimestamp(rates[-1]['time'])}")
         else:
-            print(f"  ✗ No data available")
+            print(f"   No data available")
             print(f"    Error: {mt5.last_error()}")
         
         print()
@@ -101,7 +101,7 @@ for sym_name in variations:
     
     # Try to select
     if mt5.symbol_select(sym_name, True):
-        print(f"  ✓ Symbol found and selected")
+        print(f"   Symbol found and selected")
         
         # Get info
         info = mt5.symbol_info(sym_name)
@@ -115,12 +115,12 @@ for sym_name in variations:
             rates = mt5.copy_rates_range(sym_name, mt5.TIMEFRAME_M5, start_date, end_date)
             
             if rates is not None and len(rates) > 0:
-                print(f"  ✓ Has data: {len(rates)} bars")
-                print(f"  ✅ USE THIS SYMBOL: {sym_name}")
+                print(f"   Has data: {len(rates)} bars")
+                print(f"   USE THIS SYMBOL: {sym_name}")
             else:
-                print(f"  ✗ No data: {mt5.last_error()}")
+                print(f"   No data: {mt5.last_error()}")
     else:
-        print(f"  ✗ Symbol not found")
+        print(f"   Symbol not found")
 
 mt5.shutdown()
 
@@ -129,4 +129,4 @@ print("RECOMMENDATION")
 print("="*60)
 print("Update your config.json with the correct symbol name")
 print("Example:")
-print('  "XAUUSDm": { ... }  →  "XAUUSD": { ... }')
+print('  "XAUUSDm": { ... }    "XAUUSD": { ... }')

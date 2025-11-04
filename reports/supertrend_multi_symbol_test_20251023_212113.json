@@ -1,0 +1,36 @@
+{
+  "test_date": "2025-10-23T21:21:13.244659",
+  "symbols_tested": 3,
+  "results": [
+    {
+      "timestamp": "2025-10-23T21:21:04.635622",
+      "symbol": "AUDUSDm",
+      "data_bars": 500,
+      "has_supertrend": false,
+      "has_atr": true,
+      "current_trend": null,
+      "current_price": 0.65079,
+      "signal": null
+    },
+    {
+      "timestamp": "2025-10-23T21:21:09.325839",
+      "symbol": "EURUSDm",
+      "data_bars": 500,
+      "has_supertrend": false,
+      "has_atr": true,
+      "current_trend": null,
+      "current_price": 1.16116,
+      "signal": null
+    },
+    {
+      "timestamp": "2025-10-23T21:21:13.239776",
+      "symbol": "XAUUSDm",
+      "data_bars": 500,
+      "has_supertrend": false,
+      "has_atr": true,
+      "current_trend": null,
+      "current_price": 4138.605,
+      "signal": null
+    }
+  ]
+}

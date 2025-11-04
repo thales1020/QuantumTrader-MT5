@@ -1,10 +1,10 @@
-# 🎯 Changelog - Project Reorganization
+#  Changelog - Project Reorganization
 
 ## 📅 Date: October 16, 2025
 
 ### ✨ Major Changes
 
-#### 1. **Fixed Risk Management for Gold (XAUUSD)** ✅
+#### 1. **Fixed Risk Management for Gold (XAUUSD)** 
    - **Problem**: Each trade was risking 2-8% instead of 1%
    - **Root Cause**: Incorrect pip value calculation (using $100 instead of $1 per tick)
    - **Solution**: 
@@ -12,9 +12,9 @@
      - Updated `engines/ict_backtest_engine.py` - Multiple functions
      - Now uses MT5's `trade_tick_value` and `trade_tick_size` for accurate calculation
    
-   **Result**: Every trade now risks exactly 1% of account balance ✅
+   **Result**: Every trade now risks exactly 1% of account balance 
 
-#### 2. **Project Structure Reorganization** 📁
+#### 2. **Project Structure Reorganization** 
    
    **Before** (messy):
    ```
@@ -41,7 +41,7 @@
    └── reports/          # Reports
    ```
 
-### 📦 Files Moved
+###  Files Moved
 
 | File | From | To |
 |------|------|-----|
@@ -57,7 +57,7 @@
 | `ta_lib-*.whl` | Root | `data/` |
 | `*.log` files | Root | `logs/` |
 
-### 📝 New Files Created
+###  New Files Created
 
 1. **`PROJECT_STRUCTURE.md`** - Complete project structure documentation
 2. **`.gitignore`** - Proper git ignore rules
@@ -66,14 +66,14 @@
 5. **`tests/__init__.py`** - Package initialization
 6. **`utils/__init__.py`** - Package initialization
 
-### 🔧 Import Paths Updated
+###  Import Paths Updated
 
 Updated import statements in:
 - `run_ict_bot.py` - Changed to `from engines.ict_backtest_engine import ...`
 - `run_bot.py` - Changed to `from engines.backtest_engine import ...`
 - `run_simple_backtest.py` - Changed to `from engines.backtest_engine import ...`
 
-### 🎯 Benefits
+###  Benefits
 
 1. **Better Organization** - Files grouped by functionality
 2. **Easier Navigation** - Clear folder structure
@@ -81,11 +81,11 @@ Updated import statements in:
 4. **Professional** - Industry-standard project layout
 5. **Scalability** - Easy to add new features
 
-### ⚠️ Breaking Changes
+###  Breaking Changes
 
 **None!** All functionality remains the same. Only file locations changed.
 
-### 🚀 Next Steps
+###  Next Steps
 
 1. Test the bot with new structure:
    ```bash

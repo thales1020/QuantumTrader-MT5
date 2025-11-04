@@ -1,4 +1,4 @@
-# 🔧 CUSTOMIZATION GUIDE - Making ML-SuperTrend-MT5 More Flexible
+#  CUSTOMIZATION GUIDE - Making ML-SuperTrend-MT5 More Flexible
 
 **Document Version**: 1.0  
 **Date**: October 23, 2025  
@@ -22,34 +22,34 @@
 
 ---
 
-## 🔍 CURRENT STATE ANALYSIS
+##  CURRENT STATE ANALYSIS
 
 ### **Customization Hiện Tại** (Đánh giá)
 
-#### **✅ Điểm Mạnh:**
+#### ** Điểm Mạnh:**
 ```python
-✅ Config-driven: Parameters trong dataclass
-✅ Modular bots: Dễ thêm bot mới
-✅ Clear separation: Core logic tách biệt
-✅ Type hints: Dễ hiểu interfaces
-✅ Docstrings: Documentation tốt
+ Config-driven: Parameters trong dataclass
+ Modular bots: Dễ thêm bot mới
+ Clear separation: Core logic tách biệt
+ Type hints: Dễ hiểu interfaces
+ Docstrings: Documentation tốt
 ```
 
-#### **⚠️ Điểm Yếu:**
+#### ** Điểm Yếu:**
 ```python
-⚠️ Hard-coded logic: Logic business baked in
-⚠️ No plugin system: Không có extension mechanism
-⚠️ Limited hooks: Không có event system
-⚠️ Monolithic bots: Khó thay đổi từng phần
-⚠️ Config limitations: JSON flat structure
-⚠️ No strategy templates: Phải code từ đầu
+ Hard-coded logic: Logic business baked in
+ No plugin system: Không có extension mechanism
+ Limited hooks: Không có event system
+ Monolithic bots: Khó thay đổi từng phần
+ Config limitations: JSON flat structure
+ No strategy templates: Phải code từ đầu
 ```
 
 ---
 
-## 🎯 CUSTOMIZATION LEVELS
+##  CUSTOMIZATION LEVELS
 
-### **Level 1: Configuration Only** (Easiest) ⭐
+### **Level 1: Configuration Only** (Easiest) 
 ```yaml
 Users: Non-programmers, beginners
 Changes: Parameters only
@@ -58,7 +58,7 @@ Requires: No coding
 Example: Change symbol, risk%, timeframe
 ```
 
-### **Level 2: Strategy Tweaking** (Easy) ⭐⭐
+### **Level 2: Strategy Tweaking** (Easy) 
 ```yaml
 Users: Basic Python knowledge
 Changes: Indicator parameters, thresholds
@@ -67,7 +67,7 @@ Requires: Basic Python
 Example: Adjust ATR period, change RR ratio
 ```
 
-### **Level 3: Strategy Extension** (Moderate) ⭐⭐⭐
+### **Level 3: Strategy Extension** (Moderate) 
 ```yaml
 Users: Intermediate Python
 Changes: Add filters, custom indicators
@@ -76,7 +76,7 @@ Requires: Good Python + trading knowledge
 Example: Add volume filter, custom signal
 ```
 
-### **Level 4: New Strategy** (Advanced) ⭐⭐⭐⭐
+### **Level 4: New Strategy** (Advanced) 
 ```yaml
 Users: Advanced Python developers
 Changes: Completely new trading logic
@@ -85,7 +85,7 @@ Requires: Advanced Python + trading + architecture
 Example: Implement MACD strategy, Mean Reversion
 ```
 
-### **Level 5: Architecture Changes** (Expert) ⭐⭐⭐⭐⭐
+### **Level 5: Architecture Changes** (Expert) 
 ```yaml
 Users: Expert developers
 Changes: Core framework modifications
@@ -96,7 +96,7 @@ Example: Add portfolio manager, multi-strategy
 
 ---
 
-## 🏗️ ARCHITECTURAL IMPROVEMENTS
+##  ARCHITECTURAL IMPROVEMENTS
 
 ### **1. Abstract Base Classes** (Foundation)
 
@@ -237,11 +237,11 @@ class SuperTrendBot(BaseTradingBot):
 ```
 
 **Benefits:**
-- ✅ Clear contract for new bots
-- ✅ Common functionality reused
-- ✅ Easy to add new bots
-- ✅ Hook system built-in
-- ✅ Better documentation
+-  Clear contract for new bots
+-  Common functionality reused
+-  Easy to add new bots
+-  Hook system built-in
+-  Better documentation
 
 ---
 
@@ -416,7 +416,7 @@ class PluginManager:
         """Register a plugin"""
         plugin.on_load()
         self.plugins[plugin.name] = plugin
-        print(f"✅ Loaded plugin: {plugin.name} v{plugin.version}")
+        print(f" Loaded plugin: {plugin.name} v{plugin.version}")
     
     def unregister_plugin(self, name: str):
         """Unregister a plugin"""
@@ -500,7 +500,7 @@ for plugin in indicator_plugins:
 
 ---
 
-## 📝 CONFIGURATION MANAGEMENT
+##  CONFIGURATION MANAGEMENT
 
 ### **Problem: Current Config Limitations**
 ```json
@@ -511,11 +511,11 @@ for plugin in indicator_plugins:
 }
 
 // Issues:
-❌ No inheritance
-❌ No validation
-❌ No environment variables
-❌ No secrets management
-❌ No profiles (dev/prod)
+ No inheritance
+ No validation
+ No environment variables
+ No secrets management
+ No profiles (dev/prod)
 ```
 
 ### **Solution: Enhanced Config System**
@@ -701,7 +701,7 @@ use_ml: true
 
 ---
 
-## 📦 STRATEGY TEMPLATES
+##  STRATEGY TEMPLATES
 
 ### **Problem:**
 ```python
@@ -1062,7 +1062,7 @@ def notify_on_trade(event_data: EventData):
     ticket = event_data.data['ticket']
     signal = event_data.data['signal']
     
-    message = f"🚀 New trade opened!\nTicket: {ticket}\nType: {signal['type']}"
+    message = f" New trade opened!\nTicket: {ticket}\nType: {signal['type']}"
     # Send to Telegram
     # requests.post(...)
 
@@ -1201,7 +1201,7 @@ class TelegramNotifier(NotificationExtension):
     
     def send(self, message, level="info"):
         import requests
-        emoji = {"info": "ℹ️", "warning": "⚠️", "error": "🚨", "success": "✅"}
+        emoji = {"info": "", "warning": "", "error": "", "success": ""}
         formatted = f"{emoji.get(level, '')} {message}"
         
         url = f"https://api.telegram.org/bot{self.bot_token}/sendMessage"
@@ -1288,21 +1288,21 @@ bot.run()
 
 ---
 
-## 🚀 IMPLEMENTATION ROADMAP
+##  IMPLEMENTATION ROADMAP
 
 ### **Phase 1: Foundation** (2-3 weeks)
 ```yaml
 Week 1-2: Core Architecture
-✅ Create BaseTradingBot abstract class
-✅ Implement StrategyRegistry
-✅ Add basic hook system
-✅ Refactor existing bots to inherit from base
+ Create BaseTradingBot abstract class
+ Implement StrategyRegistry
+ Add basic hook system
+ Refactor existing bots to inherit from base
 
 Week 3: Configuration
-✅ Implement ConfigManager
-✅ Add YAML support
-✅ Add environment variable support
-✅ Add profile support (dev/prod)
+ Implement ConfigManager
+ Add YAML support
+ Add environment variable support
+ Add profile support (dev/prod)
 
 Deliverables:
 - base_bot.py
@@ -1314,15 +1314,15 @@ Deliverables:
 ### **Phase 2: Extensions** (2-3 weeks)
 ```yaml
 Week 4-5: Plugin System
-✅ Implement PluginManager
-✅ Create plugin base classes
-✅ Add auto-discovery
-✅ Create example plugins
+ Implement PluginManager
+ Create plugin base classes
+ Add auto-discovery
+ Create example plugins
 
 Week 6: Extension Points
-✅ Define extension point interfaces
-✅ Add extension point support to bots
-✅ Create extension examples
+ Define extension point interfaces
+ Add extension point support to bots
+ Create extension examples
 
 Deliverables:
 - plugin_system.py
@@ -1334,14 +1334,14 @@ Deliverables:
 ### **Phase 3: Templates & Tools** (1-2 weeks)
 ```yaml
 Week 7: Strategy Templates
-✅ Create template files
-✅ Add template documentation
-✅ Create template generator CLI
+ Create template files
+ Add template documentation
+ Create template generator CLI
 
 Week 8: Event System
-✅ Implement EventManager
-✅ Add events to bot lifecycle
-✅ Create event examples
+ Implement EventManager
+ Add events to bot lifecycle
+ Create event examples
 
 Deliverables:
 - 5+ strategy templates
@@ -1353,10 +1353,10 @@ Deliverables:
 ### **Phase 4: Documentation & Examples** (1 week)
 ```yaml
 Week 9: Documentation
-✅ Write customization guide
-✅ Create video tutorials
-✅ Add inline documentation
-✅ Update README
+ Write customization guide
+ Create video tutorials
+ Add inline documentation
+ Update README
 
 Deliverables:
 - CUSTOMIZATION_GUIDE.md
@@ -1449,7 +1449,7 @@ class TelegramNotifier(NotificationPlugin):
     
     def notify(self, message, level="info"):
         import requests
-        emoji = {"info": "ℹ️", "warning": "⚠️", "error": "🚨", "success": "✅"}
+        emoji = {"info": "", "warning": "", "error": "", "success": ""}
         formatted = f"{emoji.get(level, '')} {message}"
         
         url = f"https://api.telegram.org/bot{self.bot_token}/sendMessage"
@@ -1458,7 +1458,7 @@ class TelegramNotifier(NotificationPlugin):
     def _on_position_opened(self, event_data):
         signal = event_data.data['signal']
         message = f"""
-🚀 *New Position Opened*
+ *New Position Opened*
 
 Symbol: {self.bot.config.symbol}
 Type: {signal['type']}
@@ -1470,7 +1470,7 @@ TP: {signal.get('tp', 'N/A')}
     
     def _on_position_closed(self, event_data):
         profit = event_data.data['profit']
-        emoji = "✅" if profit > 0 else "❌"
+        emoji = "" if profit > 0 else ""
         message = f"""
 {emoji} *Position Closed*
 
@@ -1571,58 +1571,58 @@ bot.add_filter(TradingHoursFilter(start_hour=8, end_hour=20))
 
 ---
 
-## 🎯 BENEFITS OF THESE IMPROVEMENTS
+##  BENEFITS OF THESE IMPROVEMENTS
 
 ### **For Users:**
 ```yaml
-✅ Easy to customize without touching core code
-✅ Can add features via plugins
-✅ Multiple strategies in one codebase
-✅ Better documentation and examples
-✅ Community can share extensions
-✅ Lower learning curve
+ Easy to customize without touching core code
+ Can add features via plugins
+ Multiple strategies in one codebase
+ Better documentation and examples
+ Community can share extensions
+ Lower learning curve
 ```
 
 ### **For Developers:**
 ```yaml
-✅ Clear extension points
-✅ Less merge conflicts
-✅ Easier to maintain
-✅ Better testing (mock plugins)
-✅ More modular architecture
-✅ Easier to add features
+ Clear extension points
+ Less merge conflicts
+ Easier to maintain
+ Better testing (mock plugins)
+ More modular architecture
+ Easier to add features
 ```
 
 ### **For Project:**
 ```yaml
-✅ More contributors
-✅ Larger ecosystem (plugins)
-✅ Better adoption
-✅ More use cases
-✅ Community growth
-✅ Long-term sustainability
+ More contributors
+ Larger ecosystem (plugins)
+ Better adoption
+ More use cases
+ Community growth
+ Long-term sustainability
 ```
 
 ---
 
-## 📊 CUSTOMIZATION MATRIX
+##  CUSTOMIZATION MATRIX
 
 ### **What Users Can Customize:**
 
 | Feature | Current | After Improvements | Difficulty |
 |---------|---------|-------------------|------------|
-| Parameters | ✅ config.json | ✅ YAML + env vars | ⭐ Easy |
-| Indicators | ❌ Edit code | ✅ Plugin system | ⭐⭐ Easy |
-| Filters | ❌ Edit code | ✅ Extension points | ⭐⭐ Easy |
-| Notifications | ❌ Not supported | ✅ Plugins | ⭐⭐ Easy |
-| Risk Logic | ❌ Edit code | ✅ Extension points | ⭐⭐⭐ Moderate |
-| Strategy | ❌ New bot | ✅ Templates + Registry | ⭐⭐⭐ Moderate |
-| Data Sources | ❌ MT5 only | ✅ Data plugins | ⭐⭐⭐⭐ Advanced |
-| Core Logic | ❌ Edit core | ✅ Event hooks | ⭐⭐⭐⭐⭐ Expert |
+| Parameters |  config.json |  YAML + env vars |  Easy |
+| Indicators |  Edit code |  Plugin system |  Easy |
+| Filters |  Edit code |  Extension points |  Easy |
+| Notifications |  Not supported |  Plugins |  Easy |
+| Risk Logic |  Edit code |  Extension points |  Moderate |
+| Strategy |  New bot |  Templates + Registry |  Moderate |
+| Data Sources |  MT5 only |  Data plugins |  Advanced |
+| Core Logic |  Edit core |  Event hooks |  Expert |
 
 ---
 
-## 🔗 RELATED DOCUMENTS
+##  RELATED DOCUMENTS
 
 - [PROJECT_SCOPE.md](PROJECT_SCOPE.md) - Project scope and boundaries
 - [ARCHITECTURE.md](ARCHITECTURE.md) - Architecture overview (to be created)
@@ -1631,31 +1631,31 @@ bot.add_filter(TradingHoursFilter(start_hour=8, end_hour=20))
 
 ---
 
-## 📝 CONCLUSION
+##  CONCLUSION
 
 Implementing these improvements will transform the project from a collection of trading bots into a **flexible trading framework** that users can customize without modifying core code.
 
 ### **Priority Recommendations:**
 
 **HIGH PRIORITY** (Implement First):
-1. ✅ Abstract Base Class (BaseTradingBot)
-2. ✅ Strategy Registry
-3. ✅ Enhanced Configuration (YAML + env vars)
-4. ✅ Strategy Templates
+1.  Abstract Base Class (BaseTradingBot)
+2.  Strategy Registry
+3.  Enhanced Configuration (YAML + env vars)
+4.  Strategy Templates
 
 **MEDIUM PRIORITY** (Implement Second):
-5. ✅ Event System
-6. ✅ Extension Points
-7. ✅ Plugin System (basic)
+5.  Event System
+6.  Extension Points
+7.  Plugin System (basic)
 
 **LOW PRIORITY** (Nice to Have):
-8. ⚠️ Advanced plugin features
-9. ⚠️ Plugin marketplace
-10. ⚠️ GUI configuration tool
+8.  Advanced plugin features
+9.  Plugin marketplace
+10.  GUI configuration tool
 
 ---
 
-**Start small, iterate quickly, and gather feedback from users! 🚀**
+**Start small, iterate quickly, and gather feedback from users! **
 
 ---
 

@@ -58,7 +58,7 @@ class TelegramNotifier:
             response = requests.get(f"{self.api_url}/getMe", timeout=5)
             if response.status_code == 200:
                 bot_info = response.json()['result']
-                print(f"✅ Telegram bot connected: @{bot_info['username']}")
+                print(f" Telegram bot connected: @{bot_info['username']}")
             else:
                 raise Exception(f"Invalid bot token: {response.status_code}")
         except Exception as e:
@@ -94,20 +94,20 @@ class TelegramNotifier:
                 return True
             else:
                 error = response.json().get('description', 'Unknown error')
-                print(f"❌ Failed to send message: {error}")
+                print(f" Failed to send message: {error}")
                 return False
                 
         except Exception as e:
-            print(f"❌ Error sending Telegram message: {e}")
+            print(f" Error sending Telegram message: {e}")
             return False
     
     def send_startup_alert(self, bot_name="MT5 Bot"):
         """Send bot startup notification"""
         text = f"""
-🚀 *{bot_name} Started*
+ *{bot_name} Started*
 
 📅 {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
-✅ Bot is now running and monitoring markets
+ Bot is now running and monitoring markets
         """
         return self.send_message(text.strip())
     
@@ -117,7 +117,7 @@ class TelegramNotifier:
 🛑 *{bot_name} Stopped*
 
 📅 {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
-ℹ️ Reason: {reason}
+ Reason: {reason}
         """
         return self.send_message(text.strip())
     
@@ -133,20 +133,20 @@ class TelegramNotifier:
             sl: Stop loss (optional)
             tp: Take profit (optional)
         """
-        emoji = "🟢" if order_type == "BUY" else "🔴"
+        emoji = "" if order_type == "BUY" else ""
         
         text = f"""
 {emoji} *{order_type} Order Executed*
 
-📊 Symbol: `{symbol}`
-💰 Volume: `{volume}` lots
+ Symbol: `{symbol}`
+ Volume: `{volume}` lots
 💵 Price: `{price}`
 """
         
         if sl:
             text += f"🛑 Stop Loss: `{sl}`\n"
         if tp:
-            text += f"🎯 Take Profit: `{tp}`\n"
+            text += f" Take Profit: `{tp}`\n"
         
         text += f"\n📅 {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
         
@@ -164,17 +164,17 @@ class TelegramNotifier:
             exit_price: Exit price
             profit: Profit/loss amount
         """
-        emoji = "✅" if profit >= 0 else "❌"
-        profit_emoji = "💰" if profit >= 0 else "📉"
+        emoji = "" if profit >= 0 else ""
+        profit_emoji = "" if profit >= 0 else ""
         
         text = f"""
 {emoji} *Position Closed*
 
-📊 Symbol: `{symbol}`
+ Symbol: `{symbol}`
 📍 Type: {order_type}
-💰 Volume: `{volume}` lots
-📈 Entry: `{entry_price}`
-📉 Exit: `{exit_price}`
+ Volume: `{volume}` lots
+ Entry: `{entry_price}`
+ Exit: `{exit_price}`
 {profit_emoji} Profit: `${profit:.2f}`
 
 📅 {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
@@ -185,10 +185,10 @@ class TelegramNotifier:
     def send_error_alert(self, error_type, message):
         """Send error notification"""
         text = f"""
-⚠️ *Error Alert*
+ *Error Alert*
 
-🔴 Type: {error_type}
-📝 Message: {message}
+ Type: {error_type}
+ Message: {message}
 
 📅 {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
         """
@@ -205,18 +205,18 @@ class TelegramNotifier:
             balance: Current balance
             equity: Current equity
         """
-        emoji = "📈" if profit >= 0 else "📉"
+        emoji = "" if profit >= 0 else ""
         
         text = f"""
-📊 *Daily Trading Summary*
+ *Daily Trading Summary*
 
 📅 {datetime.now().strftime('%Y-%m-%d')}
 
 🔢 Trades: `{trades_count}`
 {emoji} P&L: `${profit:.2f}`
-🎯 Win Rate: `{win_rate:.1f}%`
+ Win Rate: `{win_rate:.1f}%`
 💵 Balance: `${balance:.2f}`
-💰 Equity: `${equity:.2f}`
+ Equity: `${equity:.2f}`
         """
         
         return self.send_message(text.strip())
@@ -230,13 +230,13 @@ class TelegramNotifier:
             issues: List of issue descriptions
         """
         if status == 'PASS':
-            emoji = "✅"
+            emoji = ""
             title = "Health Check: OK"
         elif status == 'WARNING':
-            emoji = "⚠️"
+            emoji = ""
             title = "Health Check: Warning"
         else:
-            emoji = "🚨"
+            emoji = ""
             title = "Health Check: FAILED"
         
         text = f"{emoji} *{title}*\n\n"
@@ -260,12 +260,12 @@ class TelegramNotifier:
             level: 'INFO', 'WARNING', 'ERROR'
         """
         emoji_map = {
-            'INFO': 'ℹ️',
-            'WARNING': '⚠️',
-            'ERROR': '🚨'
+            'INFO': '',
+            'WARNING': '',
+            'ERROR': ''
         }
         
-        emoji = emoji_map.get(level, 'ℹ️')
+        emoji = emoji_map.get(level, '')
         text = f"{emoji} *{title}*\n\n"
         
         if isinstance(details, dict):
@@ -292,7 +292,7 @@ def test_notifier():
         
         # Test 1: Simple message
         print("\n1. Sending simple message...")
-        notifier.send_message("✅ Test message from MT5 Bot!")
+        notifier.send_message(" Test message from MT5 Bot!")
         
         # Test 2: Startup alert
         print("2. Sending startup alert...")
@@ -326,11 +326,11 @@ def test_notifier():
             'Low disk space: 500MB remaining'
         ])
         
-        print("\n✅ All tests completed!")
+        print("\n All tests completed!")
         print("Check your Telegram for messages")
         
     except Exception as e:
-        print(f"\n❌ Error: {e}")
+        print(f"\n Error: {e}")
         print("\nSetup instructions:")
         print("1. Create bot with @BotFather")
         print("2. Get chat ID from @userinfobot")

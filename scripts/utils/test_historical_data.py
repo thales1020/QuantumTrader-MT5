@@ -41,11 +41,11 @@ print()
 print("Test 1: copy_rates_from_pos (last 100 bars)")
 rates = mt5.copy_rates_from_pos(symbol, mt5.TIMEFRAME_M5, 0, 100)
 if rates is not None and len(rates) > 0:
-    print(f"✓ Success: {len(rates)} bars")
+    print(f" Success: {len(rates)} bars")
     print(f"  First: {datetime.fromtimestamp(rates[0]['time'])}")
     print(f"  Last:  {datetime.fromtimestamp(rates[-1]['time'])}")
 else:
-    print(f"✗ Failed: {mt5.last_error()}")
+    print(f" Failed: {mt5.last_error()}")
 print()
 
 # Test 2: Get data from specific date range (short period)
@@ -54,11 +54,11 @@ end_date = datetime.now()
 start_date = end_date - timedelta(days=7)
 rates = mt5.copy_rates_range(symbol, mt5.TIMEFRAME_M5, start_date, end_date)
 if rates is not None and len(rates) > 0:
-    print(f"✓ Success: {len(rates)} bars")
+    print(f" Success: {len(rates)} bars")
     print(f"  First: {datetime.fromtimestamp(rates[0]['time'])}")
     print(f"  Last:  {datetime.fromtimestamp(rates[-1]['time'])}")
 else:
-    print(f"✗ Failed: {mt5.last_error()}")
+    print(f" Failed: {mt5.last_error()}")
 print()
 
 # Test 3: Get data from longer period (like backtest)
@@ -69,11 +69,11 @@ print(f"  Start: {start_date}")
 print(f"  End: {end_date}")
 rates = mt5.copy_rates_range(symbol, mt5.TIMEFRAME_M5, start_date, end_date)
 if rates is not None and len(rates) > 0:
-    print(f"✓ Success: {len(rates)} bars")
+    print(f" Success: {len(rates)} bars")
     print(f"  First: {datetime.fromtimestamp(rates[0]['time'])}")
     print(f"  Last:  {datetime.fromtimestamp(rates[-1]['time'])}")
 else:
-    print(f"✗ Failed: {mt5.last_error()}")
+    print(f" Failed: {mt5.last_error()}")
     print()
     print("ISSUE: Demo account may not have historical data that far back!")
     print()
@@ -87,9 +87,9 @@ else:
         start_date = end_date - timedelta(days=days_back)
         rates = mt5.copy_rates_range(symbol, mt5.TIMEFRAME_M5, start_date, end_date)
         if rates is not None and len(rates) > 0:
-            print(f"  ✓ Last {days_back} days: {len(rates)} bars available")
+            print(f"   Last {days_back} days: {len(rates)} bars available")
         else:
-            print(f"  ✗ Last {days_back} days: No data")
+            print(f"   Last {days_back} days: No data")
 
 print()
 print("="*60)

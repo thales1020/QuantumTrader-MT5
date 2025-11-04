@@ -1,4 +1,4 @@
-# 🎓 Open Source Attribution - Best Practices
+#  Open Source Attribution - Best Practices
 
 ## Why Attribution Matters
 
@@ -17,38 +17,38 @@
 - **Networking**: Connect with original authors and community
 - **Future Opportunities**: Good reputation opens doors
 
-## What We Did Right ✅
+## What We Did Right 
 
 ### 1. Prominent Attribution
 ```markdown
-✅ Added notice at top of README
-✅ Created dedicated ATTRIBUTION.md
-✅ Created NOTICE file
-✅ Maintained original MIT license
+ Added notice at top of README
+ Created dedicated ATTRIBUTION.md
+ Created NOTICE file
+ Maintained original MIT license
 ```
 
 ### 2. Clear Differentiation
 ```markdown
-✅ Listed original features
-✅ Listed our modifications (90%+ new code)
-✅ Explained evolution of project
-✅ Quantified contributions
+ Listed original features
+ Listed our modifications (90%+ new code)
+ Explained evolution of project
+ Quantified contributions
 ```
 
 ### 3. Legal Compliance
 ```markdown
-✅ Included MIT license text
-✅ Preserved copyright notices
-✅ Stated modifications clearly
-✅ Provided source attribution
+ Included MIT license text
+ Preserved copyright notices
+ Stated modifications clearly
+ Provided source attribution
 ```
 
 ### 4. Transparency
 ```markdown
-✅ Honest about origins
-✅ Clear about extent of changes
-✅ Documented decision process
-✅ Made info easy to find
+ Honest about origins
+ Clear about extent of changes
+ Documented decision process
+ Made info easy to find
 ```
 
 ## Attribution Models for Different Scenarios
@@ -81,7 +81,7 @@ See original project for core functionality.
 > See [ATTRIBUTION.md](ATTRIBUTION.md) for details.
 ```
 
-### Scenario 3: Inspired By (70%+ New Code) ✅ **OUR CASE**
+### Scenario 3: Inspired By (70%+ New Code)  **OUR CASE**
 ```markdown
 # MyProject
 
@@ -224,10 +224,10 @@ Topics: metatrader5, trading-bot, machine-learning, algorithmic-trading, fork
 ```
 
 ### Repository Details
-- ✅ Add "Forked from" link in description
-- ✅ Link to original in About section  
-- ✅ Add relevant topics
-- ✅ Choose appropriate license (MIT)
+-  Add "Forked from" link in description
+-  Link to original in About section  
+-  Add relevant topics
+-  Choose appropriate license (MIT)
 
 ### README Badges
 ```markdown
@@ -289,30 +289,30 @@ Best regards,
 - Consult if needed
 - Maintain professionalism
 
-## Red Flags to Avoid ❌
+## Red Flags to Avoid 
 
 ### Don't Do This:
 ```markdown
-❌ Claim project is 100% yours
-❌ Remove original copyright notices
-❌ Change license without permission
-❌ Hide the fork relationship
-❌ Badmouth original project
-❌ Ignore attribution requirements
-❌ Copy code without credit
-❌ Use original name without clarification
+ Claim project is 100% yours
+ Remove original copyright notices
+ Change license without permission
+ Hide the fork relationship
+ Badmouth original project
+ Ignore attribution requirements
+ Copy code without credit
+ Use original name without clarification
 ```
 
 ### Do This Instead:
 ```markdown
-✅ Be transparent about origins
-✅ Maintain copyright notices
-✅ Keep same license type
-✅ Clearly show fork relationship  
-✅ Respect original work
-✅ Comply with license terms
-✅ Give proper credit
-✅ Use distinctive name
+ Be transparent about origins
+ Maintain copyright notices
+ Keep same license type
+ Clearly show fork relationship  
+ Respect original work
+ Comply with license terms
+ Give proper credit
+ Use distinctive name
 ```
 
 ## Attribution Levels
@@ -329,7 +329,7 @@ Substantially modified with new features X, Y, Z.
 See ATTRIBUTION.md for details.
 ```
 
-### Excellent Attribution (Best Practice) ✅ **WHAT WE DID**
+### Excellent Attribution (Best Practice)  **WHAT WE DID**
 ```markdown
 - Prominent notice in README
 - Dedicated ATTRIBUTION.md file
@@ -343,22 +343,22 @@ See ATTRIBUTION.md for details.
 
 ## License Compatibility
 
-### MIT → MIT ✅ (What we're doing)
+### MIT  MIT  (What we're doing)
 - Compatible
 - Easy
 - Recommended
 
-### MIT → Apache 2.0 ✅
+### MIT  Apache 2.0 
 - Compatible
 - More protective
 - More complex
 
-### MIT → GPL ⚠️
+### MIT  GPL 
 - Possible but one-way
 - Must be GPL forever
 - Not recommended
 
-### MIT → Proprietary ❌
+### MIT  Proprietary 
 - Not recommended
 - Ethical issues
 - May violate spirit of MIT
@@ -383,7 +383,7 @@ See ATTRIBUTION.md for details.
 - Build community
 - Share knowledge
 
-## Final Checklist ✅
+## Final Checklist 
 
 Before publishing your fork:
 
@@ -421,7 +421,7 @@ Before publishing your fork:
 
 **Remember**: Good attribution is about respect, transparency, and community. It costs nothing but builds trust and relationships that can last a career.
 
-**Your project is 90%+ your work** - be proud of it while respecting those who inspired you! 🎉
+**Your project is 90%+ your work** - be proud of it while respecting those who inspired you! 
 
 ---
 

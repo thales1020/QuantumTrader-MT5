@@ -4,9 +4,9 @@
 
 Bot này sử dụng các khái niệm trading nâng cao từ ICT (Michael J. Huddleston):
 
-### 🎯 **Các Thành Phần Chính:**
+###  **Các Thành Phần Chính:**
 
-#### 1. **Order Blocks (OB)** 📦
+#### 1. **Order Blocks (OB)** 
 - **Bullish Order Block**: Nến giảm cuối cùng trước một đợt tăng mạnh
 - **Bearish Order Block**: Nến tăng cuối cùng trước một đợt giảm mạnh
 - Đây là vùng mà tổ chức/smart money đã đặt lệnh
@@ -22,36 +22,36 @@ Bot này sử dụng các khái niệm trading nâng cao từ ICT (Michael J. Hu
 - **Buy Side Liquidity (BSL)**: Stop loss của sellers ở trên đỉnh gần nhất
 - **Sell Side Liquidity (SSL)**: Stop loss của buyers ở dưới đáy gần nhất
 - Smart money thường "sweep liquidity" (đánh stop loss) trước khi đảo chiều
-- **Bullish Sweep**: Giá chạm đáy → đảo chiều tăng
-- **Bearish Sweep**: Giá chạm đỉnh → đảo chiều giảm
+- **Bullish Sweep**: Giá chạm đáy  đảo chiều tăng
+- **Bearish Sweep**: Giá chạm đỉnh  đảo chiều giảm
 
-#### 4. **Market Structure** 📈📉
+#### 4. **Market Structure** 
 - **Higher Highs (HH) + Higher Lows (HL)** = Uptrend
 - **Lower Highs (LH) + Lower Lows (LL)** = Downtrend
-- **BOS (Break of Structure)**: Phá vỡ cấu trúc → tiếp tục xu hướng
+- **BOS (Break of Structure)**: Phá vỡ cấu trúc  tiếp tục xu hướng
 - **CHoCH (Change of Character)**: Thay đổi xu hướng
 
 ---
 
-## 🔧 **Cách Bot Hoạt Động:**
+##  **Cách Bot Hoạt Động:**
 
 ### **Tín Hiệu MUA (BUY):**
 Cần ít nhất **2/4 điều kiện**:
-1. ✅ Market structure đang uptrend (HH + HL)
-2. ✅ Giá chạm vào Bullish Order Block
-3. ✅ Giá trong vùng Bullish FVG
-4. ✅ Có Bullish Liquidity Sweep (giá đánh SSL rồi đảo chiều)
+1.  Market structure đang uptrend (HH + HL)
+2.  Giá chạm vào Bullish Order Block
+3.  Giá trong vùng Bullish FVG
+4.  Có Bullish Liquidity Sweep (giá đánh SSL rồi đảo chiều)
 
 ### **Tín Hiệu BÁN (SELL):**
 Cần ít nhất **2/4 điều kiện**:
-1. ✅ Market structure đang downtrend (LH + LL)
-2. ✅ Giá chạm vào Bearish Order Block
-3. ✅ Giá trong vùng Bearish FVG
-4. ✅ Có Bearish Liquidity Sweep (giá đánh BSL rồi đảo chiều)
+1.  Market structure đang downtrend (LH + LL)
+2.  Giá chạm vào Bearish Order Block
+3.  Giá trong vùng Bearish FVG
+4.  Có Bearish Liquidity Sweep (giá đánh BSL rồi đảo chiều)
 
 ---
 
-## 📊 **Quản Lý Lệnh:**
+##  **Quản Lý Lệnh:**
 
 ### **Stop Loss (SL):**
 - Đặt **dưới Order Block** (nếu BUY)
@@ -68,7 +68,7 @@ Cần ít nhất **2/4 điều kiện**:
 
 ---
 
-## 🚀 **Cách Sử Dụng:**
+##  **Cách Sử Dụng:**
 
 ### **1. Chạy Bot:**
 ```bash
@@ -100,7 +100,7 @@ python run_ict_bot.py --account demo --symbol EURUSDm --interval 60
 
 ---
 
-## ⚙️ **Tùy Chỉnh Chiến Lược:**
+##  **Tùy Chỉnh Chiến Lược:**
 
 Trong file `core/ict_bot.py`, bạn có thể chỉnh:
 
@@ -119,7 +119,7 @@ Config(
 
 ---
 
-## 📈 **So Sánh với SuperTrend Bot:**
+##  **So Sánh với SuperTrend Bot:**
 
 | Feature | SuperTrend Bot | ICT Bot |
 |---------|---------------|---------|
@@ -132,7 +132,7 @@ Config(
 
 ---
 
-## 💡 **Lời Khuyên:**
+##  **Lời Khuyên:**
 
 ### **Timeframe tốt nhất:**
 - **M15-M30**: Scalping/Day trading
@@ -140,18 +140,18 @@ Config(
 - **D1**: Position trading
 
 ### **Symbols phù hợp:**
-- ✅ **Major Forex**: EURUSD, GBPUSD, USDJPY
-- ✅ **Indices**: US30, NAS100
-- ⚠️ **Gold**: Cần adjust parameters (volatile)
+-  **Major Forex**: EURUSD, GBPUSD, USDJPY
+-  **Indices**: US30, NAS100
+-  **Gold**: Cần adjust parameters (volatile)
 
 ### **Điều kiện thị trường:**
-- 🟢 **Tốt nhất**: London + New York session
-- 🟡 **OK**: Asian session có tin tức
-- 🔴 **Tránh**: Low volatility, holidays
+-  **Tốt nhất**: London + New York session
+-  **OK**: Asian session có tin tức
+-  **Tránh**: Low volatility, holidays
 
 ---
 
-## 🎓 **Học Thêm về ICT:**
+##  **Học Thêm về ICT:**
 
 1. **Order Blocks**: https://www.youtube.com/watch?v=XXX
 2. **Fair Value Gaps**: https://www.youtube.com/watch?v=XXX
@@ -160,7 +160,7 @@ Config(
 
 ---
 
-## ⚠️ **Disclaimer:**
+##  **Disclaimer:**
 
 - Bot này chỉ cho mục đích **GIÁO DỤC**
 - **LUÔN TEST trên DEMO** trước khi dùng live
@@ -177,4 +177,4 @@ Config(
 
 ---
 
-**Happy Trading! 🚀📈**
+**Happy Trading! **

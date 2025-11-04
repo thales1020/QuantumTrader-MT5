@@ -39,7 +39,7 @@ lot_size = risk_amount / (ticks_at_risk * tick_value)
 - tick_size: 0.00001
 - tick_value: $1 (for 1 lot)
 - Ticks at risk: 50 / 0.00001 = 5,000,000
-- Lot size: $100 / (5,000,000 × $1) = 0.02 lots ✅
+- Lot size: $100 / (5,000,000 × $1) = 0.02 lots 
 
 #### For Crypto:
 ```python
@@ -56,7 +56,7 @@ lot_size = risk_amount / risk_per_lot
 - SL: $59,500 (SL distance = $500)
 - contract_size: 1.0 (1 lot = 1 BTC)
 - Risk per lot: $500 × 1.0 = $500
-- Lot size: $50 / $500 = **0.10 lots** ✅
+- Lot size: $50 / $500 = **0.10 lots** 
 
 **Why different?**
 - For BTC, $500 SL means $500 loss per 1 lot
@@ -123,7 +123,7 @@ lot_size = risk_amount / risk_per_lot
 ```
 **Total risk per signal**: 0.5% × 2 = **1.0%**
 
-### Aggressive (High Risk) ⚠️
+### Aggressive (High Risk) 
 ```json
 "BTCUSDm": {
   "enabled": true,
@@ -138,7 +138,7 @@ lot_size = risk_amount / risk_per_lot
   "cluster_choice": "Best"
 }
 ```
-**Total risk per signal**: 1.0% × 2 = **2.0%** ⚠️
+**Total risk per signal**: 1.0% × 2 = **2.0%** 
 
 ## Dual Orders with Crypto
 
@@ -165,17 +165,17 @@ Total Risk: $100 (0.5% × 2)
 
 ### Scenarios:
 
-#### Scenario 1: Both TPs Hit ✅✅
+#### Scenario 1: Both TPs Hit 
 - Order 1: +$50 profit
 - Order 2: +$140 profit
 - **Total: +$190 profit**
 
-#### Scenario 2: TP1 Hit, Order 2 Hits SL ✅❌
+#### Scenario 2: TP1 Hit, Order 2 Hits SL 
 - Order 1: +$50 profit
 - Order 2: -$50 loss
 - **Total: $0 (breakeven)**
 
-#### Scenario 3: Both Hit SL ❌❌
+#### Scenario 3: Both Hit SL 
 - Order 1: -$50 loss
 - Order 2: -$50 loss
 - **Total: -$100 loss**
@@ -234,7 +234,7 @@ Total Risk: $100 (0.5% × 2)
 - **Max 2 crypto positions**: BTC + ETH together
 - **Reason**: Cryptos are highly correlated, don't stack risk
 
-### Correlation Warning ⚠️
+### Correlation Warning 
 - BTC and ETH move together ~80% of the time
 - If both have open positions, effective risk is higher
 - Consider: Only trade BTC OR ETH, not both simultaneously
@@ -258,11 +258,11 @@ Risk: $50.00 (0.5%), Final lot: 0.1000
 ```
 
 ### What to Watch:
-- ✅ Final lot size reasonable (e.g., 0.01-0.50 for BTC)
-- ✅ Risk per lot matches SL distance
-- ✅ Total risk = risk_percent × 2 (dual orders)
-- ⚠️ If lot size = volume_min, risk might be higher than intended
-- ⚠️ If lot size = volume_max, might be too aggressive
+-  Final lot size reasonable (e.g., 0.01-0.50 for BTC)
+-  Risk per lot matches SL distance
+-  Total risk = risk_percent × 2 (dual orders)
+-  If lot size = volume_min, risk might be higher than intended
+-  If lot size = volume_max, might be too aggressive
 
 ## Testing Workflow
 
@@ -314,7 +314,7 @@ Monitor:
 
 ### Step 5: Scale Up Gradually
 - If profitable after 20+ trades
-- Increase risk_percent slowly (0.25% → 0.5% → 1.0%)
+- Increase risk_percent slowly (0.25%  0.5%  1.0%)
 - Add second crypto if desired
 - Keep monitoring
 
@@ -325,7 +325,7 @@ Monitor:
 **Solution**: 
 - Increase balance
 - OR lower sl_multiplier
-- OR increase risk_percent (⚠️ careful!)
+- OR increase risk_percent ( careful!)
 
 **Example**:
 ```
@@ -333,9 +333,9 @@ Balance: $1,000
 Risk: 0.5% = $5
 BTC SL: $500
 Risk per lot: $500
-Lot needed: $5 / $500 = 0.01 ✅ (minimum)
+Lot needed: $5 / $500 = 0.01  (minimum)
 ```
-→ Need $10,000+ balance to trade BTC with 0.1+ lots
+ Need $10,000+ balance to trade BTC with 0.1+ lots
 
 ### Issue 2: Orders Rejected
 **Reasons**:
@@ -356,8 +356,8 @@ Lot needed: $5 / $500 = 0.01 ✅ (minimum)
 ### Issue 4: Both Orders Hit SL Often
 **Problem**: SL too tight for crypto volatility
 **Solution**:
-- Increase sl_multiplier (2.5 → 3.0 → 3.5)
-- Use higher timeframe (M5 → M15 → H1)
+- Increase sl_multiplier (2.5  3.0  3.5)
+- Use higher timeframe (M5  M15  H1)
 - Increase min_factor (more conservative signals)
 
 ## Performance Expectations
@@ -382,7 +382,7 @@ Lot needed: $5 / $500 = 0.01 ✅ (minimum)
 - **Profit Factor**: 1.3-2.0
 - **Max Drawdown**: 7-12%
 
-**⚠️ Disclaimer**: Results vary based on market conditions. Always backtest your specific config.
+** Disclaimer**: Results vary based on market conditions. Always backtest your specific config.
 
 ## Advanced Tips
 
@@ -439,4 +439,4 @@ Before trading crypto:
 
 ---
 
-**Remember**: Crypto trading is HIGH RISK. Start small, test thoroughly, and never risk more than you can afford to lose! 🚀⚠️
+**Remember**: Crypto trading is HIGH RISK. Start small, test thoroughly, and never risk more than you can afford to lose! 

@@ -322,9 +322,9 @@ def main():
     
     print()
     if success:
-        print("✅ Test completed successfully!")
+        print(" Test completed successfully!")
     else:
-        print("❌ Test failed or cancelled")
+        print(" Test failed or cancelled")
     
     sys.exit(0 if success else 1)
 

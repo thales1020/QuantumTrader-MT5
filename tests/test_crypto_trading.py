@@ -39,7 +39,7 @@ class TestCryptoPositionSizing(unittest.TestCase):
         lot_size = risk_amount / (sl_distance * contract_size)
         lot_size = round(lot_size, 2)  # Round to 2 decimals
         
-        # Expected: $75 / ($2000 * 1) = 0.0375 → 0.04 lots
+        # Expected: $75 / ($2000 * 1) = 0.0375  0.04 lots
         expected_lot = 0.04
         
         self.assertAlmostEqual(lot_size, expected_lot, places=2,
@@ -405,9 +405,9 @@ def run_tests():
     print(f"Skipped: {len(result.skipped)}")
     
     if result.wasSuccessful():
-        print("\n✅ ALL TESTS PASSED - Crypto trading ready!")
+        print("\n ALL TESTS PASSED - Crypto trading ready!")
     else:
-        print("\n❌ SOME TESTS FAILED - Check output above")
+        print("\n SOME TESTS FAILED - Check output above")
     
     return result.wasSuccessful()
 

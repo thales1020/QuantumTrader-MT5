@@ -1,0 +1,13 @@
+{
+  "strategy_id": "ema_golden_cross",
+  "enabled": true,
+  "symbol": "EURUSD",
+  "timeframe": "M15",
+  "risk_percent": 1.0,
+  "magic_number": 123456,
+  "fast_period": 10,
+  "slow_period": 30,
+  "ma_type": "SMA",
+  "author": "QuantumTrader",
+  "version": "1.0.0"
+}

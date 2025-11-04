@@ -103,7 +103,7 @@ class StrategyRegistry:
             strategy_class._registry_name = name
             strategy_class._registry_metadata = cls._metadata[name]
             
-            print(f"✅ Registered strategy: '{name}' ({strategy_class.__name__})")
+            print(f" Registered strategy: '{name}' ({strategy_class.__name__})")
             
             return strategy_class
         
@@ -265,7 +265,7 @@ class StrategyRegistry:
         print("="*70)
         
         for name, meta in sorted(cls._metadata.items()):
-            print(f"\n📊 {name}")
+            print(f"\n {name}")
             print(f"   Class: {meta['class']}")
             print(f"   Description: {meta['description'][:60]}...")
             if meta['author']:
@@ -429,9 +429,9 @@ def discover_strategies(module_names: List[str] = None):
     for module_name in module_names:
         try:
             importlib.import_module(module_name)
-            print(f"✅ Loaded module: {module_name}")
+            print(f" Loaded module: {module_name}")
         except Exception as e:
-            print(f"❌ Error loading module {module_name}: {e}")
+            print(f" Error loading module {module_name}: {e}")
 
 
 if __name__ == "__main__":

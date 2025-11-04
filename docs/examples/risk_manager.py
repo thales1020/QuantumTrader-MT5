@@ -130,7 +130,7 @@ if __name__ == "__main__":
     print("\n1. Daily Loss Limit Check")
     account_balance = 10000
     if risk_manager.check_daily_loss_limit(account_balance):
-        print("✅ Daily loss limit OK - Can continue trading")
+        print(" Daily loss limit OK - Can continue trading")
     else:
         print("⛔ Daily loss limit reached - Stop trading for today")
     
@@ -138,9 +138,9 @@ if __name__ == "__main__":
     print("\n2. Correlation Check")
     symbols_in_trade = ['EURUSD', 'GBPUSD']  # Highly correlated
     if risk_manager.check_correlation(symbols_in_trade):
-        print("✅ Correlation acceptable")
+        print(" Correlation acceptable")
     else:
-        print("⚠️  High correlation detected - Avoid new position")
+        print("  High correlation detected - Avoid new position")
     
     # Example 3: Kelly Criterion
     print("\n3. Kelly Criterion Position Sizing")

@@ -1,4 +1,4 @@
-# 🖥️ Windows Scripts
+#  Windows Scripts
 
 Batch scripts cho Windows automation.
 
@@ -21,5 +21,5 @@ REM Hoặc double-click file trong Explorer
 1. Mở Task Scheduler
 2. Create Task
 3. Trigger: At startup
-4. Action: Start a program → `start_bot.bat`
+4. Action: Start a program  `start_bot.bat`
 5. Settings: Run whether user logged on or not

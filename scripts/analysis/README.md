@@ -1,4 +1,4 @@
-# 📈 Analysis Scripts
+#  Analysis Scripts
 
 Scripts để phân tích performance và visualize kết quả.
 

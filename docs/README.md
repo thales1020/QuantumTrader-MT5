@@ -41,7 +41,7 @@ This folder contains all documentation for the ML-SuperTrend-MT5 project.
 - Risk settings: See [PERFORMANCE.md](PERFORMANCE.md)
 - Crypto settings: See [CRYPTO_TRADING_GUIDE.md](CRYPTO_TRADING_GUIDE.md)
 
-## 🔍 Search Tips
+##  Search Tips
 
 Use these keywords to find specific topics:
 - **"dual orders"** - RR 1:1 strategy

@@ -194,7 +194,7 @@ class ICTBot(BaseTradingBot):
             reason = f"ICT Bullish: MS={self.market_structure.get('trend')}, " \
                     f"OB={'Yes' if best_ob else 'No'}, FVG={'Yes' if best_fvg else 'No'}"
             
-            self.logger.info(f"🟢 BULLISH Signal | Confidence: {confidence:.1f}% | "
+            self.logger.info(f" BULLISH Signal | Confidence: {confidence:.1f}% | "
                            f"OB: {best_ob is not None} | FVG: {best_fvg is not None}")
         
         # =====================================================================
@@ -221,7 +221,7 @@ class ICTBot(BaseTradingBot):
             reason = f"ICT Bearish: MS={self.market_structure.get('trend')}, " \
                     f"OB={'Yes' if best_ob else 'No'}, FVG={'Yes' if best_fvg else 'No'}"
             
-            self.logger.info(f"🔴 BEARISH Signal | Confidence: {confidence:.1f}% | "
+            self.logger.info(f" BEARISH Signal | Confidence: {confidence:.1f}% | "
                            f"OB: {best_ob is not None} | FVG: {best_fvg is not None}")
         
         # Return signal dict if we have a valid signal
@@ -692,9 +692,9 @@ class ICTBot(BaseTradingBot):
         """Hook called after trade execution"""
         if success:
             setup_type = signal.get('metadata', {}).get('setup_type', 'ICT')
-            self.logger.info(f"✅ ICT trade opened: {signal.get('type')} - {setup_type}")
+            self.logger.info(f" ICT trade opened: {signal.get('type')} - {setup_type}")
         else:
-            self.logger.warning(f"❌ ICT trade failed: {signal.get('type')}")
+            self.logger.warning(f" ICT trade failed: {signal.get('type')}")
     
     def _get_timeframe_seconds(self) -> int:
         """Get timeframe in seconds"""

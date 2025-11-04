@@ -1,4 +1,4 @@
-# 🚀 Hướng Dẫn Tạo Repository Mới Trên GitHub Của Bạn
+#  Hướng Dẫn Tạo Repository Mới Trên GitHub Của Bạn
 
 **Tác giả**: Trần Trọng Hiếu  
 **GitHub**: @thales1020  
@@ -6,7 +6,7 @@
 
 ---
 
-## 🎯 Mục Tiêu
+##  Mục Tiêu
 
 Tạo repository mới trên **GitHub cá nhân** (@thales1020) và push toàn bộ code ML-SuperTrend-MT5 lên đó.
 
@@ -20,17 +20,17 @@ Tạo repository mới trên **GitHub cá nhân** (@thales1020) và push toàn b
 
 2. **Tạo Repository Mới**:
    - Vào: https://github.com/new
-   - Hoặc click nút **[+]** ở góc trên bên phải → **New repository**
+   - Hoặc click nút **[+]** ở góc trên bên phải  **New repository**
 
 3. **Điền thông tin**:
    ```
    Repository name:     ML-SuperTrend-MT5
    Description:         Machine Learning Enhanced SuperTrend Trading Bot for MetaTrader 5
-   Visibility:          ✅ Public (hoặc Private nếu muốn)
+   Visibility:           Public (hoặc Private nếu muốn)
    
-   ❌ KHÔNG tick: Initialize with README
-   ❌ KHÔNG tick: Add .gitignore
-   ❌ KHÔNG tick: Choose a license
+    KHÔNG tick: Initialize with README
+    KHÔNG tick: Add .gitignore
+    KHÔNG tick: Choose a license
    
    (Vì chúng ta đã có rồi!)
    ```
@@ -176,7 +176,7 @@ git push -u origin master
 
 **Lỗi 2: Protected Branch**
 ```bash
-# GitHub Settings → Branches → Edit protection rules
+# GitHub Settings  Branches  Edit protection rules
 # Hoặc push vào branch khác trước
 git push -u origin main:dev
 ```
@@ -201,10 +201,10 @@ git commit -m "Add Git LFS tracking"
 Vào: https://github.com/thales1020/ML-SuperTrend-MT5
 
 **Check:**
-- ✅ Tất cả files đã up
-- ✅ README hiển thị đúng
-- ✅ LICENSE file có
-- ✅ Commit history preserved
+-  Tất cả files đã up
+-  README hiển thị đúng
+-  LICENSE file có
+-  Commit history preserved
 
 ### 5.2: Update Repository Settings
 
@@ -219,10 +219,10 @@ Vào: https://github.com/thales1020/ML-SuperTrend-MT5
    ```
 
 2. **Features**:
-   - ✅ Issues
-   - ✅ Discussions (optional)
-   - ❌ Wikis (có docs/ rồi)
-   - ❌ Projects (chưa cần)
+   -  Issues
+   -  Discussions (optional)
+   -  Wikis (có docs/ rồi)
+   -  Projects (chưa cần)
 
 3. **Social Preview**:
    - Upload một banner/logo nếu có
@@ -231,15 +231,15 @@ Vào: https://github.com/thales1020/ML-SuperTrend-MT5
 
 ## 📋 Bước 6: Update Documentation
 
-### 6.1: Update README.md (đã làm rồi ✅)
+### 6.1: Update README.md (đã làm rồi )
 
 Đã có:
 ```markdown
 [![Author](https://img.shields.io/badge/Author-thales1020-blue)](https://github.com/thales1020)
 
-## 👨‍💻 Author
+## 👨‍ Author
 **Trần Trọng Hiếu**
-- 🌐 Personal GitHub: [@thales1020](https://github.com/thales1020)
+-  Personal GitHub: [@thales1020](https://github.com/thales1020)
 ```
 
 ### 6.2: Update Links (nếu cần)
@@ -305,7 +305,7 @@ Please update your bookmarks and clones.
 
 ---
 
-## ✅ Checklist
+##  Checklist
 
 - [ ] **Bước 1**: Tạo repo mới trên GitHub (@thales1020)
 - [ ] **Bước 2**: Chọn Option A hoặc B cho remotes
@@ -318,13 +318,13 @@ Please update your bookmarks and clones.
 
 ---
 
-## 🎯 Recommended Option: Option A
+##  Recommended Option: Option A
 
 **Tại sao?**
-- ✅ Đơn giản hơn
-- ✅ Rõ ràng ownership
-- ✅ Một repo chính thức
-- ✅ Dễ maintain
+-  Đơn giản hơn
+-  Rõ ràng ownership
+-  Một repo chính thức
+-  Dễ maintain
 
 **Khi nào dùng Option B?**
 - Muốn sync với xPOURY4 (collaboration)
@@ -333,7 +333,7 @@ Please update your bookmarks and clones.
 
 ---
 
-## 💡 Quick Commands (Copy-Paste)
+##  Quick Commands (Copy-Paste)
 
 ### Nếu Chưa Tạo Repo (GitHub CLI):
 ```bash
@@ -398,14 +398,14 @@ git push origin main
 
 ---
 
-## 🎉 Done!
+##  Done!
 
 Sau khi hoàn thành:
 
-1. ✅ Repo mới trên https://github.com/thales1020/ML-SuperTrend-MT5
-2. ✅ Full code + history
-3. ✅ Attribution đầy đủ
-4. ✅ Ready để share/promote
+1.  Repo mới trên https://github.com/thales1020/ML-SuperTrend-MT5
+2.  Full code + history
+3.  Attribution đầy đủ
+4.  Ready để share/promote
 
 **Next steps:**
 - Share on LinkedIn/Twitter

@@ -124,7 +124,7 @@ def print_banner():
     ║  GitHub: https://github.com/xPOURY4/ML-SuperTrend-MT5     ║
     ║  Twitter: @TheRealPourya                                  ║
     ║                                                           ║
-    ║ ⚠️  EDUCATIONAL PURPOSES ONLY - TRADE AT YOUR OWN RISK    ║
+    ║   EDUCATIONAL PURPOSES ONLY - TRADE AT YOUR OWN RISK    ║
     ║                                                           ║
     ╚═══════════════════════════════════════════════════════════╝
     """

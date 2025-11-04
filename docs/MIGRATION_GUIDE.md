@@ -6,56 +6,56 @@ Project đã được tổ chức lại để root directory gọn gàng hơn v�
 
 ---
 
-## 🎯 Tóm Tắt Thay Đổi
+##  Tóm Tắt Thay Đổi
 
 ### **Root Directory**
-- ✅ Từ **30+ files** → **9 files** (giảm 70%)
-- ✅ Chỉ giữ lại files cần thiết: README, LICENSE, requirements.txt, setup.py, config.json
+-  Từ **30+ files**  **9 files** (giảm 70%)
+-  Chỉ giữ lại files cần thiết: README, LICENSE, requirements.txt, setup.py, config.json
 
 ### **Scripts Directory - Phân loại theo chức năng:**
 
 ```
 scripts/
-├── runners/              🚀 Bot & Backtest runners
+├── runners/               Bot & Backtest runners
 ├── automation/           🤖 Monitoring & maintenance
-├── windows/              🖥️ Windows batch scripts
-├── backtest/             📊 Backtest scripts
-├── analysis/             📈 Analysis & visualization
-└── utils/                🔧 Utility scripts
+├── windows/               Windows batch scripts
+├── backtest/              Backtest scripts
+├── analysis/              Analysis & visualization
+└── utils/                 Utility scripts
 ```
 
 ---
 
-## ✅ CẬP NHẬT ĐÃ HOÀN THÀNH TỰ ĐỘNG
+##  CẬP NHẬT ĐÃ HOÀN THÀNH TỰ ĐỘNG
 
-### **1. Batch Scripts** ✅
-- ✅ `scripts/windows/start_bot.bat` - Đã sửa BOT_SCRIPT path
-- ✅ `scripts/windows/auto_restart_bot.bat` - Đã sửa BOT_SCRIPT path
+### **1. Batch Scripts** 
+-  `scripts/windows/start_bot.bat` - Đã sửa BOT_SCRIPT path
+-  `scripts/windows/auto_restart_bot.bat` - Đã sửa BOT_SCRIPT path
 
-### **2. Automation Scripts** ✅
-- ✅ `scripts/automation/watchdog.py` - Đã thêm PROJECT_ROOT và sửa paths
-- ✅ `scripts/automation/health_check.py` - Đã thêm PROJECT_ROOT và sửa paths
-- ✅ `scripts/automation/rotate_logs.py` - Đã thêm PROJECT_ROOT và sửa paths
+### **2. Automation Scripts** 
+-  `scripts/automation/watchdog.py` - Đã thêm PROJECT_ROOT và sửa paths
+-  `scripts/automation/health_check.py` - Đã thêm PROJECT_ROOT và sửa paths
+-  `scripts/automation/rotate_logs.py` - Đã thêm PROJECT_ROOT và sửa paths
 
 ---
 
 ## 📋 KHÔNG CẦN THAY ĐỔI
 
 ### **Core Code**
-- ✅ `core/` - Không có import từ scripts
-- ✅ `engines/` - Không có import từ scripts
-- ✅ `tests/` - Không có import từ scripts
-- ✅ `utils/` - Không có import từ scripts
+-  `core/` - Không có import từ scripts
+-  `engines/` - Không có import từ scripts
+-  `tests/` - Không có import từ scripts
+-  `utils/` - Không có import từ scripts
 
 ### **Runner Scripts**
-- ✅ `scripts/runners/run_bot.py` - Chạy từ project root, không cần sửa
-- ✅ `scripts/runners/run_ict_bot.py` - Chạy từ project root, không cần sửa
-- ✅ `scripts/runners/run_ict_bot_smc.py` - Chạy từ project root, không cần sửa
-- ✅ `scripts/runners/run_backtest.py` - Chạy từ project root, không cần sửa
+-  `scripts/runners/run_bot.py` - Chạy từ project root, không cần sửa
+-  `scripts/runners/run_ict_bot.py` - Chạy từ project root, không cần sửa
+-  `scripts/runners/run_ict_bot_smc.py` - Chạy từ project root, không cần sửa
+-  `scripts/runners/run_backtest.py` - Chạy từ project root, không cần sửa
 
 ---
 
-## 🔧 CÁCH SỬ DỤNG MỚI
+##  CÁCH SỬ DỤNG MỚI
 
 ### **1. Chạy Bot từ Root Directory**
 
@@ -130,7 +130,7 @@ REM Hoặc double-click trong Explorer
 
 ---
 
-## 🖥️ WINDOWS TASK SCHEDULER
+##  WINDOWS TASK SCHEDULER
 
 ### **Cập nhật paths trong Task Scheduler:**
 
@@ -156,7 +156,7 @@ Start in: C:\github\ML-SuperTrend-MT5
 
 ---
 
-## 📝 VPS DEPLOYMENT
+##  VPS DEPLOYMENT
 
 ### **Cập nhật trong docs/MT5_VPS_DEPLOYMENT.md:**
 
@@ -178,13 +178,13 @@ python scripts\automation\watchdog.py
 
 ---
 
-## 🔍 KIỂM TRA SAU KHI MIGRATE
+##  KIỂM TRA SAU KHI MIGRATE
 
 ### **Checklist:**
 
-- [x] ✅ Batch scripts paths đã sửa
-- [x] ✅ Automation scripts paths đã sửa
-- [x] ✅ Test rotate_logs.py → OK
+- [x]  Batch scripts paths đã sửa
+- [x]  Automation scripts paths đã sửa
+- [x]  Test rotate_logs.py  OK
 - [ ] ⏳ Test watchdog.py (cần install psutil)
 - [ ] ⏳ Test health_check.py (cần MT5 running)
 - [ ] ⏳ Test batch scripts trên Windows
@@ -209,7 +209,7 @@ python scripts/backtest/backtest_all_symbols.py --help
 
 ---
 
-## 🐛 TROUBLESHOOTING
+##  TROUBLESHOOTING
 
 ### **Issue 1: "Module not found"**
 **Solution:** Đảm bảo chạy từ project root directory
@@ -230,7 +230,7 @@ python scripts/runners/run_bot.py
 
 ---
 
-## 📊 SO SÁNH TRƯỚC & SAU
+##  SO SÁNH TRƯỚC & SAU
 
 ### **Trước khi tổ chức lại:**
 ```
@@ -274,11 +274,11 @@ Root/
     └── utils/            (6 files)
 ```
 
-**Kết quả:** Root gọn gàng 70%, dễ navigate, professional structure! 🎉
+**Kết quả:** Root gọn gàng 70%, dễ navigate, professional structure! 
 
 ---
 
-## 🎓 LỢI ÍCH
+##  LỢI ÍCH
 
 1. **Dễ tìm kiếm** - Files được phân loại rõ ràng
 2. **Dễ maintain** - Tách biệt concerns
@@ -299,6 +299,6 @@ Nếu gặp vấn đề sau khi migrate:
 
 ---
 
-**✅ Migration completed successfully!**
+** Migration completed successfully!**
 **📅 Date: October 18, 2025**
 **👤 By: GitHub Copilot**

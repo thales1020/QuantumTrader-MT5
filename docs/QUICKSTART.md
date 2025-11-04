@@ -1,4 +1,4 @@
-# 🚀 Quick Start Guide
+#  Quick Start Guide
 
 Get up and running with ML-SuperTrend-MT5 in 5 minutes!
 
@@ -81,7 +81,7 @@ python run_bot.py --log-level DEBUG
 ## First Time Setup Tips
 
 1. **Enable Algo Trading in MT5**:
-   - Tools → Options → Expert Advisors
+   - Tools  Options  Expert Advisors
    - Check "Allow automated trading"
 
 2. **Start with Conservative Settings**:
@@ -118,17 +118,17 @@ pip install MetaTrader5 --no-cache-dir
 
 ## Next Steps
 
-1. 📊 Monitor your first trades in demo
-2. 📈 Check performance reports in `reports/` folder
-3. 🔧 Fine-tune parameters based on results
+1.  Monitor your first trades in demo
+2.  Check performance reports in `reports/` folder
+3.  Fine-tune parameters based on results
 4. 📚 Read the full documentation
 
 ## Need Help?
 
 - 📖 Full Documentation: [README.md](README.md)
-- 🐛 Report Issues: [GitHub Issues](https://github.com/xPOURY4/ML-SuperTrend-MT5/issues)
+-  Report Issues: [GitHub Issues](https://github.com/xPOURY4/ML-SuperTrend-MT5/issues)
 - 🐦 Twitter: [@TheRealPourya](https://twitter.com/TheRealPourya)
 
 ---
 
-**Remember**: Always test thoroughly on demo before going live! 🎯
+**Remember**: Always test thoroughly on demo before going live! 

@@ -71,13 +71,13 @@ class BalanceChartPlotter:
                         'type': trade_type
                     })
         
-        print(f"✅ Tìm thấy {len(self.balance_data)} balance records")
+        print(f" Tìm thấy {len(self.balance_data)} balance records")
         return len(self.balance_data) > 0
     
     def plot_balance_chart(self, output_file: str = None):
         """Vẽ biểu đồ balance progression"""
         if not self.balance_data:
-            print("❌ Không có dữ liệu balance để vẽ!")
+            print(" Không có dữ liệu balance để vẽ!")
             return
         
         # Convert to DataFrame
@@ -171,7 +171,7 @@ class BalanceChartPlotter:
         # Save or show
         if output_file:
             plt.savefig(output_file, dpi=300, bbox_inches='tight')
-            print(f"✅ Biểu đồ đã lưu: {output_file}")
+            print(f" Biểu đồ đã lưu: {output_file}")
         else:
             plt.show()
         
@@ -189,8 +189,8 @@ def main():
     
     # Check if log file exists
     if not Path(args.log).exists():
-        print(f"❌ Log file not found: {args.log}")
-        print("📁 Available log files:")
+        print(f" Log file not found: {args.log}")
+        print(" Available log files:")
         for log_file in Path('logs').glob('ict_bot_*.log'):
             print(f"   - {log_file}")
         return
@@ -207,7 +207,7 @@ def main():
     if plotter.parse_log():
         plotter.plot_balance_chart(args.output)
     else:
-        print("❌ Không tìm thấy dữ liệu balance trong log file!")
+        print(" Không tìm thấy dữ liệu balance trong log file!")
 
 
 if __name__ == "__main__":

@@ -18,17 +18,17 @@ from engines.ict_backtest_engine import ICTBacktestEngine
 from engines.backtest_engine import BacktestEngine
 
 print("="*80)
-print("📊 BACKTEST: Deployed Bots")
+print(" BACKTEST: Deployed Bots")
 print("="*80)
 print()
 
 # Connect to MT5
 print("📡 Connecting to MT5...")
 if not mt5.initialize():
-    print("❌ MT5 initialization failed")
+    print(" MT5 initialization failed")
     sys.exit(1)
 
-print("✅ Connected to MT5")
+print(" Connected to MT5")
 print()
 
 # Backtest parameters
@@ -86,16 +86,16 @@ try:
     
     if results:
         print("\n" + "="*80)
-        print("📈 ICTBot BACKTEST RESULTS")
+        print(" ICTBot BACKTEST RESULTS")
         print("="*80)
         
-        print(f"\n💰 Financial Summary:")
+        print(f"\n Financial Summary:")
         print(f"   Initial Balance:  ${results['initial_balance']:,.2f}")
         print(f"   Final Balance:    ${results['final_balance']:,.2f}")
         print(f"   Total P/L:        ${results['total_profit']:,.2f}")
         print(f"   Return:           {results['return_pct']:.2f}%")
         
-        print(f"\n📊 Trade Statistics:")
+        print(f"\n Trade Statistics:")
         print(f"   Total Trades:     {results['total_trades']}")
         print(f"   Winning Trades:   {results['winning_trades']} ({results['win_rate']:.1f}%)")
         print(f"   Losing Trades:    {results['losing_trades']}")
@@ -103,7 +103,7 @@ try:
         print(f"   Average Loss:     ${results['avg_loss']:.2f}")
         print(f"   Profit Factor:    {results['profit_factor']:.2f}")
         
-        print(f"\n📉 Risk Metrics:")
+        print(f"\n Risk Metrics:")
         print(f"   Max Drawdown:     ${results['max_drawdown']:.2f} ({results['max_drawdown_pct']:.2f}%)")
         print(f"   Sharpe Ratio:     {results.get('sharpe_ratio', 0):.2f}")
         
@@ -114,20 +114,20 @@ try:
             df_trades = pd.DataFrame(results['trades'])
             trades_file = f"reports/ict_backtest_{symbol}_{timestamp}.csv"
             df_trades.to_csv(trades_file, index=False)
-            print(f"\n💾 Trades saved to: {trades_file}")
+            print(f"\n Trades saved to: {trades_file}")
         
         if results.get('equity_curve'):
             df_equity = pd.DataFrame(results['equity_curve'])
             equity_file = f"reports/ict_equity_{symbol}_{timestamp}.csv"
             df_equity.to_csv(equity_file, index=False)
-            print(f"💾 Equity curve saved to: {equity_file}")
+            print(f" Equity curve saved to: {equity_file}")
         
-        print("\n✅ ICTBot Backtest Complete")
+        print("\n ICTBot Backtest Complete")
     else:
-        print("\n⚠️  No trades generated during backtest period")
+        print("\n  No trades generated during backtest period")
         
 except Exception as e:
-    print(f"\n❌ ICTBot Backtest Failed: {e}")
+    print(f"\n ICTBot Backtest Failed: {e}")
     import traceback
     traceback.print_exc()
 
@@ -180,16 +180,16 @@ try:
     
     if results:
         print("\n" + "="*80)
-        print("📈 SuperTrendBot BACKTEST RESULTS")
+        print(" SuperTrendBot BACKTEST RESULTS")
         print("="*80)
         
-        print(f"\n💰 Financial Summary:")
+        print(f"\n Financial Summary:")
         print(f"   Initial Balance:  ${results['initial_balance']:,.2f}")
         print(f"   Final Balance:    ${results['final_balance']:,.2f}")
         print(f"   Total P/L:        ${results['total_profit']:,.2f}")
         print(f"   Return:           {results['return_pct']:.2f}%")
         
-        print(f"\n📊 Trade Statistics:")
+        print(f"\n Trade Statistics:")
         print(f"   Total Trades:     {results['total_trades']}")
         print(f"   Winning Trades:   {results['winning_trades']} ({results['win_rate']:.1f}%)")
         print(f"   Losing Trades:    {results['losing_trades']}")
@@ -197,7 +197,7 @@ try:
         print(f"   Average Loss:     ${results['avg_loss']:.2f}")
         print(f"   Profit Factor:    {results['profit_factor']:.2f}")
         
-        print(f"\n📉 Risk Metrics:")
+        print(f"\n Risk Metrics:")
         print(f"   Max Drawdown:     ${results['max_drawdown']:.2f} ({results['max_drawdown_pct']:.2f}%)")
         print(f"   Sharpe Ratio:     {results.get('sharpe_ratio', 0):.2f}")
         
@@ -208,20 +208,20 @@ try:
             df_trades = pd.DataFrame(results['trades'])
             trades_file = f"reports/supertrend_backtest_{symbol}_{timestamp}.csv"
             df_trades.to_csv(trades_file, index=False)
-            print(f"\n💾 Trades saved to: {trades_file}")
+            print(f"\n Trades saved to: {trades_file}")
         
         if results.get('equity_curve'):
             df_equity = pd.DataFrame(results['equity_curve'])
             equity_file = f"reports/supertrend_equity_{symbol}_{timestamp}.csv"
             df_equity.to_csv(equity_file, index=False)
-            print(f"💾 Equity curve saved to: {equity_file}")
+            print(f" Equity curve saved to: {equity_file}")
         
-        print("\n✅ SuperTrendBot Backtest Complete")
+        print("\n SuperTrendBot Backtest Complete")
     else:
-        print("\n⚠️  No trades generated during backtest period")
+        print("\n  No trades generated during backtest period")
         
 except Exception as e:
-    print(f"\n❌ SuperTrendBot Backtest Failed: {e}")
+    print(f"\n SuperTrendBot Backtest Failed: {e}")
     import traceback
     traceback.print_exc()
 
@@ -232,7 +232,7 @@ print()
 # =============================================================================
 
 print("="*80)
-print("📊 BACKTEST COMPARISON SUMMARY")
+print(" BACKTEST COMPARISON SUMMARY")
 print("="*80)
 print()
 print("Both bots tested on same period with same risk parameters")
@@ -245,8 +245,8 @@ print()
 
 # Cleanup
 mt5.shutdown()
-print("✅ MT5 connection closed")
+print(" MT5 connection closed")
 print()
 print("="*80)
-print("🎉 BACKTEST COMPLETE")
+print(" BACKTEST COMPLETE")
 print("="*80)

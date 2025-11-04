@@ -1,4 +1,4 @@
-# 🚀 Phase 1.5: SuperTrendBot Refactoring Plan
+#  Phase 1.5: SuperTrendBot Refactoring Plan
 
 **Date**: October 23, 2025  
 **Status**: Planning  
@@ -6,13 +6,13 @@
 
 ---
 
-## 🎯 Objective
+##  Objective
 
 Refactor SuperTrendBot to inherit from BaseTradingBot while maintaining all ML optimization features (K-means clustering, multi-factor SuperTrend).
 
 ---
 
-## 📊 Current SuperTrendBot Analysis
+##  Current SuperTrendBot Analysis
 
 ### File: `core/supertrend_bot.py` (670 lines)
 
@@ -23,33 +23,33 @@ Refactor SuperTrendBot to inherit from BaseTradingBot while maintaining all ML o
 
 class SuperTrendBot:
     - __init__()
-    - _setup_logger()                     → Will inherit from base
-    - connect()                           → Will inherit from base
-    - get_data()                          → Will inherit from base
-    - calculate_supertrends()             → Keep (SuperTrend specific)
-    - perform_clustering()                → Keep (ML specific)
-    - calculate_position_size()           → Will inherit from base
-    - check_volume_condition()            → Keep (SuperTrend specific)
-    - place_order()                       → Will inherit from base
-    - place_dual_orders()                 → Will inherit from base
-    - modify_sl()                         → Will inherit from base
-    - check_and_move_sl_to_breakeven()    → Will inherit from base
-    - update_trailing_stop()              → Keep (SuperTrend specific)
-    - run_cycle()                         → Will use base template
-    - calculate_statistics()              → Will inherit from base
-    - run()                               → Will inherit from base
-    - shutdown()                          → Will inherit from base
+    - _setup_logger()                      Will inherit from base
+    - connect()                            Will inherit from base
+    - get_data()                           Will inherit from base
+    - calculate_supertrends()              Keep (SuperTrend specific)
+    - perform_clustering()                 Keep (ML specific)
+    - calculate_position_size()            Will inherit from base
+    - check_volume_condition()             Keep (SuperTrend specific)
+    - place_order()                        Will inherit from base
+    - place_dual_orders()                  Will inherit from base
+    - modify_sl()                          Will inherit from base
+    - check_and_move_sl_to_breakeven()     Will inherit from base
+    - update_trailing_stop()               Keep (SuperTrend specific)
+    - run_cycle()                          Will use base template
+    - calculate_statistics()               Will inherit from base
+    - run()                                Will inherit from base
+    - shutdown()                           Will inherit from base
 ```
 
 ### Key Features to Preserve:
-1. ✅ **Multi-factor SuperTrend** calculation (min/max factor)
-2. ✅ **K-means clustering** for factor optimization
-3. ✅ **Volume-adjusted performance** tracking
-4. ✅ **Normalized volatility** adjustment
-5. ✅ **Cluster choice** (Best/Average/Worst)
-6. ✅ **Trailing stop** logic
-7. ✅ **Volume condition** filtering
-8. ✅ **Crypto support** in position sizing
+1.  **Multi-factor SuperTrend** calculation (min/max factor)
+2.  **K-means clustering** for factor optimization
+3.  **Volume-adjusted performance** tracking
+4.  **Normalized volatility** adjustment
+5.  **Cluster choice** (Best/Average/Worst)
+6.  **Trailing stop** logic
+7.  **Volume condition** filtering
+8.  **Crypto support** in position sizing
 
 ---
 
@@ -286,7 +286,7 @@ def hook_post_cycle(self, cycle_data: Dict):
 
 ---
 
-## 📊 Code Reduction Estimate
+##  Code Reduction Estimate
 
 ### Before (Original):
 ```
@@ -307,22 +307,22 @@ Total: ~390 lines
 
 ---
 
-## ✅ Success Criteria
+##  Success Criteria
 
-1. ✅ SuperTrendBot inherits from BaseTradingBot
-2. ✅ All ML features preserved (K-means, multi-factor)
-3. ✅ calculate_indicators() implements SuperTrend logic
-4. ✅ generate_signal() uses optimal factor
-5. ✅ All SuperTrend-specific methods working
-6. ✅ Volume condition filtering working
-7. ✅ Trailing stop logic preserved
-8. ✅ Crypto support maintained
-9. ✅ Tests pass with real data
-10. ✅ Code reduction achieved (-40%+)
+1.  SuperTrendBot inherits from BaseTradingBot
+2.  All ML features preserved (K-means, multi-factor)
+3.  calculate_indicators() implements SuperTrend logic
+4.  generate_signal() uses optimal factor
+5.  All SuperTrend-specific methods working
+6.  Volume condition filtering working
+7.  Trailing stop logic preserved
+8.  Crypto support maintained
+9.  Tests pass with real data
+10.  Code reduction achieved (-40%+)
 
 ---
 
-## 🎯 Key Differences from ICTBot
+##  Key Differences from ICTBot
 
 | Aspect | ICTBot | SuperTrendBot |
 |--------|--------|---------------|
@@ -335,11 +335,11 @@ Total: ~390 lines
 
 ---
 
-## 🚀 Implementation Steps
+##  Implementation Steps
 
 ### Today's Session:
-1. ✅ Analyze current SuperTrendBot
-2. ✅ Create refactoring plan
+1.  Analyze current SuperTrendBot
+2.  Create refactoring plan
 3. ⏳ Implement SuperTrendConfig
 4. ⏳ Implement SuperTrendBot class
 5. ⏳ Implement calculate_indicators()
@@ -353,7 +353,7 @@ Total: ~390 lines
 
 ---
 
-## 💡 Special Considerations
+##  Special Considerations
 
 ### 1. ML Optimization State
 - Need to cache supertrends dict
@@ -377,7 +377,7 @@ Total: ~390 lines
 
 ---
 
-## 📝 Notes
+##  Notes
 
 - SuperTrendBot is MORE COMPLEX than ICTBot due to ML
 - Need to preserve all clustering logic
@@ -386,7 +386,7 @@ Total: ~390 lines
 
 ---
 
-**Ready to start implementation!** 🚀
+**Ready to start implementation!** 
 
 ---
 

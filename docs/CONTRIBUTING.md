@@ -140,4 +140,4 @@ def calculate_position_size(
 
 Feel free to contact the maintainer at [@TheRealPourya](https://twitter.com/TheRealPourya) on Twitter.
 
-Thank you for contributing! 🚀
+Thank you for contributing! 

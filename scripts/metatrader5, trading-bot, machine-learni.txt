@@ -1,0 +1,2 @@
+metatrader5, trading-bot, machine-learning, algorithmic-trading,
+forex-trading, python, fintech, automated-trading

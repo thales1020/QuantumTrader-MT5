@@ -16,17 +16,17 @@ from core.ict_bot import ICTBot, ICTConfig
 from core.supertrend_bot import SuperTrendBot, SuperTrendConfig
 
 print("="*80)
-print("📊 SIMPLE BACKTEST ANALYSIS: Deployed Bots")
+print(" SIMPLE BACKTEST ANALYSIS: Deployed Bots")
 print("="*80)
 print()
 
 # Connect to MT5
 print("📡 Connecting to MT5...")
 if not mt5.initialize():
-    print("❌ MT5 initialization failed")
+    print(" MT5 initialization failed")
     sys.exit(1)
 
-print("✅ Connected to MT5")
+print(" Connected to MT5")
 print()
 
 # Test parameters
@@ -46,14 +46,14 @@ print("📥 Fetching historical data...")
 rates = mt5.copy_rates_range(symbol, timeframe, start_date, end_date)
 
 if rates is None or len(rates) == 0:
-    print("❌ Failed to fetch data")
+    print(" Failed to fetch data")
     mt5.shutdown()
     sys.exit(1)
 
 df = pd.DataFrame(rates)
 df['time'] = pd.to_datetime(df['time'], unit='s')
 
-print(f"✅ Loaded {len(df)} bars")
+print(f" Loaded {len(df)} bars")
 print(f"   Period: {df['time'].iloc[0]} to {df['time'].iloc[-1]}")
 print(f"   Price range: {df['close'].min():.5f} - {df['close'].max():.5f}")
 print()
@@ -79,22 +79,22 @@ try:
     
     ict_bot = ICTBot(ict_config)
     
-    print("\n🔍 Analyzing full period with ICT concepts...")
+    print("\n Analyzing full period with ICT concepts...")
     df_ict = ict_bot.calculate_indicators(df.copy())
     
-    print(f"\n✅ ICT Analysis Complete:")
+    print(f"\n ICT Analysis Complete:")
     print(f"   Order Blocks detected: {len(ict_bot.order_blocks)}")
     print(f"   Fair Value Gaps found: {len(ict_bot.fair_value_gaps)}")
     print(f"   Market Structure: {ict_bot.market_structure.get('trend', 'unknown')}")
     
     if ict_bot.order_blocks:
-        print(f"\n   📦 Order Blocks Summary:")
+        print(f"\n    Order Blocks Summary:")
         bullish_obs = [ob for ob in ict_bot.order_blocks if ob.direction == 'bullish']
         bearish_obs = [ob for ob in ict_bot.order_blocks if ob.direction == 'bearish']
         print(f"      Bullish: {len(bullish_obs)}")
         print(f"      Bearish: {len(bearish_obs)}")
         
-        print(f"\n   📦 Top 5 Strongest Order Blocks:")
+        print(f"\n    Top 5 Strongest Order Blocks:")
         sorted_obs = sorted(ict_bot.order_blocks, key=lambda x: x.strength, reverse=True)[:5]
         for i, ob in enumerate(sorted_obs, 1):
             mid_price = (ob.price_high + ob.price_low) / 2
@@ -112,7 +112,7 @@ try:
     buy_signals = 0
     sell_signals = 0
     
-    print(f"\n🎯 Scanning for trading signals...")
+    print(f"\n Scanning for trading signals...")
     for i in range(50, len(df)):  # Start after enough bars for analysis
         df_window = df.iloc[:i+1].copy()
         df_analyzed = ict_bot.calculate_indicators(df_window)
@@ -130,13 +130,13 @@ try:
     print(f"   SELL signals: {sell_signals}")
     
     if signals_count == 0:
-        print(f"\n   ℹ️  No trading signals during this period")
-        print(f"   📝 Note: ICT strategy is selective and waits for high-quality setups")
+        print(f"\n     No trading signals during this period")
+        print(f"    Note: ICT strategy is selective and waits for high-quality setups")
     
-    print(f"\n✅ ICTBot Analysis Complete")
+    print(f"\n ICTBot Analysis Complete")
     
 except Exception as e:
-    print(f"\n❌ ICTBot Analysis Failed: {e}")
+    print(f"\n ICTBot Analysis Failed: {e}")
     import traceback
     traceback.print_exc()
 
@@ -164,10 +164,10 @@ try:
     
     st_bot = SuperTrendBot(st_config)
     
-    print("\n🔍 Analyzing full period with SuperTrend + ML...")
+    print("\n Analyzing full period with SuperTrend + ML...")
     df_st = st_bot.calculate_indicators(df.copy())
     
-    print(f"\n✅ SuperTrend Analysis Complete:")
+    print(f"\n SuperTrend Analysis Complete:")
     print(f"   SuperTrend indicators: {len(st_bot.supertrends)}")
     print(f"   Factors tested: {sorted(st_bot.supertrends.keys())}")
     print(f"   ML Optimal Factor: {st_bot.optimal_factor:.2f}")
@@ -178,7 +178,7 @@ try:
     buy_signals = 0
     sell_signals = 0
     
-    print(f"\n🎯 Scanning for trading signals...")
+    print(f"\n Scanning for trading signals...")
     for i in range(50, len(df)):
         df_window = df.iloc[:i+1].copy()
         df_analyzed = st_bot.calculate_indicators(df_window)
@@ -196,13 +196,13 @@ try:
     print(f"   SELL signals: {sell_signals}")
     
     if signals_count == 0:
-        print(f"\n   ℹ️  No trading signals during this period")
-        print(f"   📝 Note: SuperTrend waits for trend confirmations + volume")
+        print(f"\n     No trading signals during this period")
+        print(f"    Note: SuperTrend waits for trend confirmations + volume")
     
-    print(f"\n✅ SuperTrendBot Analysis Complete")
+    print(f"\n SuperTrendBot Analysis Complete")
     
 except Exception as e:
-    print(f"\n❌ SuperTrendBot Analysis Failed: {e}")
+    print(f"\n SuperTrendBot Analysis Failed: {e}")
     import traceback
     traceback.print_exc()
 
@@ -213,23 +213,23 @@ print()
 # =============================================================================
 
 print("="*80)
-print("📊 ANALYSIS SUMMARY")
+print(" ANALYSIS SUMMARY")
 print("="*80)
 print()
-print(f"✅ Both bots successfully analyzed {len(df)} bars of historical data")
-print(f"✅ ICTBot: Smart Money Concepts working correctly")
-print(f"✅ SuperTrendBot: ML optimization selecting best parameters")
+print(f" Both bots successfully analyzed {len(df)} bars of historical data")
+print(f" ICTBot: Smart Money Concepts working correctly")
+print(f" SuperTrendBot: ML optimization selecting best parameters")
 print()
-print(f"📝 Note: Signal counts may be low if market is ranging/choppy")
-print(f"📝 Both strategies are designed to be selective (quality over quantity)")
+print(f" Note: Signal counts may be low if market is ranging/choppy")
+print(f" Both strategies are designed to be selective (quality over quantity)")
 print()
-print(f"💡 Bots are working correctly and ready for live trading!")
+print(f" Bots are working correctly and ready for live trading!")
 print()
 
 # Cleanup
 mt5.shutdown()
-print("✅ MT5 connection closed")
+print(" MT5 connection closed")
 print()
 print("="*80)
-print("🎉 ANALYSIS COMPLETE")
+print(" ANALYSIS COMPLETE")
 print("="*80)

@@ -1,42 +1,42 @@
-# 🔍 PHÂN TÍCH FILES DƯ THỪA TRONG PROJECT
+#  PHÂN TÍCH FILES DƯ THỪA TRONG PROJECT
 
 ## 📅 Ngày phân tích: 18 Tháng 10, 2025
 
 ---
 
-## 🚨 FILES DƯ THỪA CẦN XÓA
+##  FILES DƯ THỪA CẦN XÓA
 
-### 1. **DUPLICATE FILES** ❌
+### 1. **DUPLICATE FILES** 
 
 #### `config.json` (root) - **DƯ THỪA**
 - **Vị trí**: `C:\github\ML-SuperTrend-MT5\config.json` (1.14 KB)
 - **Duplicate of**: `config/config.json` (5.72 KB)
 - **Lý do xóa**: Đã có config.json trong `config/` folder
-- **Action**: ❌ **XÓA**
+- **Action**:  **XÓA**
 
 #### `reorganize_project.py` (root) - **DƯ THỪA**
 - **Vị trí**: `C:\github\ML-SuperTrend-MT5\reorganize_project.py` (9.01 KB)
 - **Duplicate of**: `organize_project.py` (16.37 KB - newer version)
 - **Lý do xóa**: Đã có `organize_project.py` mới hơn và tốt hơn
-- **Action**: ❌ **XÓA**
+- **Action**:  **XÓA**
 
 ---
 
 ### 2. **OLD LOG FILES** 🗑️
 
 #### Log files trong root (đã di chuyển vào `logs/`)
-- ❌ **KHÔNG CÒN** - Đã được clean khi reorganize
+-  **KHÔNG CÒN** - Đã được clean khi reorganize
 
 #### Large log files cần clean
 - `logs/ict_bot_smc.log` - **8,868 KB** 😱
 - `logs/ict_bot_20251016.log` - **632.81 KB**
 - `logs/supertrend_bot.log` - **162.82 KB**
 - **Lý do**: Quá cũ, chiếm dung lượng
-- **Action**: ⚠️ **NÊN XÓA** (hoặc compress với rotate_logs.py)
+- **Action**:  **NÊN XÓA** (hoặc compress với rotate_logs.py)
 
 ---
 
-### 3. **OLD REPORTS** 📊
+### 3. **OLD REPORTS** 
 
 #### Backtest reports cũ (3-7 ngày trước)
 ```
@@ -49,21 +49,21 @@ reports/ict_smc_equity_*_20251017_*.csv           (x10 files - LARGE: 3.3MB each
 
 - **Tổng kích thước**: ~20+ MB
 - **Lý do**: Reports cũ, không cần thiết cho development
-- **Action**: ⚠️ **CÂN NHẮC XÓA** (backup nếu cần)
+- **Action**:  **CÂN NHẮC XÓA** (backup nếu cần)
 
 ---
 
-### 4. **DUPLICATE DOCS** 📝
+### 4. **DUPLICATE DOCS** 
 
 #### `docs/VPS_DEPLOYMENT_GUIDE.md` - **CÓ THỂ DƯ THỪA**
 - **Vị trí**: `C:\github\ML-SuperTrend-MT5\docs\VPS_DEPLOYMENT_GUIDE.md` (16.17 KB)
 - **Duplicate of**: `docs/MT5_VPS_DEPLOYMENT.md` (19.91 KB - comprehensive hơn)
 - **Lý do**: Có 2 files guide giống nhau về VPS
-- **Action**: ⚠️ **KIỂM TRA & MERGE** hoặc XÓA nếu duplicate
+- **Action**:  **KIỂM TRA & MERGE** hoặc XÓA nếu duplicate
 
 ---
 
-### 5. **STATISTIC IMAGES** 📈
+### 5. **STATISTIC IMAGES** 
 
 #### PNG charts cũ
 ```
@@ -74,55 +74,55 @@ statistic/balance_chart_20251016_201630.png    (863.14 KB)
 
 - **Tổng kích thước**: ~2.5 MB
 - **Lý do**: Charts cũ từ 2 ngày trước
-- **Action**: ⚠️ **NÊN XÓA** (hoặc move to archive)
+- **Action**:  **NÊN XÓA** (hoặc move to archive)
 
 ---
 
-## ✅ FILES CẦN GIỮ (KHÔNG DƯ THỪA)
+##  FILES CẦN GIỮ (KHÔNG DƯ THỪA)
 
-### **Documentation** ✅
+### **Documentation** 
 - All markdown files in `docs/` (trừ VPS_DEPLOYMENT_GUIDE.md nếu duplicate)
 - README files in subdirectories
 - Migration guides, technology stack docs
 
-### **Core Code** ✅
+### **Core Code** 
 - `core/*.py` - Bot logic
 - `engines/*.py` - Backtest engines
 - `utils/*.py` - Utilities
 - `scripts/**/*.py` - All scripts (đã organize tốt)
 
-### **Config & Setup** ✅
+### **Config & Setup** 
 - `config/config.json` - Main config
 - `config/config.example.json` - Example
 - `setup.py`, `requirements.txt`, `MANIFEST.in`
 - `.gitignore` (nếu có)
 
-### **Tests** ✅
+### **Tests** 
 - `tests/*.py` - All test files
 - Test documentation
 
-### **Data** ✅
+### **Data** 
 - `data/ta_lib-0.6.7-cp311-cp311-win_amd64.whl` - TA-Lib wheel (898 KB)
 
 ---
 
-## 📊 TỔNG HỢP
+##  TỔNG HỢP
 
 | Category | Files | Total Size | Action |
 |----------|-------|------------|--------|
-| **Duplicate configs** | 1 | 1.14 KB | ❌ XÓA |
-| **Duplicate scripts** | 1 | 9.01 KB | ❌ XÓA |
-| **Old logs** | 3 | 9.6 MB | ⚠️ Clean |
-| **Old reports** | 25+ | ~20 MB | ⚠️ Clean |
-| **Old charts** | 3 | 2.5 MB | ⚠️ Xóa |
-| **Duplicate docs** | 1? | 16.17 KB | ⚠️ Kiểm tra |
+| **Duplicate configs** | 1 | 1.14 KB |  XÓA |
+| **Duplicate scripts** | 1 | 9.01 KB |  XÓA |
+| **Old logs** | 3 | 9.6 MB |  Clean |
+| **Old reports** | 25+ | ~20 MB |  Clean |
+| **Old charts** | 3 | 2.5 MB |  Xóa |
+| **Duplicate docs** | 1? | 16.17 KB |  Kiểm tra |
 | **TOTAL** | **30+** | **~32 MB** | 🧹 Cleanup |
 
 ---
 
-## 🎯 KHUYẾN NGHỊ CLEANUP
+##  KHUYẾN NGHỊ CLEANUP
 
-### **Priority 1: XÓA NGAY** ❌
+### **Priority 1: XÓA NGAY** 
 
 ```bash
 # 1. Duplicate config
@@ -147,7 +147,7 @@ Remove-Item logs/ict_bot_smc.log
 Remove-Item logs/supertrend_bot.log
 ```
 
-### **Priority 3: CLEAN REPORTS** 📊
+### **Priority 3: CLEAN REPORTS** 
 
 ```bash
 # Xóa reports cũ hơn 7 ngày
@@ -159,13 +159,13 @@ Remove-Item reports/*_20251016_*.json
 Remove-Item reports/*_20251017_*.csv  # Nếu không cần
 ```
 
-### **Priority 4: KIỂM TRA DOCS** 📝
+### **Priority 4: KIỂM TRA DOCS** 
 
 ```bash
 # So sánh 2 files VPS deployment
 code --diff docs/VPS_DEPLOYMENT_GUIDE.md docs/MT5_VPS_DEPLOYMENT.md
 
-# Nếu duplicate → xóa file cũ hơn
+# Nếu duplicate  xóa file cũ hơn
 ```
 
 ---
@@ -180,20 +180,20 @@ Write-Host "🧹 CLEANING UP PROJECT..." -ForegroundColor Yellow
 # 1. Remove duplicate config
 if (Test-Path "config.json") {
     Remove-Item "config.json" -Force
-    Write-Host "✅ Removed: config.json (duplicate)" -ForegroundColor Green
+    Write-Host " Removed: config.json (duplicate)" -ForegroundColor Green
 }
 
 # 2. Remove old reorganize script
 if (Test-Path "reorganize_project.py") {
     Remove-Item "reorganize_project.py" -Force
-    Write-Host "✅ Removed: reorganize_project.py (duplicate)" -ForegroundColor Green
+    Write-Host " Removed: reorganize_project.py (duplicate)" -ForegroundColor Green
 }
 
 # 3. Clean old charts
 $charts = Get-ChildItem "statistic/*.png" -ErrorAction SilentlyContinue
 if ($charts) {
     $charts | Remove-Item -Force
-    Write-Host "✅ Removed: $($charts.Count) old chart images" -ForegroundColor Green
+    Write-Host " Removed: $($charts.Count) old chart images" -ForegroundColor Green
 }
 
 # 4. Clean large old logs
@@ -206,7 +206,7 @@ foreach ($log in $oldLogs) {
     if (Test-Path $log) {
         $size = (Get-Item $log).Length / 1MB
         Remove-Item $log -Force
-        Write-Host "✅ Removed: $log ($([math]::Round($size, 2)) MB)" -ForegroundColor Green
+        Write-Host " Removed: $log ($([math]::Round($size, 2)) MB)" -ForegroundColor Green
     }
 }
 
@@ -216,32 +216,32 @@ $oldReports = Get-ChildItem "reports/*" | Where-Object { $_.LastWriteTime -lt $c
 if ($oldReports) {
     $totalSize = ($oldReports | Measure-Object -Property Length -Sum).Sum / 1MB
     $oldReports | Remove-Item -Force
-    Write-Host "✅ Removed: $($oldReports.Count) old reports ($([math]::Round($totalSize, 2)) MB)" -ForegroundColor Green
+    Write-Host " Removed: $($oldReports.Count) old reports ($([math]::Round($totalSize, 2)) MB)" -ForegroundColor Green
 }
 
 Write-Host ""
-Write-Host "🎉 CLEANUP COMPLETED!" -ForegroundColor Green
+Write-Host " CLEANUP COMPLETED!" -ForegroundColor Green
 Write-Host ""
 
 # Show space saved
 $spaceSaved = 32  # Approximate MB
-Write-Host "💾 Estimated space saved: ~$spaceSaved MB" -ForegroundColor Cyan
+Write-Host " Estimated space saved: ~$spaceSaved MB" -ForegroundColor Cyan
 ```
 
 ---
 
-## 🔍 KIỂM TRA DUPLICATE DOCS
+##  KIỂM TRA DUPLICATE DOCS
 
 ```bash
 # So sánh 2 VPS guides
 diff docs/VPS_DEPLOYMENT_GUIDE.md docs/MT5_VPS_DEPLOYMENT.md
 
-# Nếu giống nhau → giữ file mới hơn (MT5_VPS_DEPLOYMENT.md)
+# Nếu giống nhau  giữ file mới hơn (MT5_VPS_DEPLOYMENT.md)
 ```
 
 ---
 
-## ✅ SAU KHI CLEANUP
+##  SAU KHI CLEANUP
 
 ### **Space Saved**
 - Duplicate files: ~10 KB
@@ -251,24 +251,24 @@ diff docs/VPS_DEPLOYMENT_GUIDE.md docs/MT5_VPS_DEPLOYMENT.md
 - **TOTAL**: ~**32 MB**
 
 ### **Benefits**
-✅ Root directory cleaner
-✅ Faster Git operations
-✅ Less confusion
-✅ Better organization
-✅ Reduced disk usage
+ Root directory cleaner
+ Faster Git operations
+ Less confusion
+ Better organization
+ Reduced disk usage
 
 ---
 
-## 🚀 NEXT STEPS
+##  NEXT STEPS
 
-1. ✅ Chạy cleanup script
-2. ✅ Test project vẫn hoạt động
-3. ✅ Commit changes
-4. ✅ Setup log rotation schedule
-5. ✅ Setup report cleanup schedule
+1.  Chạy cleanup script
+2.  Test project vẫn hoạt động
+3.  Commit changes
+4.  Setup log rotation schedule
+5.  Setup report cleanup schedule
 
 ---
 
 **📅 Created: October 18, 2025**
 **👤 Analyzed by: GitHub Copilot**
-**📦 Project: ML-SuperTrend-MT5**
+** Project: ML-SuperTrend-MT5**

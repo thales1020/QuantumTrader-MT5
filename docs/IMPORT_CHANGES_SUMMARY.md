@@ -1,12 +1,12 @@
-# ✅ TÓM TẮT: CẬP NHẬT IMPORT PATHS SAU KHI TỔ CHỨC LẠI
+#  TÓM TẮT: CẬP NHẬT IMPORT PATHS SAU KHI TỔ CHỨC LẠI
 
-## 🎯 Câu Trả Lời: CÓ, ĐÃ THAY ĐỔI & SỬA XONG!
+##  Câu Trả Lời: CÓ, ĐÃ THAY ĐỔI & SỬA XONG!
 
 ---
 
-## 📝 CÁC THAY ĐỔI ĐÃ THỰC HIỆN
+##  CÁC THAY ĐỔI ĐÃ THỰC HIỆN
 
-### ✅ 1. **Windows Batch Scripts** (2 files)
+###  1. **Windows Batch Scripts** (2 files)
 
 #### `scripts/windows/start_bot.bat`
 ```bat
@@ -30,7 +30,7 @@ set BOT_SCRIPT=scripts\runners\run_bot.py
 
 ---
 
-### ✅ 2. **Automation Scripts** (3 files)
+###  2. **Automation Scripts** (3 files)
 
 #### `scripts/automation/watchdog.py`
 ```python
@@ -84,88 +84,88 @@ report_dir = os.path.join(PROJECT_ROOT, 'reports')
 
 ---
 
-## ✅ KHÔNG CẦN THAY ĐỔI
+##  KHÔNG CẦN THAY ĐỔI
 
 ### **Core Code**
-- ✅ `core/*.py` - Không import từ scripts
-- ✅ `engines/*.py` - Không import từ scripts  
-- ✅ `tests/*.py` - Không import từ scripts
-- ✅ `utils/*.py` - Không import từ scripts
+-  `core/*.py` - Không import từ scripts
+-  `engines/*.py` - Không import từ scripts  
+-  `tests/*.py` - Không import từ scripts
+-  `utils/*.py` - Không import từ scripts
 
 ### **Runner Scripts** 
-- ✅ `scripts/runners/run_bot.py` - Chạy từ root, paths relative đúng
-- ✅ `scripts/runners/run_ict_bot.py` - Chạy từ root, paths relative đúng
-- ✅ `scripts/runners/run_ict_bot_smc.py` - Chạy từ root, paths relative đúng
+-  `scripts/runners/run_bot.py` - Chạy từ root, paths relative đúng
+-  `scripts/runners/run_ict_bot.py` - Chạy từ root, paths relative đúng
+-  `scripts/runners/run_ict_bot_smc.py` - Chạy từ root, paths relative đúng
 
 ### **Backtest Scripts**
-- ✅ `scripts/backtest/*.py` - Không có hard-coded paths
+-  `scripts/backtest/*.py` - Không có hard-coded paths
 
 ### **Analysis Scripts**
-- ✅ `scripts/analysis/*.py` - Paths relative, không cần sửa
+-  `scripts/analysis/*.py` - Paths relative, không cần sửa
 
 ### **Utility Scripts**
-- ✅ `scripts/utils/*.py` - Paths relative, không cần sửa
+-  `scripts/utils/*.py` - Paths relative, không cần sửa
 
 ---
 
-## 🧪 ĐÃ TEST & HOẠT ĐỘNG
+##  ĐÃ TEST & HOẠT ĐỘNG
 
 ```bash
-✅ python scripts/automation/rotate_logs.py
-   → OK, tìm được logs/ và reports/
+ python scripts/automation/rotate_logs.py
+    OK, tìm được logs/ và reports/
 
 ⏳ python scripts/automation/health_check.py
-   → Cần MT5 running để test đầy đủ
+    Cần MT5 running để test đầy đủ
 
 ⏳ python scripts/automation/watchdog.py
-   → Cần install psutil (pip install psutil)
+    Cần install psutil (pip install psutil)
 
 ⏳ scripts\windows\start_bot.bat
-   → Cần test trên Windows với bot running
+    Cần test trên Windows với bot running
 ```
 
 ---
 
-## 📊 TỔNG KẾT
+##  TỔNG KẾT
 
 | Category | Files | Changed | Status |
 |----------|-------|---------|--------|
-| **Batch Scripts** | 2 | 2 | ✅ Done |
-| **Automation** | 3 | 3 | ✅ Done |
-| **Runners** | 6 | 0 | ✅ No change needed |
-| **Backtest** | 4 | 0 | ✅ No change needed |
-| **Analysis** | 4 | 0 | ✅ No change needed |
-| **Utils** | 6 | 0 | ✅ No change needed |
-| **Core** | - | 0 | ✅ No change needed |
-| **Tests** | - | 0 | ✅ No change needed |
-| **TOTAL** | 25+ | **5** | **✅ All Fixed** |
+| **Batch Scripts** | 2 | 2 |  Done |
+| **Automation** | 3 | 3 |  Done |
+| **Runners** | 6 | 0 |  No change needed |
+| **Backtest** | 4 | 0 |  No change needed |
+| **Analysis** | 4 | 0 |  No change needed |
+| **Utils** | 6 | 0 |  No change needed |
+| **Core** | - | 0 |  No change needed |
+| **Tests** | - | 0 |  No change needed |
+| **TOTAL** | 25+ | **5** | ** All Fixed** |
 
 ---
 
-## 🎯 KEY CHANGES SUMMARY
+##  KEY CHANGES SUMMARY
 
-1. **Batch files** → Sửa BOT_SCRIPT paths
-2. **Automation scripts** → Thêm PROJECT_ROOT detection
-3. **All paths** → Absolute paths dựa trên PROJECT_ROOT
-4. **Log/Report dirs** → Dynamic resolution từ root
+1. **Batch files**  Sửa BOT_SCRIPT paths
+2. **Automation scripts**  Thêm PROJECT_ROOT detection
+3. **All paths**  Absolute paths dựa trên PROJECT_ROOT
+4. **Log/Report dirs**  Dynamic resolution từ root
 
 ---
 
-## 🚀 READY TO USE
+##  READY TO USE
 
 ```bash
 # All these work now from project root:
-python scripts/automation/rotate_logs.py              ✅
-python scripts/automation/health_check.py --alerts    ✅
-python scripts/automation/watchdog.py                 ✅
-scripts\windows\start_bot.bat                         ✅
+python scripts/automation/rotate_logs.py              
+python scripts/automation/health_check.py --alerts    
+python scripts/automation/watchdog.py                 
+scripts\windows\start_bot.bat                         
 ```
 
 ---
 
 ## 📋 NEXT STEPS
 
-1. ✅ Test trên local: `python scripts/automation/rotate_logs.py`
+1.  Test trên local: `python scripts/automation/rotate_logs.py`
 2. ⏳ Install psutil: `pip install psutil`
 3. ⏳ Test watchdog: `python scripts/automation/watchdog.py`
 4. ⏳ Test health check: `python scripts/automation/health_check.py`
@@ -175,7 +175,7 @@ scripts\windows\start_bot.bat                         ✅
 
 ---
 
-**✅ Tất cả imports đã được cập nhật thành công!**
+** Tất cả imports đã được cập nhật thành công!**
 
 **Các scripts giờ chạy được từ bất kỳ vị trí nào, tự động detect PROJECT_ROOT!**
 

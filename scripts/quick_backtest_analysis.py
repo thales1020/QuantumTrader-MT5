@@ -20,16 +20,16 @@ from core.ict_bot import ICTBot, ICTConfig
 from core.supertrend_bot import SuperTrendBot, SuperTrendConfig
 
 print("="*80)
-print("⚡ QUICK BACKTEST ANALYSIS - Optimized")
+print(" QUICK BACKTEST ANALYSIS - Optimized")
 print("="*80)
 print()
 
 # Connect to MT5
 if not mt5.initialize():
-    print("❌ MT5 initialization failed")
+    print(" MT5 initialization failed")
     sys.exit(1)
 
-print("✅ Connected to MT5")
+print(" Connected to MT5")
 print()
 
 # Test parameters
@@ -49,14 +49,14 @@ print("📥 Fetching data...")
 rates = mt5.copy_rates_range(symbol, timeframe, start_date, end_date)
 
 if rates is None or len(rates) == 0:
-    print("❌ Failed to fetch data")
+    print(" Failed to fetch data")
     mt5.shutdown()
     sys.exit(1)
 
 df = pd.DataFrame(rates)
 df['time'] = pd.to_datetime(df['time'], unit='s')
 
-print(f"✅ Loaded {len(df)} bars")
+print(f" Loaded {len(df)} bars")
 print()
 
 # =============================================================================
@@ -64,7 +64,7 @@ print()
 # =============================================================================
 
 print("="*80)
-print("📊 ICTBot Backtest")
+print(" ICTBot Backtest")
 print("="*80)
 
 try:
@@ -83,12 +83,12 @@ try:
     print("\n🔄 Calculating indicators (ONE TIME)...")
     df_ict = ict_bot.calculate_indicators(df.copy())
     
-    print(f"✅ Indicators ready")
+    print(f" Indicators ready")
     print(f"   Order Blocks: {len(ict_bot.order_blocks)}")
     print(f"   Fair Value Gaps: {len(ict_bot.fair_value_gaps)}")
     
     # Now check signals bar by bar WITHOUT recalculating
-    print(f"\n🎯 Scanning {len(df_ict)} bars for signals...")
+    print(f"\n Scanning {len(df_ict)} bars for signals...")
     
     signals = []
     for i in range(20, len(df_ict)):  # Start after warmup
@@ -116,7 +116,7 @@ try:
                     })
                     break
     
-    print(f"\n✅ ICTBot Results:")
+    print(f"\n ICTBot Results:")
     print(f"   Total Signals: {len(signals)}")
     if len(signals) > 0:
         buy_count = sum(1 for s in signals if s['type'] == 'BUY')
@@ -130,7 +130,7 @@ try:
             print(f"      {s['time']}: {s['type']} @ {s['price']:.5f}")
     
 except Exception as e:
-    print(f"\n❌ ICTBot Failed: {e}")
+    print(f"\n ICTBot Failed: {e}")
 
 print()
 
@@ -139,7 +139,7 @@ print()
 # =============================================================================
 
 print("="*80)
-print("📊 SuperTrendBot Backtest")
+print(" SuperTrendBot Backtest")
 print("="*80)
 
 try:
@@ -162,7 +162,7 @@ try:
     print("\n🔄 Calculating indicators (ONE TIME)...")
     df_st = st_bot.calculate_indicators(df.copy())
     
-    print(f"✅ Indicators ready")
+    print(f" Indicators ready")
     print(f"   ML Optimal Factor: {st_bot.optimal_factor:.2f}")
     print(f"   Factors tested: {len(st_bot.supertrends)}")
     
@@ -170,7 +170,7 @@ try:
     if st_bot.optimal_factor in st_bot.supertrends:
         st_data = st_bot.supertrends[st_bot.optimal_factor]
         
-        print(f"\n🎯 Scanning for trend changes...")
+        print(f"\n Scanning for trend changes...")
         
         # SuperTrend dict contains DataFrame with 'trend' column
         # trend = 1 (bullish), 0 (bearish)
@@ -200,7 +200,7 @@ try:
                         'bar': i
                     })
         
-        print(f"\n✅ SuperTrendBot Results:")
+        print(f"\n SuperTrendBot Results:")
         print(f"   Total Signals: {len(signals)}")
         if len(signals) > 0:
             buy_count = sum(1 for s in signals if s['type'] == 'BUY')
@@ -213,10 +213,10 @@ try:
             for s in signals[:5]:
                 print(f"      {s['time']}: {s['type']} @ {s['price']:.5f}")
     else:
-        print(f"\n⚠️  Optimal factor not in supertrends dict")
+        print(f"\n  Optimal factor not in supertrends dict")
     
 except Exception as e:
-    print(f"\n❌ SuperTrendBot Failed: {e}")
+    print(f"\n SuperTrendBot Failed: {e}")
     import traceback
     traceback.print_exc()
 
@@ -227,10 +227,10 @@ print()
 # =============================================================================
 
 print("="*80)
-print("✅ QUICK BACKTEST COMPLETE")
+print(" QUICK BACKTEST COMPLETE")
 print("="*80)
 print()
-print("💡 This optimized version:")
+print(" This optimized version:")
 print("   - Calculates indicators ONCE (not per bar)")
 print("   - Uses simple signal detection logic")
 print("   - No memory leaks from repeated DataFrame creation")

@@ -64,12 +64,12 @@ for symbol in symbols:
             first_bar = datetime.fromtimestamp(rates[0]['time'])
             last_bar = datetime.fromtimestamp(rates[-1]['time'])
             
-            status = "✓"
+            status = ""
             available_ranges.append(period_name)
             
             print(f"  {status} {period_name:<20} {len(rates):>6,} bars  ({first_bar.strftime('%Y-%m-%d')} to {last_bar.strftime('%Y-%m-%d')})")
         else:
-            print(f"  ✗ {period_name:<20} No data available")
+            print(f"   {period_name:<20} No data available")
     
     if available_ranges:
         print(f"\n  Available periods: {', '.join(available_ranges)}")
@@ -81,10 +81,10 @@ for symbol in symbols:
             rates = mt5.copy_rates_range(symbol, mt5.TIMEFRAME_M5, start, datetime.now())
             if rates is not None and len(rates) > 0:
                 earliest = datetime.fromtimestamp(rates[0]['time'])
-                print(f"  → Earliest data: {earliest.strftime('%Y-%m-%d')} ({months_back} months back)")
+                print(f"   Earliest data: {earliest.strftime('%Y-%m-%d')} ({months_back} months back)")
                 break
     else:
-        print(f"\n  ⚠️  No historical data available for {symbol}")
+        print(f"\n    No historical data available for {symbol}")
 
 print("\n" + "="*70)
 print("CONCLUSION")

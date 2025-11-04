@@ -85,8 +85,8 @@ class LogRotator:
             os.remove(filepath)
             
             self.log(
-                f"✅ Compressed: {os.path.basename(filepath)} "
-                f"({original_size:.2f}MB → {compressed_size:.2f}MB, "
+                f" Compressed: {os.path.basename(filepath)} "
+                f"({original_size:.2f}MB  {compressed_size:.2f}MB, "
                 f"saved {saved:.2f}MB)",
                 "SUCCESS"
             )

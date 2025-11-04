@@ -1,19 +1,19 @@
-# 🚀 QuantumTrader-MT5 - Final Updates Needed
+#  QuantumTrader-MT5 - Final Updates Needed
 
-## Files Already Updated ✅
+## Files Already Updated 
 
-1. **setup.py** ✅
+1. **setup.py** 
    - Name: `quantumtrader-mt5`
    - Version: `2.0.0`
    - Author: Trần Trọng Hiếu
    - URLs: @thales1020/QuantumTrader-MT5
 
-2. **README.md** ✅  
+2. **README.md**   
    - Header with new branding
    - Title: QuantumTrader-MT5
    - Professional tagline
 
-## Manual Updates Needed 📝
+## Manual Updates Needed 
 
 ### README.md - Search & Replace
 
@@ -52,11 +52,11 @@ git clone https://github.com/thales1020/QuantumTrader-MT5.git
 
 **Lines 582-608** - Update author & contact:
 ```markdown
-## 👨‍💻 Author
+## 👨‍ Author
 
 **Trần Trọng Hiếu**
 
-- 🌐 GitHub: [@thales1020](https://github.com/thales1020)
+-  GitHub: [@thales1020](https://github.com/thales1020)
 - 📂 Project: [QuantumTrader-MT5](https://github.com/thales1020/QuantumTrader-MT5)
 
 ## 📞 Contact
@@ -70,7 +70,7 @@ Project Link: [https://github.com/thales1020/QuantumTrader-MT5](https://github.c
 
 <div align="center">
 
-**⭐ Star this repo if you find it useful!**
+** Star this repo if you find it useful!**
 
 Made with ❤️ by [Trần Trọng Hiếu](https://github.com/thales1020)
 
@@ -79,7 +79,7 @@ Made with ❤️ by [Trần Trọng Hiếu](https://github.com/thales1020)
 </div>
 ```
 
-## Next Steps 🚀
+## Next Steps 
 
 ### Step 1: Manual Find & Replace
 ```
@@ -118,7 +118,7 @@ git add -A
 
 ### Step 5: Commit
 ```powershell
-git commit -m "🚀 Major Release: Rebrand to QuantumTrader-MT5 v2.0.0
+git commit -m " Major Release: Rebrand to QuantumTrader-MT5 v2.0.0
 
 BREAKING CHANGES:
 - Complete rebrand from ML-SuperTrend-MT5 to QuantumTrader-MT5
@@ -128,18 +128,18 @@ BREAKING CHANGES:
 - Professional platform positioning
 
 NEW FEATURES:
-- ✅ BaseTradingBot abstract class architecture
-- ✅ StrategyRegistry for dynamic strategy management  
-- ✅ ConfigManager with YAML/profiles support
-- ✅ Complete attribution system
-- ✅ Enhanced customization framework
+-  BaseTradingBot abstract class architecture
+-  StrategyRegistry for dynamic strategy management  
+-  ConfigManager with YAML/profiles support
+-  Complete attribution system
+-  Enhanced customization framework
 
 IMPROVEMENTS:
-- 🎨 Professional branding & positioning
+-  Professional branding & positioning
 - 📚 15+ comprehensive documentation guides
-- 🏗️ Modular architecture for extensibility
-- 📊 'Platform' positioning vs 'Bot'
-- 🎯 Clear ownership (Trần Trọng Hiếu)
+-  Modular architecture for extensibility
+-  'Platform' positioning vs 'Bot'
+-  Clear ownership (Trần Trọng Hiếu)
 
 This represents evolution from experimental bot to  
 professional trading platform, ready for production
@@ -156,20 +156,20 @@ git push -u origin main
 ### Step 7: Create Release
 1. Go to: https://github.com/thales1020/QuantumTrader-MT5/releases/new
 2. Tag: `v2.0.0`
-3. Title: `🚀 QuantumTrader-MT5 v2.0.0 - Major Release`
+3. Title: ` QuantumTrader-MT5 v2.0.0 - Major Release`
 4. Description: Copy from commit message
 5. Publish release
 
 ## Summary
 
-**✅ Already Done:**
+** Already Done:**
 - setup.py updated
 - README header updated
 - New documentation created
 
-**📝 Need Manual:**
+** Need Manual:**
 - Find & Replace URLs in README
 - Create GitHub repo
 - Push to new repo
 
-**Ready to go!** 🎉
+**Ready to go!** 

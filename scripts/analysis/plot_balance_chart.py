@@ -84,16 +84,16 @@ class BalanceChartPlotter:
                     })
         
         if not self.balance_data:
-            print("❌ Không tìm thấy dữ liệu balance trong log file!")
+            print(" Không tìm thấy dữ liệu balance trong log file!")
             return False
         
-        print(f"✅ Tìm thấy {len(self.balance_data)} điểm balance")
+        print(f" Tìm thấy {len(self.balance_data)} điểm balance")
         return True
     
     def plot_chart(self, output_file: str = None, show: bool = True):
         """Vẽ biểu đồ balance"""
         if not self.balance_data:
-            print("❌ Không có dữ liệu để vẽ!")
+            print(" Không có dữ liệu để vẽ!")
             return
         
         # Convert to DataFrame for easier manipulation
@@ -114,7 +114,7 @@ class BalanceChartPlotter:
         
         # Create figure with 2 subplots
         fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(14, 10), sharex=True)
-        fig.suptitle('📊 Trading Balance & Drawdown Analysis', fontsize=16, fontweight='bold')
+        fig.suptitle(' Trading Balance & Drawdown Analysis', fontsize=16, fontweight='bold')
         
         # ===== PLOT 1: Balance Chart =====
         ax1.plot(df['timestamp'], df['balance'], 
@@ -185,7 +185,7 @@ class BalanceChartPlotter:
         # Save to file
         if output_file:
             plt.savefig(output_file, dpi=300, bbox_inches='tight')
-            print(f"✅ Chart saved: {output_file}")
+            print(f" Chart saved: {output_file}")
         
         # Show plot
         if show:
@@ -220,7 +220,7 @@ class BalanceChartPlotter:
         days = (end_date - start_date).days
         
         print("\n" + "="*60)
-        print("📊 BALANCE SUMMARY")
+        print(" BALANCE SUMMARY")
         print("="*60)
         print(f"Period        : {start_date.strftime('%Y-%m-%d')} to {end_date.strftime('%Y-%m-%d')} ({days} days)")
         print(f"Data Points   : {len(df)} trades")
@@ -242,7 +242,7 @@ class BalanceChartPlotter:
             
             print("📅 MONTHLY RETURNS:")
             for month, row in monthly.iterrows():
-                print(f"   {month}: {row['return']:+.2f}% (${row['first']:,.0f} → ${row['last']:,.0f})")
+                print(f"   {month}: {row['return']:+.2f}% (${row['first']:,.0f}  ${row['last']:,.0f})")
         
         print("="*60 + "\n")
 
@@ -258,8 +258,8 @@ def main():
     
     # Check if log file exists
     if not Path(args.log).exists():
-        print(f"❌ Log file not found: {args.log}")
-        print("\n📁 Available log files:")
+        print(f" Log file not found: {args.log}")
+        print("\n Available log files:")
         for log_file in Path('logs').glob('*.log'):
             print(f"   - {log_file}")
         return

@@ -9,7 +9,7 @@ This strategy allows capturing quick profits while maintaining exposure to large
 
 ## Affected Bots
 
-### ✅ 1. SuperTrend Bot (`core/supertrend_bot.py`)
+###  1. SuperTrend Bot (`core/supertrend_bot.py`)
 **Implementation**: NEW - Added in this update
 
 **Key Changes**:
@@ -26,7 +26,7 @@ TP1: 1.1075 (RR 1:1 - same 75 pips above) ← Order 1
 TP2: 1.1150 (RR 2:1 - 150 pips above)    ← Order 2
 ```
 
-### ✅ 2. ICT Bot SMC (`core/ict_bot_smc.py`)
+###  2. ICT Bot SMC (`core/ict_bot_smc.py`)
 **Implementation**: EXISTING - Already has dual orders
 
 **Features**:
@@ -34,7 +34,7 @@ TP2: 1.1150 (RR 2:1 - 150 pips above)    ← Order 2
 - Order comments: `ICT_BUY_QUICK`, `ICT_BUY_MAIN`, etc.
 - Advanced Smart Money Concepts (SMC) integration
 
-### ✅ 3. ICT Bot (`core/ict_bot.py`)
+###  3. ICT Bot (`core/ict_bot.py`)
 **Implementation**: NEW - Added in this update
 
 **Key Changes**:
@@ -95,7 +95,7 @@ Total P&L: $2,500.00
 
 ## Risk Management Considerations
 
-### ⚠️ CRITICAL: Double Risk per Signal
+###  CRITICAL: Double Risk per Signal
 Each signal now opens **2 orders**, which means:
 - **Total Risk = 2 × risk_percent**
 - If `risk_percent = 1.0%`, total exposure per signal = **2.0%**
@@ -132,7 +132,7 @@ All bots now log total risk warnings:
 ## Testing
 
 ### Unit Tests Needed
-- [x] Backtest engine dual orders tracking ✅
+- [x] Backtest engine dual orders tracking 
 - [ ] SuperTrend Bot dual orders placement
 - [ ] ICT Bot dual orders placement
 - [ ] Total risk calculation verification
@@ -140,19 +140,19 @@ All bots now log total risk warnings:
 
 ### Test Scenarios
 1. **Both Orders Hit TP**:
-   - Order 1 hits TP1 (RR 1:1) → Closes with profit
-   - Order 2 hits TP2 (Main RR) → Closes with larger profit
-   - Total P&L = P&L1 + P&L2 ✅
+   - Order 1 hits TP1 (RR 1:1)  Closes with profit
+   - Order 2 hits TP2 (Main RR)  Closes with larger profit
+   - Total P&L = P&L1 + P&L2 
 
 2. **Order 1 Hits TP, Order 2 Hits SL**:
-   - Order 1 hits TP1 → Small profit
-   - Order 2 hits SL → Loss
+   - Order 1 hits TP1  Small profit
+   - Order 2 hits SL  Loss
    - Net P&L = Small profit - Loss (usually small loss or breakeven)
 
 3. **Both Orders Hit SL**:
    - Both orders hit SL simultaneously
    - Total Loss = 2 × risk_amount
-   - Risk management limits should catch this ⚠️
+   - Risk management limits should catch this 
 
 ## Advantages
 
@@ -176,7 +176,7 @@ All bots now log total risk warnings:
 ### 1. Doubled Risk per Signal
 - Each signal risks **2 × risk_percent**
 - Requires halving risk_percent to maintain same exposure
-- Must update risk management settings ⚠️
+- Must update risk management settings 
 
 ### 2. More Commission/Spread
 - 2 orders = 2× spread cost
@@ -235,11 +235,11 @@ Verify that dual orders are placed correctly.
 }
 ```
 
-### Aggressive Dual Orders (4% total risk) ⚠️
+### Aggressive Dual Orders (4% total risk) 
 ```json
 {
   "symbol": "XAUUSD",
-  "risk_percent": 2.0,      // 2.0% × 2 = 4% total ⚠️
+  "risk_percent": 2.0,      // 2.0% × 2 = 4% total 
   "tp_multiplier": 4.0,     // Main RR = 3:1 (TP=4.0, SL=1.33)
   "sl_multiplier": 1.33,
   "max_daily_loss": 5.0,
@@ -283,22 +283,22 @@ Verify that dual orders are placed correctly.
 
 ## Summary
 
-✅ **All bots now support dual orders**:
+ **All bots now support dual orders**:
 - SuperTrend Bot: NEW implementation
 - ICT Bot SMC: Already supported
 - ICT Bot: NEW implementation
 
-✅ **Backtest engine updated**:
+ **Backtest engine updated**:
 - Tracks dual orders separately
 - Shows RR 1:1 vs Main RR statistics
 - Calculates combined P&L correctly
 
-⚠️ **Risk management updated**:
+ **Risk management updated**:
 - Total risk = 2 × risk_percent per signal
 - Adjust configuration accordingly
 - Monitor total exposure carefully
 
-📊 **Testing recommended**:
+ **Testing recommended**:
 - Run backtests to verify performance
 - Test on demo account first
 - Monitor initial live trades closely

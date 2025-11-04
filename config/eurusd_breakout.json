@@ -1,0 +1,16 @@
+{
+  "strategy_id": "eurusd_breakout",
+  "enabled": true,
+  "symbol": "EURUSD",
+  "timeframe": "M15",
+  "risk_percent": 1.0,
+  "magic_number": 123456,
+  "bb_period": 20,
+  "bb_std": 2.0,
+  "volume_multiplier": 1.5,
+  "trailing_atr": 2.0,
+  "max_bars": 50,
+  "atr_period": 14,
+  "author": "QuantumTrader",
+  "version": "1.0.0"
+}

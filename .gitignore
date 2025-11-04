@@ -66,3 +66,6 @@ desktop.ini
 *.tmp
 *.bak
 *.backup
+
+# Archive (old/backup files)
+archive/

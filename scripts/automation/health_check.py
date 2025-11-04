@@ -34,7 +34,7 @@ class HealthChecker:
                 from utils.telegram_notifier import TelegramNotifier
                 self.telegram = TelegramNotifier()
             except:
-                print("⚠️ Could not import TelegramNotifier - alerts disabled")
+                print(" Could not import TelegramNotifier - alerts disabled")
                 self.send_alerts = False
     
     def log(self, message, status="INFO"):
@@ -74,7 +74,7 @@ class HealthChecker:
                 'build': terminal_info.build
             }
             
-            self.log(f"✅ MT5 Connected (Build: {terminal_info.build})", "SUCCESS")
+            self.log(f" MT5 Connected (Build: {terminal_info.build})", "SUCCESS")
             return True
             
         except Exception as e:
@@ -82,7 +82,7 @@ class HealthChecker:
                 'status': 'FAIL',
                 'message': f"Exception: {str(e)}"
             }
-            self.log(f"❌ MT5 Connection Error: {e}", "ERROR")
+            self.log(f" MT5 Connection Error: {e}", "ERROR")
             return False
     
     def check_account_status(self):
@@ -122,7 +122,7 @@ class HealthChecker:
             }
             
             self.log(
-                f"✅ Account: Login={account_info.login}, "
+                f" Account: Login={account_info.login}, "
                 f"Balance=${balance:.2f}, "
                 f"Equity=${equity:.2f}, "
                 f"Margin Level={margin_level:.2f}%",
@@ -135,7 +135,7 @@ class HealthChecker:
                 'status': 'FAIL',
                 'message': f"Exception: {str(e)}"
             }
-            self.log(f"❌ Account Status Error: {e}", "ERROR")
+            self.log(f" Account Status Error: {e}", "ERROR")
             return False
     
     def check_open_positions(self):
@@ -177,7 +177,7 @@ class HealthChecker:
             }
             
             self.log(
-                f"✅ Positions: {total_positions} open, "
+                f" Positions: {total_positions} open, "
                 f"Total P&L: ${total_profit:.2f}",
                 "SUCCESS"
             )
@@ -188,7 +188,7 @@ class HealthChecker:
                 'status': 'FAIL',
                 'message': f"Exception: {str(e)}"
             }
-            self.log(f"❌ Positions Check Error: {e}", "ERROR")
+            self.log(f" Positions Check Error: {e}", "ERROR")
             return False
     
     def check_recent_logs(self):
@@ -204,7 +204,7 @@ class HealthChecker:
                     'status': 'WARNING',
                     'message': 'No log files found'
                 }
-                self.log("⚠️ No log files found", "WARNING")
+                self.log(" No log files found", "WARNING")
                 return True  # Not critical
             
             # Get most recent log
@@ -235,7 +235,7 @@ class HealthChecker:
             }
             
             self.log(
-                f"✅ Logs: {len(errors)} errors, {len(warnings)} warnings",
+                f" Logs: {len(errors)} errors, {len(warnings)} warnings",
                 "SUCCESS" if status == 'PASS' else status
             )
             return status != 'FAIL'
@@ -245,7 +245,7 @@ class HealthChecker:
                 'status': 'WARNING',
                 'message': f"Exception: {str(e)}"
             }
-            self.log(f"⚠️ Log Check Error: {e}", "WARNING")
+            self.log(f" Log Check Error: {e}", "WARNING")
             return True  # Not critical
     
     def check_disk_space(self):
@@ -271,7 +271,7 @@ class HealthChecker:
             }
             
             self.log(
-                f"✅ Disk: {free_gb:.2f}GB free ({percent_free:.1f}%)",
+                f" Disk: {free_gb:.2f}GB free ({percent_free:.1f}%)",
                 "SUCCESS" if status == 'PASS' else "WARNING"
             )
             return True
@@ -281,7 +281,7 @@ class HealthChecker:
                 'status': 'WARNING',
                 'message': f"Exception: {str(e)}"
             }
-            self.log(f"⚠️ Disk Check Error: {e}", "WARNING")
+            self.log(f" Disk Check Error: {e}", "WARNING")
             return True  # Not critical
     
     def determine_overall_status(self):
@@ -312,9 +312,9 @@ class HealthChecker:
         
         try:
             if status == 'FAIL':
-                message = "🚨 *CRITICAL: Health Check Failed*\n\n"
+                message = " *CRITICAL: Health Check Failed*\n\n"
             elif status == 'WARNING':
-                message = "⚠️ *WARNING: Health Check Issues*\n\n"
+                message = " *WARNING: Health Check Issues*\n\n"
             else:
                 return  # Don't send alerts for PASS
             

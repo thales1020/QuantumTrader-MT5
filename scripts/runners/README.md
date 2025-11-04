@@ -1,4 +1,4 @@
-# 🚀 Runner Scripts
+#  Runner Scripts
 
 Scripts để chạy các bot và backtest.
 

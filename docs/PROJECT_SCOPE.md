@@ -1,4 +1,4 @@
-# 🎯 PROJECT SCOPE - ML-SuperTrend-MT5
+#  PROJECT SCOPE - ML-SuperTrend-MT5
 
 **Document Version**: 1.0  
 **Date**: October 23, 2025  
@@ -22,14 +22,14 @@
 
 ---
 
-## 🎯 EXECUTIVE SUMMARY
+##  EXECUTIVE SUMMARY
 
 **ML-SuperTrend-MT5** là một hệ thống automated trading bot cho MetaTrader 5, tập trung vào:
 
 ### **Primary Purpose**:
 - 📚 **Educational**: Dạy về algorithmic trading, ML integration, và risk management
 - 🤖 **Automated Trading**: Thực thi chiến lược trading tự động 24/7
-- 📊 **Research Platform**: Thử nghiệm và optimize trading strategies
+-  **Research Platform**: Thử nghiệm và optimize trading strategies
 
 ### **Core Value Proposition**:
 ```
@@ -44,7 +44,7 @@ kết hợp Machine Learning với các chiến lược trading hiện đại"
 
 ---
 
-## 🌟 PROJECT VISION & MISSION
+##  PROJECT VISION & MISSION
 
 ### **Vision** (3-5 years):
 > "Trở thành một trong những open-source trading bot phổ biến nhất cho MT5,
@@ -57,81 +57,81 @@ kết hợp Machine Learning với các chiến lược trading hiện đại"
 4. **Community Building**: Xây dựng cộng đồng chia sẻ strategies và improvements
 
 ### **Core Values**:
-- ✅ **Transparency**: Mọi thứ đều open và documented
-- ✅ **Education**: Learning > Profits
-- ✅ **Quality**: Code quality và testing là ưu tiên
-- ✅ **Risk Awareness**: Luôn nhấn mạnh rủi ro của trading
-- ✅ **Community**: Collaborative development
+-  **Transparency**: Mọi thứ đều open và documented
+-  **Education**: Learning > Profits
+-  **Quality**: Code quality và testing là ưu tiên
+-  **Risk Awareness**: Luôn nhấn mạnh rủi ro của trading
+-  **Community**: Collaborative development
 
 ---
 
 ## 🔲 PROJECT BOUNDARIES
 
-### **IN SCOPE** ✅
+### **IN SCOPE** 
 
 #### **1. Trading Strategies**
-- ✅ SuperTrend with ML optimization (K-means clustering)
-- ✅ ICT (Inner Circle Trader) concepts:
+-  SuperTrend with ML optimization (K-means clustering)
+-  ICT (Inner Circle Trader) concepts:
   - Order Blocks
   - Fair Value Gaps
   - Liquidity Sweeps
   - Market Structure (BOS/CHoCH)
-- ✅ Dual Orders Strategy (RR 1:1 + Main RR)
-- ✅ **NEW**: Breakeven SL Management
+-  Dual Orders Strategy (RR 1:1 + Main RR)
+-  **NEW**: Breakeven SL Management
 
 #### **2. Markets & Instruments**
-- ✅ **Forex**: Major pairs (EUR/USD, GBP/USD, etc.)
-- ✅ **Crypto**: BTC, ETH, major altcoins
-- ✅ **Commodities**: Gold (XAU), Silver, Oil
-- ✅ **Indices**: US30, NAS100, SPX500
+-  **Forex**: Major pairs (EUR/USD, GBP/USD, etc.)
+-  **Crypto**: BTC, ETH, major altcoins
+-  **Commodities**: Gold (XAU), Silver, Oil
+-  **Indices**: US30, NAS100, SPX500
 
 #### **3. Platform Support**
-- ✅ **MetaTrader 5**: Primary platform
-- ✅ **Windows**: Main OS support
-- ⚠️ **Linux/Mac**: Limited (MT5 constraints)
+-  **MetaTrader 5**: Primary platform
+-  **Windows**: Main OS support
+-  **Linux/Mac**: Limited (MT5 constraints)
 
 #### **4. Features**
-- ✅ Automated position opening/closing
-- ✅ Dynamic position sizing
-- ✅ Risk management (SL/TP/trailing)
-- ✅ Backtesting engine
-- ✅ Performance analytics
-- ✅ Multi-symbol support
-- ✅ Logging & monitoring
-- ✅ Configuration management
+-  Automated position opening/closing
+-  Dynamic position sizing
+-  Risk management (SL/TP/trailing)
+-  Backtesting engine
+-  Performance analytics
+-  Multi-symbol support
+-  Logging & monitoring
+-  Configuration management
 
 #### **5. Development**
-- ✅ Python 3.8+
-- ✅ Open source (MIT License)
-- ✅ Unit testing
-- ✅ Documentation
-- ✅ Community contributions
+-  Python 3.8+
+-  Open source (MIT License)
+-  Unit testing
+-  Documentation
+-  Community contributions
 
 ---
 
-### **OUT OF SCOPE** ❌
+### **OUT OF SCOPE** 
 
 #### **1. NOT Included**:
-❌ **Web Interface/Dashboard**: Không có web UI (CLI only)
-❌ **Mobile App**: Không có iOS/Android app
-❌ **Cloud Hosting**: Không cung cấp hosted solution
-❌ **Copy Trading**: Không support signal distribution
-❌ **Social Trading Features**: Không có follow/copy traders
-❌ **Broker Integration**: Chỉ support MT5, không direct broker API
+ **Web Interface/Dashboard**: Không có web UI (CLI only)
+ **Mobile App**: Không có iOS/Android app
+ **Cloud Hosting**: Không cung cấp hosted solution
+ **Copy Trading**: Không support signal distribution
+ **Social Trading Features**: Không có follow/copy traders
+ **Broker Integration**: Chỉ support MT5, không direct broker API
 
 #### **2. NOT Responsible For**:
-❌ **Broker Selection**: Users tự chọn broker
-❌ **VPS Setup**: Users tự setup VPS nếu cần
-❌ **Tax/Legal Advice**: Không cung cấp legal guidance
-❌ **Guaranteed Profits**: Không bảo đảm lợi nhuận
-❌ **Customer Support**: Community-driven support only
+ **Broker Selection**: Users tự chọn broker
+ **VPS Setup**: Users tự setup VPS nếu cần
+ **Tax/Legal Advice**: Không cung cấp legal guidance
+ **Guaranteed Profits**: Không bảo đảm lợi nhuận
+ **Customer Support**: Community-driven support only
 
 #### **3. Technical Limitations**:
-❌ **HFT (High-Frequency Trading)**: Không phải HFT system
-❌ **Tick-level Data**: Không xử lý tick data
-❌ **Options/Futures**: Chỉ spot/CFD trading
-❌ **Multi-broker**: Một bot = một MT5 account
-❌ **Real-time News**: News filter là placeholder
+ **HFT (High-Frequency Trading)**: Không phải HFT system
+ **Tick-level Data**: Không xử lý tick data
+ **Options/Futures**: Chỉ spot/CFD trading
+ **Multi-broker**: Một bot = một MT5 account
+ **Real-time News**: News filter là placeholder
 
 ---
 
@@ -163,7 +163,7 @@ Features:
 - Breakeven SL movement
 ```
 
-#### **3. Backtesting** 📊
+#### **3. Backtesting** 
 ```python
 engines/
 ├── backtest_engine.py
@@ -177,7 +177,7 @@ Metrics:
 - Equity curve
 ```
 
-#### **4. Configuration** ⚙️
+#### **4. Configuration** 
 ```json
 config/config.json
 
@@ -192,7 +192,7 @@ Supports:
 
 ### **Tier 2 - Should Have** (Important)
 
-#### **5. Testing Suite** 🧪
+#### **5. Testing Suite** 
 ```
 tests/
 ├── test_configuration.py     (19 tests)
@@ -215,7 +215,7 @@ docs/
 └── ... (13 files total)
 ```
 
-#### **7. Utility Scripts** 🔧
+#### **7. Utility Scripts** 
 ```python
 scripts/
 ├── runners/          # Bot execution scripts
@@ -227,7 +227,7 @@ scripts/
 
 ### **Tier 3 - Nice to Have** (Enhancement)
 
-#### **8. Performance Monitoring** 📈
+#### **8. Performance Monitoring** 
 - Real-time stats display
 - Equity curve visualization
 - Trade history export
@@ -238,7 +238,7 @@ scripts/
 - Correlation management
 - Portfolio-level risk
 
-#### **10. Advanced Features** ⚡
+#### **10. Advanced Features** 
 - Volume confirmation
 - Session management
 - News filter framework (placeholder)
@@ -246,7 +246,7 @@ scripts/
 
 ---
 
-## 🔧 TECHNICAL SCOPE
+##  TECHNICAL SCOPE
 
 ### **Technology Stack**
 
@@ -291,11 +291,11 @@ Design Patterns:
 ```
 
 ### **Code Standards**:
-- ✅ PEP 8 compliance
-- ✅ Type hints
-- ✅ Docstrings
-- ✅ Unit tests (>80% coverage target)
-- ✅ Clean code principles
+-  PEP 8 compliance
+-  Type hints
+-  Docstrings
+-  Unit tests (>80% coverage target)
+-  Clean code principles
 
 ### **Performance Requirements**:
 ```yaml
@@ -312,7 +312,7 @@ Uptime: 24/7 capability (with VPS)
 
 ### **Primary Users** (Core Audience)
 
-#### **1. Algorithmic Trading Learners** 🎓
+#### **1. Algorithmic Trading Learners** 
 ```yaml
 Profile:
   - Programming knowledge: Intermediate Python
@@ -327,7 +327,7 @@ Needs:
   - Community support
 ```
 
-#### **2. Retail Traders** 📊
+#### **2. Retail Traders** 
 ```yaml
 Profile:
   - Programming knowledge: Basic to Intermediate
@@ -342,7 +342,7 @@ Needs:
   - Easy customization
 ```
 
-#### **3. Python Developers** 💻
+#### **3. Python Developers** 
 ```yaml
 Profile:
   - Programming knowledge: Advanced Python
@@ -381,33 +381,33 @@ Needs: Clear contribution guidelines, good documentation
 
 ---
 
-## ✅ SUCCESS CRITERIA
+##  SUCCESS CRITERIA
 
 ### **Technical Metrics**
 
 #### **Code Quality**:
 ```yaml
-✅ Test Coverage: >80%
-✅ Documentation Coverage: 100% (all public APIs)
-✅ Code Duplication: <5%
-✅ Complexity: Cyclomatic <10 average
-✅ Type Hints: >90% coverage
+ Test Coverage: >80%
+ Documentation Coverage: 100% (all public APIs)
+ Code Duplication: <5%
+ Complexity: Cyclomatic <10 average
+ Type Hints: >90% coverage
 ```
 
 #### **Performance**:
 ```yaml
-✅ Backtest Speed: >100 trades/second processing
-✅ Live Trading Latency: <1s per cycle
-✅ Memory Usage: <500MB steady state
-✅ Uptime: >99% (with proper VPS setup)
+ Backtest Speed: >100 trades/second processing
+ Live Trading Latency: <1s per cycle
+ Memory Usage: <500MB steady state
+ Uptime: >99% (with proper VPS setup)
 ```
 
 #### **Reliability**:
 ```yaml
-✅ Bug Rate: <1 critical bug per 1000 lines
-✅ Test Pass Rate: 100%
-✅ MT5 Connection Success: >99%
-✅ Order Execution Success: >98%
+ Bug Rate: <1 critical bug per 1000 lines
+ Test Pass Rate: 100%
+ MT5 Connection Success: >99%
+ Order Execution Success: >98%
 ```
 
 ---
@@ -416,25 +416,25 @@ Needs: Clear contribution guidelines, good documentation
 
 #### **Adoption**:
 ```yaml
-✅ GitHub Stars: 100+ (milestone)
-✅ PyPI Downloads: 1000+/month
-✅ Active Users: 50+ regular users
-✅ Contributors: 5+ active contributors
+ GitHub Stars: 100+ (milestone)
+ PyPI Downloads: 1000+/month
+ Active Users: 50+ regular users
+ Contributors: 5+ active contributors
 ```
 
 #### **Community**:
 ```yaml
-✅ GitHub Issues Response: <48 hours
-✅ Documentation Feedback: Positive (>80%)
-✅ Community Contributions: 10+ PRs accepted
-✅ Tutorial Views: 1000+ views
+ GitHub Issues Response: <48 hours
+ Documentation Feedback: Positive (>80%)
+ Community Contributions: 10+ PRs accepted
+ Tutorial Views: 1000+ views
 ```
 
 #### **Educational Impact**:
 ```yaml
-✅ Learning Resources Created: 10+ tutorials/guides
-✅ User Success Stories: 5+ testimonials
-✅ Educational Projects Based On: 3+ forks with modifications
+ Learning Resources Created: 10+ tutorials/guides
+ User Success Stories: 5+ testimonials
+ Educational Projects Based On: 3+ forks with modifications
 ```
 
 ---
@@ -443,11 +443,11 @@ Needs: Clear contribution guidelines, good documentation
 
 ```yaml
 Target Metrics (Historical Data):
-✅ Win Rate: >40% (realistic)
-✅ Profit Factor: >1.2
-✅ Max Drawdown: <15%
-✅ Sharpe Ratio: >1.0
-✅ Risk/Reward: 1:1.5 minimum
+ Win Rate: >40% (realistic)
+ Profit Factor: >1.2
+ Max Drawdown: <15%
+ Sharpe Ratio: >1.0
+ Risk/Reward: 1:1.5 minimum
 
 Note: Past performance ≠ Future results
 These are BACKTESTING targets, not live guarantees
@@ -459,7 +459,7 @@ These are BACKTESTING targets, not live guarantees
 
 ### **Features Explicitly NOT Included**
 
-#### **1. Web/Mobile Applications** ❌
+#### **1. Web/Mobile Applications** 
 ```
 NOT Building:
 - Web dashboard
@@ -472,7 +472,7 @@ Why: Focus on core trading logic, not UI/infrastructure
 Alternative: Users can build their own interfaces
 ```
 
-#### **2. Broker Services** ❌
+#### **2. Broker Services** 
 ```
 NOT Providing:
 - Broker recommendations
@@ -485,7 +485,7 @@ Why: Broker-agnostic, users choose their own
 Alternative: Users use any MT5-compatible broker
 ```
 
-#### **3. Financial Advisory** ❌
+#### **3. Financial Advisory** 
 ```
 NOT Offering:
 - Investment advice
@@ -498,7 +498,7 @@ Why: Educational tool only, not a financial service
 Alternative: Users consult licensed professionals
 ```
 
-#### **4. Commercial Services** ❌
+#### **4. Commercial Services** 
 ```
 NOT Selling:
 - Premium features/versions
@@ -511,7 +511,7 @@ Why: Open source, community-driven project
 Alternative: Free, self-hosted, self-managed
 ```
 
-#### **5. Advanced Trading Features** ❌
+#### **5. Advanced Trading Features** 
 ```
 NOT Supporting:
 - High-Frequency Trading (HFT)
@@ -525,7 +525,7 @@ Why: Scope limited to directional spot/CFD trading
 Alternative: Use specialized platforms for these
 ```
 
-#### **6. Enterprise Features** ❌
+#### **6. Enterprise Features** 
 ```
 NOT Including:
 - Multi-user system
@@ -541,7 +541,7 @@ Alternative: Fork and customize for enterprise needs
 
 ---
 
-## 🔗 DEPENDENCIES
+##  DEPENDENCIES
 
 ### **Critical Dependencies** (Project Cannot Function Without)
 
@@ -622,31 +622,31 @@ GitHub: Repository hosting
 #### **Phase 1: Foundation** (Completed)
 ```yaml
 Q4 2024:
-✅ Initial SuperTrend bot
-✅ MT5 integration
-✅ Basic risk management
-✅ Configuration system
+ Initial SuperTrend bot
+ MT5 integration
+ Basic risk management
+ Configuration system
 Status: Completed
 ```
 
 #### **Phase 2: Enhancement** (Completed)
 ```yaml
 Q1 2025:
-✅ ICT bot implementation
-✅ Backtesting engine
-✅ Multi-symbol support
-✅ Documentation expansion
+ ICT bot implementation
+ Backtesting engine
+ Multi-symbol support
+ Documentation expansion
 Status: Completed
 ```
 
 #### **Phase 3: Optimization** (Completed)
 ```yaml
 Q2-Q3 2025:
-✅ Crypto trading support
-✅ Dual orders strategy
-✅ Breakeven SL feature
-✅ SMC library integration (then removed)
-✅ Testing suite (85+ tests)
+ Crypto trading support
+ Dual orders strategy
+ Breakeven SL feature
+ SMC library integration (then removed)
+ Testing suite (85+ tests)
 Status: Completed
 ```
 
@@ -718,7 +718,7 @@ v2.0.0 (Q3 2026): Major expansion
 
 ---
 
-## 🎓 EDUCATIONAL SCOPE
+##  EDUCATIONAL SCOPE
 
 ### **Learning Objectives** (What Users Should Learn)
 
@@ -785,7 +785,7 @@ Resources:
 
 ---
 
-## 📊 PROJECT METRICS & KPIs
+##  PROJECT METRICS & KPIs
 
 ### **Development Metrics**
 
@@ -841,24 +841,24 @@ Reliability:
 
 #### **1. Educational Purpose**
 ```
-⚠️ This software is provided for EDUCATIONAL PURPOSES ONLY.
+ This software is provided for EDUCATIONAL PURPOSES ONLY.
 
 NOT:
-❌ Investment advice
-❌ Financial advisory service
-❌ Guaranteed profit system
-❌ Professional trading tool
+ Investment advice
+ Financial advisory service
+ Guaranteed profit system
+ Professional trading tool
 
 IS:
-✅ Learning resource
-✅ Research platform
-✅ Open-source project
-✅ Community-driven tool
+ Learning resource
+ Research platform
+ Open-source project
+ Community-driven tool
 ```
 
 #### **2. Trading Risks**
 ```
-⚠️ Trading Disclaimer:
+ Trading Disclaimer:
 
 - Forex/CFD trading involves substantial risk
 - You can lose all your invested capital
@@ -872,28 +872,28 @@ IS:
 ```
 MIT License:
 
-✅ Can: Use, modify, distribute
-✅ Can: Commercial use
-✅ Must: Include license and copyright
-❌ No warranty provided
-❌ No liability accepted
+ Can: Use, modify, distribute
+ Can: Commercial use
+ Must: Include license and copyright
+ No warranty provided
+ No liability accepted
 ```
 
 #### **4. User Responsibilities**
 ```
 Users are responsible for:
 
-✅ Complying with local trading regulations
-✅ Managing their own trading accounts
-✅ Understanding risks involved
-✅ Testing before live usage
-✅ Monitoring their bots
-✅ Tax compliance (where applicable)
+ Complying with local trading regulations
+ Managing their own trading accounts
+ Understanding risks involved
+ Testing before live usage
+ Monitoring their bots
+ Tax compliance (where applicable)
 ```
 
 ---
 
-## 🎯 SCOPE MANAGEMENT
+##  SCOPE MANAGEMENT
 
 ### **Change Control Process**
 
@@ -922,16 +922,16 @@ Users are responsible for:
 #### **Scope Creep Prevention**:
 ```yaml
 Red Flags:
-❌ "Can we add a web dashboard?"
-❌ "Why not support broker X's API?"
-❌ "Let's build a social trading platform"
-❌ "We should offer cloud hosting"
+ "Can we add a web dashboard?"
+ "Why not support broker X's API?"
+ "Let's build a social trading platform"
+ "We should offer cloud hosting"
 
 Response:
-✅ Evaluate against core mission
-✅ Consider maintenance burden
-✅ Check alignment with educational goal
-✅ Assess community benefit vs. complexity
+ Evaluate against core mission
+ Consider maintenance burden
+ Check alignment with educational goal
+ Assess community benefit vs. complexity
 ```
 
 ---
@@ -990,16 +990,16 @@ Communication: GitHub Discussions, Social media
 
 ```yaml
 What is ML-SuperTrend-MT5?
-  ✅ Educational trading bot
-  ✅ Open-source Python project
-  ✅ Algorithmic trading framework
-  ✅ Learning resource
+   Educational trading bot
+   Open-source Python project
+   Algorithmic trading framework
+   Learning resource
 
 What is it NOT?
-  ❌ Professional trading platform
-  ❌ Get-rich-quick scheme
-  ❌ Commercial product
-  ❌ Financial service
+   Professional trading platform
+   Get-rich-quick scheme
+   Commercial product
+   Financial service
 ```
 
 ### **Core Principles**
@@ -1024,7 +1024,7 @@ Success = {
 
 ---
 
-## 📝 DOCUMENT METADATA
+##  DOCUMENT METADATA
 
 ```yaml
 Version: 1.0
@@ -1047,7 +1047,7 @@ v1.0 (Oct 23, 2025):
 
 ---
 
-## 🔗 RELATED DOCUMENTS
+##  RELATED DOCUMENTS
 
 - [README.md](../README.md) - Project overview
 - [PROJECT_EVALUATION.md](PROJECT_EVALUATION.md) - Technical evaluation

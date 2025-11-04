@@ -7,12 +7,12 @@ Comprehensive unit test suite to ensure system stability and correctness before 
 
 ### 1. test_supertrend_bot.py
 Tests for SuperTrend Bot core functionality:
-- ✅ Configuration creation and validation
-- ✅ SuperTrend indicator calculation
-- ✅ K-Means clustering for factor selection
-- ✅ Trade execution logic
-- ✅ SL/TP calculation
-- ✅ Risk-reward ratios
+-  Configuration creation and validation
+-  SuperTrend indicator calculation
+-  K-Means clustering for factor selection
+-  Trade execution logic
+-  SL/TP calculation
+-  Risk-reward ratios
 
 **Key Tests:**
 - `test_sl_tp_calculation_buy()` - Validates BUY order SL/TP
@@ -21,12 +21,12 @@ Tests for SuperTrend Bot core functionality:
 
 ### 3. test_backtest_engines.py
 Tests for backtest simulation accuracy:
-- ✅ Backtest engine initialization
-- ✅ Trade simulation (wins and losses)
-- ✅ Profit calculation (BUY/SELL, wins/losses)
-- ✅ Metrics calculation (WR, PF, DD)
-- ✅ Quality tracking and buckets
-- ✅ Dual order tracking
+-  Backtest engine initialization
+-  Trade simulation (wins and losses)
+-  Profit calculation (BUY/SELL, wins/losses)
+-  Metrics calculation (WR, PF, DD)
+-  Quality tracking and buckets
+-  Dual order tracking
 
 **Key Tests:**
 - `test_calculate_profit_*()` - Validates P&L calculations
@@ -36,14 +36,14 @@ Tests for backtest simulation accuracy:
 
 ### 4. test_configuration.py
 Tests for configuration loading and validation:
-- ✅ Config file exists and valid JSON
-- ✅ Required sections present (accounts, symbols)
-- ✅ Symbol configuration validation
-- ✅ Timeframe validation
-- ✅ Risk percent range validation
-- ✅ RR ratio validation
-- ✅ ICT parameters validation
-- ✅ Dual order risk awareness
+-  Config file exists and valid JSON
+-  Required sections present (accounts, symbols)
+-  Symbol configuration validation
+-  Timeframe validation
+-  Risk percent range validation
+-  RR ratio validation
+-  ICT parameters validation
+-  Dual order risk awareness
 
 **Key Tests:**
 - `test_config_file_valid_json()` - Ensures config is valid JSON
@@ -52,14 +52,14 @@ Tests for configuration loading and validation:
 
 ### 5. test_risk_management.py
 Tests for risk calculations and account protection:
-- ✅ Position sizing for different pairs (EUR, GBP, JPY, XAU)
-- ✅ Risk limits enforcement
-- ✅ Stop loss calculation
-- ✅ Take profit calculation
-- ✅ Risk-reward ratio validation
-- ✅ Account protection mechanisms
-- ✅ Lot size validation
-- ✅ Balance impact calculations
+-  Position sizing for different pairs (EUR, GBP, JPY, XAU)
+-  Risk limits enforcement
+-  Stop loss calculation
+-  Take profit calculation
+-  Risk-reward ratio validation
+-  Account protection mechanisms
+-  Lot size validation
+-  Balance impact calculations
 
 **Key Tests:**
 - `test_position_size_with_dual_orders()` - Validates 2x risk
@@ -67,19 +67,19 @@ Tests for risk calculations and account protection:
 - `test_total_account_risk_limit()` - Ensures safe total risk
 - `test_lot_size_rounding()` - Ensures correct lot sizing
 
-### 6. test_live_trading.py ⭐ NEW
+### 6. test_live_trading.py  NEW
 Tests for live trading mode and safety:
-- ✅ MT5 connection and initialization
-- ✅ Account login and authentication
-- ✅ Live order placement (BUY/SELL)
-- ✅ Dual order placement validation
-- ✅ Position management (open/close/monitor)
-- ✅ Safety mechanisms (daily loss, drawdown, consecutive losses)
-- ✅ Live risk management
-- ✅ Data validation (ticks, historical, symbols)
-- ✅ Logging and monitoring
-- ✅ Recovery mechanisms (reconnection, restart)
-- ✅ Trading modes (demo/live/paper)
+-  MT5 connection and initialization
+-  Account login and authentication
+-  Live order placement (BUY/SELL)
+-  Dual order placement validation
+-  Position management (open/close/monitor)
+-  Safety mechanisms (daily loss, drawdown, consecutive losses)
+-  Live risk management
+-  Data validation (ticks, historical, symbols)
+-  Logging and monitoring
+-  Recovery mechanisms (reconnection, restart)
+-  Trading modes (demo/live/paper)
 
 **Key Tests:**
 - `test_mt5_initialization_success()` - Validates MT5 connection
@@ -128,20 +128,20 @@ python run_tests.py --live
 ## Test Coverage
 
 ### Critical Components Tested
-- ✅ ICT Bot signal generation
-- ✅ Dual orders implementation (RR 1:1 + Main RR)
-- ✅ Position sizing with 2x risk awareness
-- ✅ Stop loss and take profit calculations
-- ✅ Backtest P&L calculations
-- ✅ Configuration validation
-- ✅ Risk management rules
-- ✅ Account protection mechanisms
+-  ICT Bot signal generation
+-  Dual orders implementation (RR 1:1 + Main RR)
+-  Position sizing with 2x risk awareness
+-  Stop loss and take profit calculations
+-  Backtest P&L calculations
+-  Configuration validation
+-  Risk management rules
+-  Account protection mechanisms
 
 ### Components Not Tested (Integration/Manual Testing)
-- ⚠️ MetaTrader5 connection (requires MT5 running)
-- ⚠️ Real order placement (requires demo account)
-- ⚠️ Historical data fetching (requires MT5)
-- ⚠️ Live trading execution
+-  MetaTrader5 connection (requires MT5 running)
+-  Real order placement (requires demo account)
+-  Historical data fetching (requires MT5)
+-  Live trading execution
 
 ## Expected Results
 
@@ -162,10 +162,10 @@ Some tests will print warnings for awareness:
 
 ## Test Results Interpretation
 
-### ✅ All Pass
+###  All Pass
 System is ready for demo trading. Configuration is valid, risk calculations are correct, dual orders logic is working properly.
 
-### ❌ Some Fail
+###  Some Fail
 - **Config tests fail**: Fix config.json
 - **Risk tests fail**: Review risk calculations
 - **Dual order tests fail**: Review open_position() logic

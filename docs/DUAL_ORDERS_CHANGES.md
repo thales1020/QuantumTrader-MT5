@@ -11,7 +11,7 @@ Implemented **Dual Orders Strategy** across all trading bots where each signal n
 
 ## Files Modified
 
-### 1. ✅ `core/supertrend_bot.py`
+### 1.  `core/supertrend_bot.py`
 **Status**: UPDATED - NEW dual orders implementation
 
 **Changes**:
@@ -38,7 +38,7 @@ Implemented **Dual Orders Strategy** across all trading bots where each signal n
 
 ---
 
-### 2. ✅ `core/ict_bot.py`
+### 2.  `core/ict_bot.py`
 **Status**: UPDATED - NEW dual orders implementation
 
 **Changes**:
@@ -69,7 +69,7 @@ if result2.retcode != mt5.TRADE_RETCODE_DONE:
 
 ---
 
-### 3. ✅ `core/ict_bot_smc.py`
+### 3.  `core/ict_bot_smc.py`
 **Status**: UNCHANGED - Already has dual orders
 
 **Existing Features**:
@@ -79,7 +79,7 @@ if result2.retcode != mt5.TRADE_RETCODE_DONE:
 
 ---
 
-### 4. ✅ `engines/backtest_engine.py`
+### 4.  `engines/backtest_engine.py`
 **Status**: UPDATED - Complete rewrite for dual orders tracking
 
 **Changes**:
@@ -252,7 +252,7 @@ if pos['order2']['active']:
 
 ## Documentation Files Created
 
-### 5. ✅ `DUAL_ORDERS_IMPLEMENTATION.md` (NEW)
+### 5.  `DUAL_ORDERS_IMPLEMENTATION.md` (NEW)
 **Purpose**: Comprehensive guide for dual orders feature
 
 **Sections**:
@@ -260,7 +260,7 @@ if pos['order2']['active']:
 2. **Affected Bots**: SuperTrend, ICT Bot, ICT Bot SMC
 3. **Implementation Details**: Code examples for each bot
 4. **Backtest Engine Update**: All changes explained
-5. **Risk Management**: ⚠️ Double risk warning
+5. **Risk Management**:  Double risk warning
 6. **Testing**: Test scenarios and checklist
 7. **Advantages/Disadvantages**: Pros and cons
 8. **Migration Guide**: Step-by-step for existing users
@@ -269,14 +269,14 @@ if pos['order2']['active']:
 11. **Future Enhancements**: Planned features
 
 **Key Highlights**:
-- 📊 Examples with actual numbers
-- ⚠️ Risk warnings prominently displayed
-- 🎯 Configuration recommendations
-- 📝 Clear migration path for existing users
+-  Examples with actual numbers
+-  Risk warnings prominently displayed
+-  Configuration recommendations
+-  Clear migration path for existing users
 
 ---
 
-### 6. ✅ `DUAL_ORDERS_CHANGES.md` (THIS FILE) (NEW)
+### 6.  `DUAL_ORDERS_CHANGES.md` (THIS FILE) (NEW)
 **Purpose**: Technical change log for developers
 
 **Contents**:
@@ -287,7 +287,7 @@ if pos['order2']['active']:
 
 ---
 
-### 7. ✅ `README.md` (UPDATED)
+### 7.  `README.md` (UPDATED)
 **Changes**:
 - **Added**: "What's New - Dual Orders Strategy" section (lines ~13-28)
   - Quick overview of the feature
@@ -297,51 +297,51 @@ if pos['order2']['active']:
 
 - **Updated**: Trading Features section
   - Added dual orders as first feature
-  - Emoji: 🎯 for emphasis
+  - Emoji:  for emphasis
 
 **New Section**:
 ```markdown
-## 🎉 What's New - Dual Orders Strategy
+##  What's New - Dual Orders Strategy
 
 Each trading signal now opens **2 positions**:
-- 🎯 **Order 1**: Quick profit at **RR 1:1**
-- 🚀 **Order 2**: Main profit at configured RR ratio
+-  **Order 1**: Quick profit at **RR 1:1**
+-  **Order 2**: Main profit at configured RR ratio
 
-⚠️ Total risk per signal is now **2 × risk_percent**
+ Total risk per signal is now **2 × risk_percent**
 ```
 
 ---
 
 ## Testing Performed
 
-### Import Tests ✅
+### Import Tests 
 ```bash
-✅ SuperTrend Bot: Import successful
-✅ place_dual_orders method exists: True
+ SuperTrend Bot: Import successful
+ place_dual_orders method exists: True
 
-✅ Backtest Engine: Import successful
-✅ Public methods: ['run_backtest']
+ Backtest Engine: Import successful
+ Public methods: ['run_backtest']
 
-✅ ICT Bot: Import successful
-✅ open_position method exists: True
+ ICT Bot: Import successful
+ open_position method exists: True
 ```
 
-### Syntax Tests ✅
+### Syntax Tests 
 ```bash
-✅ No errors in core/supertrend_bot.py
-✅ No errors in core/ict_bot.py
-✅ No errors in engines/backtest_engine.py
+ No errors in core/supertrend_bot.py
+ No errors in core/ict_bot.py
+ No errors in engines/backtest_engine.py
 ```
 
 ### Unit Tests
-- ✅ Live trading tests: 34/34 passed (from previous work)
+-  Live trading tests: 34/34 passed (from previous work)
 - ⏳ Dual orders specific tests: TODO (recommended)
 
 ---
 
 ## Risk Management Changes
 
-### ⚠️ CRITICAL: Risk Doubling
+###  CRITICAL: Risk Doubling
 
 **Old Behavior**:
 - 1 signal = 1 order
@@ -505,8 +505,8 @@ Net Profit: $1,500.00
 - Can blow account if not careful
 
 **Mitigation**: 
-- ⚠️ Warnings in logs
-- 📊 Documentation emphasizes this
+-  Warnings in logs
+-  Documentation emphasizes this
 - 🛡️ Recommended to halve risk_percent
 
 ---
@@ -534,13 +534,13 @@ Net Profit: $1,500.00
 ## Testing Recommendations
 
 ### Before Live Trading
-1. ✅ Run all unit tests: `python run_tests.py --all`
-2. ✅ Run backtest: `python run_backtest.py`
-3. ✅ Review backtest dual orders statistics
-4. ✅ Test on demo account for 1 week
-5. ✅ Verify risk calculations in logs
-6. ✅ Check MT5 for correct order comments
-7. ✅ Monitor total exposure vs limits
+1.  Run all unit tests: `python run_tests.py --all`
+2.  Run backtest: `python run_backtest.py`
+3.  Review backtest dual orders statistics
+4.  Test on demo account for 1 week
+5.  Verify risk calculations in logs
+6.  Check MT5 for correct order comments
+7.  Monitor total exposure vs limits
 
 ### During Live Trading
 - Monitor first 10 signals closely
@@ -574,7 +574,7 @@ Based on theoretical analysis:
 - Max Drawdown: Potentially lower (RR 1:1 cushions losses)
 - Sharpe Ratio: Potentially improved
 
-**⚠️ Disclaimer**: Actual results vary. Always backtest your specific configuration.
+** Disclaimer**: Actual results vary. Always backtest your specific configuration.
 
 ---
 
@@ -591,14 +591,14 @@ For questions or issues:
 
 ## Summary
 
-✅ **3 bots updated** (SuperTrend, ICT Bot) + 1 already had it (ICT Bot SMC)
-✅ **Backtest engine** completely rewritten for dual tracking
-✅ **Documentation** comprehensive and clear
-✅ **Risk warnings** prominently displayed
-✅ **Migration guide** provided
-✅ **Import tests** passing
+ **3 bots updated** (SuperTrend, ICT Bot) + 1 already had it (ICT Bot SMC)
+ **Backtest engine** completely rewritten for dual tracking
+ **Documentation** comprehensive and clear
+ **Risk warnings** prominently displayed
+ **Migration guide** provided
+ **Import tests** passing
 
-⚠️ **Action Required**: Users must update `risk_percent` in config!
+ **Action Required**: Users must update `risk_percent` in config!
 
 ---
 
@@ -608,7 +608,7 @@ For questions or issues:
 ## [1.X.X] - 2025-01-16
 
 ### Added
-- 🎯 **Dual Orders Strategy**: All bots now open 2 positions per signal
+-  **Dual Orders Strategy**: All bots now open 2 positions per signal
   - Order 1: RR 1:1 (quick profit)
   - Order 2: Main RR from config (larger profit)
 - New `place_dual_orders()` method in SuperTrend Bot
@@ -617,7 +617,7 @@ For questions or issues:
 - Comprehensive documentation: DUAL_ORDERS_IMPLEMENTATION.md
 
 ### Changed
-- ⚠️ **BREAKING**: Total risk per signal is now 2 × risk_percent
+-  **BREAKING**: Total risk per signal is now 2 × risk_percent
 - Backtest reports now show RR 1:1 vs Main RR statistics
 - Order comments updated for tracking (ST_BUY_RR1, ST_BUY_RR2, etc.)
 - Enhanced logging showing both orders and total risk
@@ -634,4 +634,4 @@ For questions or issues:
 **Total Files Modified**: 4 (3 bots + 1 backtest engine)
 **Total Files Created**: 3 (2 docs + this summary)
 **Lines of Code Changed**: ~500 lines
-**Testing Status**: Import tests ✅, Syntax ✅, Unit tests recommended
+**Testing Status**: Import tests , Syntax , Unit tests recommended

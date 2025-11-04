@@ -1,4 +1,4 @@
-# 🔧 Utility Scripts
+#  Utility Scripts
 
 Scripts tiện ích cho testing và maintenance.
 

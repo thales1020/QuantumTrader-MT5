@@ -116,7 +116,7 @@ def print_banner():
     ║  Author: xPOURY4                                          ║
     ║  GitHub: https://github.com/xPOURY4/ML-SuperTrend-MT5     ║
     ║                                                           ║
-    ║ ⚠️  EDUCATIONAL PURPOSES ONLY - TRADE AT YOUR OWN RISK    ║
+    ║   EDUCATIONAL PURPOSES ONLY - TRADE AT YOUR OWN RISK    ║
     ║                                                           ║
     ╚═══════════════════════════════════════════════════════════╝
     """

@@ -1,4 +1,4 @@
-# ⚡ Performance Optimization Guide
+#  Performance Optimization Guide
 
 ## 🐌 Vấn đề ban đầu
 
@@ -8,7 +8,7 @@ Backtest càng chạy càng chậm do:
 3. **Redundant calculations** - Tính lại indicators trên toàn bộ data
 4. **Excessive logging** - Log quá nhiều làm chậm I/O
 
-## ✅ Các tối ưu đã áp dụng
+##  Các tối ưu đã áp dụng
 
 ### 1. **Sliding Window Approach** 🪟
 **Trước:**
@@ -23,10 +23,10 @@ current_df = df_indexed.iloc[i-lookback:i+1].copy()  # Chỉ lấy 500 bars gầ
 ```
 
 **Lợi ích:** 
-- Memory constant: ~500 bars thay vì 1→52,988 bars
+- Memory constant: ~500 bars thay vì 152,988 bars
 - Speed: Copy 500 bars thay vì 52,988 bars
 
-### 2. **Reduced Equity Recording** 📊
+### 2. **Reduced Equity Recording** 
 **Trước:**
 ```python
 # Record equity mỗi bar
@@ -42,10 +42,10 @@ if i % equity_record_interval == 0 or self.open_position:
 ```
 
 **Lợi ích:**
-- Memory: Giảm 100x (từ 52,888 → 528 records)
+- Memory: Giảm 100x (từ 52,888  528 records)
 - Speed: Ít append operations hơn
 
-### 3. **Optimized Signal Generation** 🎯
+### 3. **Optimized Signal Generation** 
 **Trước:**
 ```python
 def generate_signal(self, df: pd.DataFrame):
@@ -67,7 +67,7 @@ def generate_signal(self, df: pd.DataFrame):
 - Analyze: 100 bars thay vì 52,988 bars
 - Speed: 500x nhanh hơn
 
-### 4. **Smart Order Block Scanning** 🔍
+### 4. **Smart Order Block Scanning** 
 ```python
 # Only scan recent data (last 50 candles)
 scan_range = min(50, len(df) - 3)
@@ -81,7 +81,7 @@ for i in range(start_idx, len(df) - 3):
 - Scan 50 candles thay vì toàn bộ
 - Speed: 1000x nhanh hơn
 
-### 5. **Reduced Logging** 📝
+### 5. **Reduced Logging** 
 **Trước:**
 ```python
 # Log mỗi 10%
@@ -101,57 +101,57 @@ if progress - last_progress_report >= progress_report_interval:
 - Giảm 50% logging operations
 - Thêm thông tin hữu ích (trades, balance)
 
-## 📈 Kết quả
+##  Kết quả
 
 ### Trước tối ưu:
 - ⏱️ Thời gian: ~10-15 phút cho 52,988 bars
-- 🧠 Memory: Tăng dần từ 200MB → 2GB+
+- 🧠 Memory: Tăng dần từ 200MB  2GB+
 - 🐌 Speed: Càng chạy càng chậm (exponential slowdown)
 
 ### Sau tối ưu:
-- ⚡ Thời gian: ~2-3 phút cho 52,988 bars (5x nhanh hơn)
+-  Thời gian: ~2-3 phút cho 52,988 bars (5x nhanh hơn)
 - 🧠 Memory: Ổn định ~300-400MB
-- 🚀 Speed: Constant (không chậm dần)
+-  Speed: Constant (không chậm dần)
 
-## 🎯 Best Practices
+##  Best Practices
 
 ### 1. **Luôn dùng Sliding Window**
 ```python
-# ✅ GOOD
+#  GOOD
 lookback = min(500, current_index)
 data = df.iloc[i-lookback:i+1]
 
-# ❌ BAD
+#  BAD
 data = df.iloc[:i+1]  # Grows indefinitely
 ```
 
 ### 2. **Limit Data Storage**
 ```python
-# ✅ GOOD - Record periodically
+#  GOOD - Record periodically
 if i % 100 == 0:
     save_data()
 
-# ❌ BAD - Record everything
+#  BAD - Record everything
 save_data()  # Every iteration
 ```
 
 ### 3. **Use Recent Data for Analysis**
 ```python
-# ✅ GOOD
+#  GOOD
 recent = df.tail(100)
 analyze(recent)
 
-# ❌ BAD
+#  BAD
 analyze(df)  # Entire dataset
 ```
 
 ### 4. **Optimize Indicators**
 ```python
-# ✅ GOOD - Calculate once
+#  GOOD - Calculate once
 if not hasattr(df, 'atr_cached'):
     df['atr_cached'] = calculate_atr(df)
 
-# ❌ BAD - Calculate repeatedly
+#  BAD - Calculate repeatedly
 atr = calculate_atr(df)  # Every time
 ```
 
@@ -163,7 +163,7 @@ atr = calculate_atr(df)  # Every time
 4. **JIT Compilation** - Use Numba for critical paths
 5. **Database** - Store results in database instead of memory
 
-## 📊 Performance Monitoring
+##  Performance Monitoring
 
 ```python
 import time

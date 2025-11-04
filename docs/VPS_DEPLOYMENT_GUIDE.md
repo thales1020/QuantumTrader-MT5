@@ -1,4 +1,4 @@
-# 🖥️ HƯỚNG DẪN DEPLOY BOT LÊN VPS/SERVER
+#  HƯỚNG DẪN DEPLOY BOT LÊN VPS/SERVER
 
 ## 📋 MỤC LỤC
 1. [Tại Sao Cần VPS?](#tại-sao-cần-vps)
@@ -13,13 +13,13 @@
 
 ## 🤔 TẠI SAO CẦN VPS?
 
-### ❌ **Máy Cá Nhân:**
+###  **Máy Cá Nhân:**
 - Phải bật 24/7
 - Mất điện = bot dừng
 - Chi phí điện cao
 - Không ổn định
 
-### ✅ **VPS (Virtual Private Server):**
+###  **VPS (Virtual Private Server):**
 - Chạy 24/7 không gián đoạn
 - Uptime 99.9%
 - Internet tốc độ cao
@@ -28,7 +28,7 @@
 
 ---
 
-## 💻 CHỌN VPS
+##  CHỌN VPS
 
 ### **Option 1: Windows VPS** (Khuyến Nghị - Dễ Nhất)
 
@@ -203,7 +203,7 @@ goto loop
 
 1. **Open Task Scheduler**
    ```
-   Win + R → taskschd.msc
+   Win + R  taskschd.msc
    ```
 
 2. **Create Basic Task**
@@ -217,10 +217,10 @@ goto loop
 
 3. **Advanced Settings**
    ```
-   ✅ Run whether user is logged on or not
-   ✅ Run with highest privileges
-   ✅ If task fails, restart every: 1 minute
-   ✅ Attempt to restart up to: 999 times
+    Run whether user is logged on or not
+    Run with highest privileges
+    If task fails, restart every: 1 minute
+    Attempt to restart up to: 999 times
    ```
 
 ### **PowerShell Auto-Restart Script** (Advanced)
@@ -362,7 +362,7 @@ sudo journalctl -u supertrend-bot -f
 
 ---
 
-## 📊 MONITORING & ALERTS
+##  MONITORING & ALERTS
 
 ### **Option 1: Telegram Bot Alerts**
 
@@ -398,13 +398,13 @@ class TelegramAlert:
         message = f"""
 🤖 <b>ML-SuperTrend Bot Alert</b>
 
-📊 Symbol: {trade_info['symbol']}
-{'🟢 BUY' if trade_info['type'] == 'BUY' else '🔴 SELL'}
+ Symbol: {trade_info['symbol']}
+{' BUY' if trade_info['type'] == 'BUY' else ' SELL'}
 
-💰 Entry: ${trade_info['entry']:.2f}
+ Entry: ${trade_info['entry']:.2f}
 🛡️ Stop Loss: ${trade_info['sl']:.2f}
-🎯 Take Profit: ${trade_info['tp']:.2f}
-📦 Lot Size: {trade_info['lot_size']}
+ Take Profit: ${trade_info['tp']:.2f}
+ Lot Size: {trade_info['lot_size']}
 
 ⏰ {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
         """
@@ -413,7 +413,7 @@ class TelegramAlert:
     def send_error_alert(self, error_msg):
         """Send error notification"""
         message = f"""
-⚠️ <b>BOT ERROR</b>
+ <b>BOT ERROR</b>
 
 {error_msg}
 
@@ -424,13 +424,13 @@ class TelegramAlert:
     def send_daily_report(self, stats):
         """Send daily performance report"""
         message = f"""
-📈 <b>Daily Performance Report</b>
+ <b>Daily Performance Report</b>
 
-💰 P&L: ${stats['pnl']:.2f}
-📊 Win Rate: {stats['win_rate']:.1f}%
-🎯 Trades: {stats['total_trades']}
-✅ Wins: {stats['wins']}
-❌ Losses: {stats['losses']}
+ P&L: ${stats['pnl']:.2f}
+ Win Rate: {stats['win_rate']:.1f}%
+ Trades: {stats['total_trades']}
+ Wins: {stats['wins']}
+ Losses: {stats['losses']}
 
 ⏰ {datetime.now().strftime('%Y-%m-%d')}
         """
@@ -611,13 +611,13 @@ def check_bot_health():
     
     # Send alert if issues
     if not bot_running:
-        send_alert("⚠️ Bot is NOT running!")
+        send_alert(" Bot is NOT running!")
     elif cpu_percent > 90:
-        send_alert(f"⚠️ High CPU usage: {cpu_percent}%")
+        send_alert(f" High CPU usage: {cpu_percent}%")
     elif ram_percent > 90:
-        send_alert(f"⚠️ High RAM usage: {ram_percent}%")
+        send_alert(f" High RAM usage: {ram_percent}%")
     else:
-        print(f"✅ Bot healthy - CPU: {cpu_percent}%, RAM: {ram_percent}%")
+        print(f" Bot healthy - CPU: {cpu_percent}%, RAM: {ram_percent}%")
 
 if __name__ == "__main__":
     check_bot_health()
@@ -631,7 +631,7 @@ if __name__ == "__main__":
 
 ---
 
-## 💰 CHI PHÍ DỰ KIẾN
+##  CHI PHÍ DỰ KIẾN
 
 | Item | Giá/Tháng | Ghi Chú |
 |------|-----------|---------|
@@ -642,7 +642,7 @@ if __name__ == "__main__":
 | **Domain (optional)** | $10/năm | Cho dashboard |
 | **TỔNG** | **$10-25/tháng** | |
 
-**So với chi phí điện máy cá nhân chạy 24/7: ~$30-50/tháng** → VPS rẻ hơn!
+**So với chi phí điện máy cá nhân chạy 24/7: ~$30-50/tháng**  VPS rẻ hơn!
 
 ---
 
@@ -674,7 +674,7 @@ if __name__ == "__main__":
 
 ---
 
-## 🎯 KẾT LUẬN
+##  KẾT LUẬN
 
 **Khuyến Nghị:**
 1. **Newbie**: Dùng **Windows VPS** - dễ nhất
@@ -687,7 +687,7 @@ if __name__ == "__main__":
 2. Follow hướng dẫn setup Windows VPS
 3. Test bot chạy 24h
 4. Setup Telegram alerts
-5. Enjoy passive trading! 🚀
+5. Enjoy passive trading! 
 
 ---
 

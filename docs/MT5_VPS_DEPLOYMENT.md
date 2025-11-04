@@ -1,4 +1,4 @@
-# 🚀 Deploy Bot lên MT5 VPS
+#  Deploy Bot lên MT5 VPS
 
 ## Tổng Quan
 
@@ -8,39 +8,39 @@ MT5 cung cấp **Virtual Private Server (VPS)** tích hợp ngay trong platform,
 
 ## 📋 Ưu & Nhược Điểm MT5 VPS
 
-### ✅ **Ưu Điểm:**
-- 🚀 **Setup dễ dàng** - 1-click deployment từ MT5 terminal
+###  **Ưu Điểm:**
+-  **Setup dễ dàng** - 1-click deployment từ MT5 terminal
 - 🌍 **Latency cực thấp** - 96% brokers <10ms, 84% <3ms
-- 💰 **Giá rẻ** - $10-15/tháng (có 24h FREE trial)
+-  **Giá rẻ** - $10-15/tháng (có 24h FREE trial)
 - 🔒 **Bảo mật cao** - Môi trường cách ly
-- ⚡ **Uptime 99.99%** - Ổn định tuyệt đối
-- 🔧 **Không cần quản lý** - MQL5 lo toàn bộ
-- 🌐 **30+ locations** - Worldwide coverage
+-  **Uptime 99.99%** - Ổn định tuyệt đối
+-  **Không cần quản lý** - MQL5 lo toàn bộ
+-  **30+ locations** - Worldwide coverage
 
-### ⚠️ **Nhược Điểm:**
-- 🖥️ **Chỉ Windows** - RDP desktop environment
-- 📦 **Tài nguyên giới hạn** - RAM up to 3GB, CPU chia sẻ
-- 🔧 **Ít tùy chỉnh** - Không có root access
-- 💾 **Storage nhỏ** - Up to 16GB
-- ⚠️ **Phụ thuộc broker** - Tied to broker account
+###  **Nhược Điểm:**
+-  **Chỉ Windows** - RDP desktop environment
+-  **Tài nguyên giới hạn** - RAM up to 3GB, CPU chia sẻ
+-  **Ít tùy chỉnh** - Không có root access
+-  **Storage nhỏ** - Up to 16GB
+-  **Phụ thuộc broker** - Tied to broker account
 
 ---
 
-## 🎯 Phương Án Deploy
+##  Phương Án Deploy
 
-### **Option 1: MT5 VPS (Khuyến Nghị Cho Beginners)** ⭐⭐⭐⭐⭐
+### **Option 1: MT5 VPS (Khuyến Nghị Cho Beginners)** 
 
 **Phù hợp khi:**
-- ✅ Bạn mới bắt đầu
-- ✅ Không muốn quản lý server
-- ✅ Broker hỗ trợ VPS (Exness, XM, IC Markets)
-- ✅ Chỉ chạy 1-2 bots
+-  Bạn mới bắt đầu
+-  Không muốn quản lý server
+-  Broker hỗ trợ VPS (Exness, XM, IC Markets)
+-  Chỉ chạy 1-2 bots
 
 **Giá:**
 - Mini (1 tháng): **$15/month**
 - Optimal (3 tháng): **$13/month**
 - Long (6 tháng): **$10.83/month**
-- Max (12 tháng): **$10/month** ⭐ Best value
+- Max (12 tháng): **$10/month**  Best value
 - **24-hour FREE trial** - Test trước khi mua!
 
 **Specs:**
@@ -54,13 +54,13 @@ MT5 cung cấp **Virtual Private Server (VPS)** tích hợp ngay trong platform,
 
 ---
 
-### **Option 2: Cloud VPS (AWS, Google Cloud, Azure)** ⭐⭐⭐⭐
+### **Option 2: Cloud VPS (AWS, Google Cloud, Azure)** 
 
 **Phù hợp khi:**
-- ✅ Chạy nhiều bots/strategies
-- ✅ Cần tùy chỉnh cao
-- ✅ Muốn control hoàn toàn
-- ✅ Có kiến thức Linux/DevOps
+-  Chạy nhiều bots/strategies
+-  Cần tùy chỉnh cao
+-  Muốn control hoàn toàn
+-  Có kiến thức Linux/DevOps
 
 **Giá:** $5-50/tháng tùy cấu hình
 
@@ -68,12 +68,12 @@ MT5 cung cấp **Virtual Private Server (VPS)** tích hợp ngay trong platform,
 
 ---
 
-### **Option 3: VPS Providers (Vultr, DigitalOcean, Contabo)** ⭐⭐⭐⭐
+### **Option 3: VPS Providers (Vultr, DigitalOcean, Contabo)** 
 
 **Phù hợp khi:**
-- ✅ Muốn giá rẻ nhất
-- ✅ Chấp nhận quản lý server
-- ✅ Chạy multi-strategy portfolio
+-  Muốn giá rẻ nhất
+-  Chấp nhận quản lý server
+-  Chạy multi-strategy portfolio
 
 **Giá:** $3-20/tháng
 
@@ -81,20 +81,20 @@ MT5 cung cấp **Virtual Private Server (VPS)** tích hợp ngay trong platform,
 
 ---
 
-## 🔧 HƯỚNG DẪN: Deploy lên MT5 VPS
+##  HƯỚNG DẪN: Deploy lên MT5 VPS
 
 ### **Bước 1: Activate 24-Hour FREE Trial**
 
 MT5 VPS cung cấp **24 giờ miễn phí** để test:
 - 🆓 Không cần thẻ tín dụng
-- ✅ Full features như bản trả phí
+-  Full features như bản trả phí
 - 🔄 Sau 24h tự động chuyển sang paid plan (hoặc hủy)
 
 **Lưu ý:** Một số broker có thể cung cấp FREE VPS với điều kiện:
-- 💰 Balance ≥ $500 (hoặc $300 tùy broker)
-- 📊 Trading volume ≥ 2 lots/tháng
+-  Balance ≥ $500 (hoặc $300 tùy broker)
+-  Trading volume ≥ 2 lots/tháng
 - 🏦 Tài khoản active liên tục
-- ⚠️ **Check với broker của bạn** - không có trên trang chính thức MQL5
+-  **Check với broker của bạn** - không có trên trang chính thức MQL5
 
 ---
 
@@ -102,7 +102,7 @@ MT5 VPS cung cấp **24 giờ miễn phí** để test:
 
 #### **2.1. Mở VPS Settings**
 ```
-MT5 Terminal → Tools → Options → VPS Tab
+MT5 Terminal  Tools  Options  VPS Tab
 ```
 
 Hoặc click icon VPS trên toolbar (hình cloud ☁️)
@@ -111,12 +111,12 @@ Hoặc click icon VPS trên toolbar (hình cloud ☁️)
 - **Mini (1 month)**: $15/month - Test ngắn hạn
 - **Optimal (3 months)**: $13/month - Good balance
 - **Long (6 months)**: $10.83/month - Save $25/year
-- **Max (12 months)**: $10/month - Best value, save $60/year ⭐
+- **Max (12 months)**: $10/month - Best value, save $60/year 
 
 #### **2.3. One-Click Deployment**
 ```
-Click "Rent" → Select plan → Confirm
-→ MT5 tự động transfer environment lên cloud
+Click "Rent"  Select plan  Confirm
+ MT5 tự động transfer environment lên cloud
 ```
 
 **Process:**
@@ -134,16 +134,16 @@ Click "Rent" → Select plan → Confirm
 
 ### **Bước 3: Verify VPS Connection**
 ```
-Status: Connected ✅
-Latency: <10ms ✅ (96% brokers achieve this)
-Migration: Completed ✅
-Resources: 3GB RAM, 16GB Disk ✅
+Status: Connected 
+Latency: <10ms  (96% brokers achieve this)
+Migration: Completed 
+Resources: 3GB RAM, 16GB Disk 
 ```
 
 **Test latency:**
 ```
-Right-click VPS icon → Show Journal
-→ Check "Ping to trade server: X ms"
+Right-click VPS icon  Show Journal
+ Check "Ping to trade server: X ms"
 ```
 
 ---
@@ -237,10 +237,10 @@ goto start
 
 #### **5.1. Connect RDP to VPS**
 
-**⚠️ Lưu ý:** MT5 VPS không cung cấp RDP access mặc định. Bạn chỉ cần:
-1. ✅ MT5 tự động sync environment (EAs, settings)
-2. ✅ Bot Python cần chạy **trên máy local** hoặc **VPS riêng**
-3. ✅ MT5 VPS chỉ dành cho **Expert Advisors (EAs)** viết bằng MQL5
+** Lưu ý:** MT5 VPS không cung cấp RDP access mặc định. Bạn chỉ cần:
+1.  MT5 tự động sync environment (EAs, settings)
+2.  Bot Python cần chạy **trên máy local** hoặc **VPS riêng**
+3.  MT5 VPS chỉ dành cho **Expert Advisors (EAs)** viết bằng MQL5
 
 **Nếu muốn chạy Python bot 24/7:**
 - Option A: Convert Python logic sang EA (MQL5)
@@ -313,10 +313,10 @@ python run_bot.py --account demo --symbol BTCUSDm
 ```
 
 **Verify:**
-- ✅ MT5 connection successful
-- ✅ Data loading OK
-- ✅ Bot running without errors
-- ✅ Ctrl+C để dừng
+-  MT5 connection successful
+-  Data loading OK
+-  Bot running without errors
+-  Ctrl+C để dừng
 
 #### **6.2. Test Auto-Restart**
 ```batch
@@ -324,21 +324,21 @@ start_bot.bat
 ```
 
 **Verify:**
-- ✅ Bot starts automatically
-- ✅ Logs được ghi vào file
-- ✅ Bot restart sau khi crash
+-  Bot starts automatically
+-  Logs được ghi vào file
+-  Bot restart sau khi crash
 
 ---
 
 ### **Bước 7: Chạy Bot 24/7 (Windows VPS riêng)**
 
-**⚠️ Lưu ý:** Phần này chỉ áp dụng nếu bạn dùng Windows VPS riêng (không phải MT5 VPS).
+** Lưu ý:** Phần này chỉ áp dụng nếu bạn dùng Windows VPS riêng (không phải MT5 VPS).
 
 #### **7.1. Tạo Windows Task Scheduler**
 
 **Run as Scheduled Task:**
 ```
-1. VPS → Search "Task Scheduler"
+1. VPS  Search "Task Scheduler"
 2. Create Basic Task
 3. Name: "TradingBot-AutoStart"
 4. Trigger: "When computer starts"
@@ -349,8 +349,8 @@ start_bot.bat
 
 **Test:**
 ```
-Right-click task → Run
-→ Check logs\bot_*.log
+Right-click task  Run
+ Check logs\bot_*.log
 ```
 
 #### **7.2. Tạo Watchdog Script** (Advanced)
@@ -395,22 +395,22 @@ def start_bot():
             ['python', BOT_SCRIPT, '--account', 'demo', '--symbol', 'BTCUSDm'],
             creationflags=subprocess.CREATE_NEW_CONSOLE
         )
-        log_message("✅ Bot started successfully")
+        log_message(" Bot started successfully")
         return True
     except Exception as e:
-        log_message(f"❌ Failed to start bot: {e}")
+        log_message(f" Failed to start bot: {e}")
         return False
 
 def main():
-    log_message("🚀 Watchdog started")
+    log_message(" Watchdog started")
     
     while True:
         try:
             if not is_bot_running():
-                log_message("⚠️ Bot not running! Attempting to restart...")
+                log_message(" Bot not running! Attempting to restart...")
                 start_bot()
             else:
-                log_message("✅ Bot is running")
+                log_message(" Bot is running")
             
             time.sleep(CHECK_INTERVAL)
             
@@ -418,7 +418,7 @@ def main():
             log_message("🛑 Watchdog stopped by user")
             break
         except Exception as e:
-            log_message(f"❌ Watchdog error: {e}")
+            log_message(f" Watchdog error: {e}")
             time.sleep(10)
 
 if __name__ == "__main__":
@@ -441,7 +441,7 @@ python watchdog.py
 **Via RDP:**
 ```
 1. Connect RDP to VPS
-2. Check Task Manager → Python processes
+2. Check Task Manager  Python processes
 3. Check logs\bot_*.log
 ```
 
@@ -492,7 +492,7 @@ def rotate_logs():
         elif file_size_mb > MAX_LOG_SIZE_MB:
             archive_name = f"{filepath}.{datetime.now().strftime('%Y%m%d')}.archive"
             shutil.move(filepath, archive_name)
-            print(f"Archived large log: {filename} → {archive_name}")
+            print(f"Archived large log: {filename}  {archive_name}")
 
 if __name__ == "__main__":
     rotate_logs()
@@ -500,7 +500,7 @@ if __name__ == "__main__":
 
 **Schedule Daily:**
 ```
-Task Scheduler → Daily 3:00 AM
+Task Scheduler  Daily 3:00 AM
 Program: python scripts/rotate_logs.py
 ```
 
@@ -557,22 +557,22 @@ def main():
     for check_name, check_func in checks:
         try:
             passed, message = check_func()
-            status = "✅ PASS" if passed else "❌ FAIL"
+            status = " PASS" if passed else " FAIL"
             print(f"{status} - {check_name}: {message}")
             if not passed:
                 all_passed = False
         except Exception as e:
-            print(f"❌ FAIL - {check_name}: {e}")
+            print(f" FAIL - {check_name}: {e}")
             all_passed = False
     
     mt5.shutdown()
     
     print("="*50)
     if all_passed:
-        print("✅ All checks passed")
+        print(" All checks passed")
         sys.exit(0)
     else:
-        print("❌ Some checks failed")
+        print(" Some checks failed")
         sys.exit(1)
 
 if __name__ == "__main__":
@@ -581,7 +581,7 @@ if __name__ == "__main__":
 
 **Schedule Every Hour:**
 ```
-Task Scheduler → Every 1 hour
+Task Scheduler  Every 1 hour
 Program: python scripts/health_check.py >> logs/health_check.log
 ```
 
@@ -591,7 +591,7 @@ Program: python scripts/health_check.py >> logs/health_check.log
 
 ### **Bước 1: Tạo Telegram Bot**
 
-1. Mở Telegram → Search **@BotFather**
+1. Mở Telegram  Search **@BotFather**
 2. Send `/newbot`
 3. Name: "My Trading Bot"
 4. Username: "my_trading_bot" (unique)
@@ -640,12 +640,12 @@ class TelegramNotifier:
         message = f"""
 🤖 *New Trade Alert*
 
-📊 Symbol: `{symbol}`
-🔔 Signal: *{signal_type}*
-💰 Entry: `{entry:.5f}`
+ Symbol: `{symbol}`
+ Signal: *{signal_type}*
+ Entry: `{entry:.5f}`
 🛑 SL: `{sl:.5f}`
-🎯 TP: `{tp:.5f}`
-📦 Lot Size: `{lot_size:.2f}`
+ TP: `{tp:.5f}`
+ Lot Size: `{lot_size:.2f}`
 
 ⏰ {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
 """
@@ -653,11 +653,11 @@ class TelegramNotifier:
     
     def notify_closed(self, symbol, profit, duration):
         """Notify trade closed"""
-        emoji = "✅" if profit > 0 else "❌"
+        emoji = "" if profit > 0 else ""
         message = f"""
 {emoji} *Trade Closed*
 
-📊 Symbol: `{symbol}`
+ Symbol: `{symbol}`
 💵 P&L: `${profit:.2f}`
 ⏱ Duration: `{duration}`
 
@@ -668,7 +668,7 @@ class TelegramNotifier:
     def notify_error(self, error_msg):
         """Notify error"""
         message = f"""
-⚠️ *Bot Error*
+ *Bot Error*
 
 ```
 {error_msg}
@@ -681,11 +681,11 @@ class TelegramNotifier:
     def notify_status(self, balance, equity, positions):
         """Send status update"""
         message = f"""
-📊 *Bot Status*
+ *Bot Status*
 
-💰 Balance: `${balance:.2f}`
+ Balance: `${balance:.2f}`
 💎 Equity: `${equity:.2f}`
-📈 Open Positions: `{positions}`
+ Open Positions: `{positions}`
 
 ⏰ {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
 """
@@ -725,7 +725,7 @@ telegram.notify_error(str(exception))
 
 ---
 
-## 💰 Chi Phí Ước Tính
+##  Chi Phí Ước Tính
 
 ### **MT5 VPS Pricing**
 
@@ -748,7 +748,7 @@ telegram.notify_error(str(exception))
 
 ---
 
-## ✅ Checklist Trước Khi Deploy
+##  Checklist Trước Khi Deploy
 
 ### **Pre-Deployment**
 - [ ] Test bot hoàn toàn trên local
@@ -819,46 +819,46 @@ Solution:
 
 ---
 
-## 📝 Best Practices
+##  Best Practices
 
 ### **Security**
-1. ✅ Không share VPS credentials
-2. ✅ Use strong passwords
-3. ✅ Enable Windows Firewall
-4. ✅ Regular backup config files
-5. ✅ Monitor login attempts
+1.  Không share VPS credentials
+2.  Use strong passwords
+3.  Enable Windows Firewall
+4.  Regular backup config files
+5.  Monitor login attempts
 
 ### **Performance**
-1. ✅ Keep VPS clean (no unnecessary software)
-2. ✅ Regular updates (Windows, Python)
-3. ✅ Monitor CPU/RAM usage
-4. ✅ Optimize bot settings
-5. ✅ Use efficient indicators
+1.  Keep VPS clean (no unnecessary software)
+2.  Regular updates (Windows, Python)
+3.  Monitor CPU/RAM usage
+4.  Optimize bot settings
+5.  Use efficient indicators
 
 ### **Reliability**
-1. ✅ Auto-restart mechanism
-2. ✅ Health checks scheduled
-3. ✅ Log rotation
-4. ✅ Telegram alerts for critical events
-5. ✅ Daily manual verification
+1.  Auto-restart mechanism
+2.  Health checks scheduled
+3.  Log rotation
+4.  Telegram alerts for critical events
+5.  Daily manual verification
 
 ### **Risk Management**
-1. ✅ Start với demo account
-2. ✅ Test 1-2 tuần trước khi live
-3. ✅ Set daily loss limits
-4. ✅ Monitor drawdown
-5. ✅ Have emergency stop plan
+1.  Start với demo account
+2.  Test 1-2 tuần trước khi live
+3.  Set daily loss limits
+4.  Monitor drawdown
+5.  Have emergency stop plan
 
 ---
 
-## 🎯 Kết Luận
+##  Kết Luận
 
 **MT5 VPS** là lựa chọn tốt nhất cho **beginners** vì:
-- ✅ Setup đơn giản (< 15 phút)
-- ✅ Không cần kiến thức DevOps
-- ✅ Có thể FREE nếu đủ điều kiện
-- ✅ Support từ broker
-- ✅ Low latency
+-  Setup đơn giản (< 15 phút)
+-  Không cần kiến thức DevOps
+-  Có thể FREE nếu đủ điều kiện
+-  Support từ broker
+-  Low latency
 
 **Recommend:**
 1. Dùng **MT5 VPS** cho 1-2 bots
@@ -867,4 +867,4 @@ Solution:
 4. Backup **config** thường xuyên
 5. Monitor **hàng ngày** ban đầu
 
-**Good luck với bot 24/7!** 🚀
+**Good luck với bot 24/7!** 

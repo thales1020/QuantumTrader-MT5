@@ -1,6 +1,6 @@
 # 📋 Attribution Checklist
 
-## ✅ Tasks to Complete Attribution
+##  Tasks to Complete Attribution
 
 Bạn cần điền các thông tin sau để hoàn thành attribution:
 
@@ -19,10 +19,10 @@ Tìm và điền vào các files:
 - [ ] **Line 11**: Thay `[Year]` và `[Original Author Name]` bằng thông tin gốc
 
 ### 2. Review Modified Files
-- [x] ✅ `docs/ATTRIBUTION.md` - Created with placeholders
-- [x] ✅ `NOTICE` - Created with placeholders
-- [x] ✅ `README.md` - Added attribution notice and link
-- [x] ✅ `LICENSE` - Already has your copyright (correct!)
+- [x]  `docs/ATTRIBUTION.md` - Created with placeholders
+- [x]  `NOTICE` - Created with placeholders
+- [x]  `README.md` - Added attribution notice and link
+- [x]  `LICENSE` - Already has your copyright (correct!)
 
 ### 3. Verify Information
 
@@ -79,28 +79,28 @@ Bạn cần tìm từ project gốc:
   - Set repository as "Forked from ..." in GitHub settings (nếu thực sự fork)
   - Add "Original Project" link in About section
 
-### 6. Best Practices Met ✅
+### 6. Best Practices Met 
 
 Bạn đã làm đúng các điều sau:
 
-- ✅ Keep MIT License (same as original)
-- ✅ Create ATTRIBUTION.md (transparency)
-- ✅ Create NOTICE file (legal compliance)
-- ✅ Add prominent notice in README
-- ✅ List all modifications clearly
-- ✅ Maintain copyright notices
-- ✅ Document code ownership breakdown
+-  Keep MIT License (same as original)
+-  Create ATTRIBUTION.md (transparency)
+-  Create NOTICE file (legal compliance)
+-  Add prominent notice in README
+-  List all modifications clearly
+-  Maintain copyright notices
+-  Document code ownership breakdown
 
 ### 7. Legal Compliance Checklist
 
 MIT License requires:
 
-- [x] ✅ Include copy of MIT license ➜ `LICENSE` file exists
-- [x] ✅ Include copyright notice ➜ In `LICENSE` and `NOTICE`
-- [x] ✅ State modifications ➜ In `ATTRIBUTION.md`
-- [x] ✅ Preserve original license ➜ Using same MIT license
+- [x]  Include copy of MIT license  `LICENSE` file exists
+- [x]  Include copyright notice  In `LICENSE` and `NOTICE`
+- [x]  State modifications  In `ATTRIBUTION.md`
+- [x]  Preserve original license  Using same MIT license
 
-## 📝 Example: How to Fill
+##  Example: How to Fill
 
 ### Before:
 ```markdown
@@ -116,7 +116,7 @@ MIT License requires:
 - **Fork Date**: December 2023
 ```
 
-## 🎯 Next Steps
+##  Next Steps
 
 1. **Find original project info** (GitHub, git history, etc.)
 2. **Fill in all placeholders** in `ATTRIBUTION.md` and `NOTICE`

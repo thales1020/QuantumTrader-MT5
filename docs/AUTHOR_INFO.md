@@ -1,10 +1,10 @@
-# 📝 Repository & Author Information
+#  Repository & Author Information
 
-## 👨‍💻 Author
+## 👨‍ Author
 
 **Trần Trọng Hiếu**
 
-- 🌐 **Personal GitHub**: [@thales1020](https://github.com/thales1020)
+-  **Personal GitHub**: [@thales1020](https://github.com/thales1020)
 ## 📂 Repository Structure
 
 ### This Repository
@@ -28,14 +28,14 @@ This is a common practice in software development:
 
 **Analogy**: Like having a personal email and a company email. Both are you, but used for different purposes.
 
-## 🎯 Project Ownership
+##  Project Ownership
 
 **This project (ML-SuperTrend-MT5) is owned and developed by Trần Trọng Hiếu**
 
-- ✅ Original Author: Trần Trọng Hiếu
-- ✅ Primary Developer: Trần Trọng Hiếu
-- ✅ Maintainer: Trần Trọng Hiếu
-- ✅ Copyright Holder: Trần Trọng Hiếu (2024-2025)
+-  Original Author: Trần Trọng Hiếu
+-  Primary Developer: Trần Trọng Hiếu
+-  Maintainer: Trần Trọng Hiếu
+-  Copyright Holder: Trần Trọng Hiếu (2024-2025)
 
 The fact that it's hosted under **@xPOURY4** doesn't change the authorship - it's still 100% yours.
 
@@ -62,7 +62,7 @@ Repository:
     └── Maintained by: Trần Trọng Hiếu (@thales1020)
 ```
 
-## 🔗 How to Reference This Project
+##  How to Reference This Project
 
 ### In Academic Papers
 ```bibtex
@@ -85,12 +85,12 @@ Project: https://github.com/xPOURY4/ML-SuperTrend-MT5
 
 ### In Social Media
 ```
-Check out ML-SuperTrend-MT5 by @thales1020! 🚀
+Check out ML-SuperTrend-MT5 by @thales1020! 
 An ML-enhanced trading bot for MetaTrader 5
 https://github.com/xPOURY4/ML-SuperTrend-MT5
 ```
 
-## 📊 Contribution Guidelines
+##  Contribution Guidelines
 
 If you want to contribute to this project:
 

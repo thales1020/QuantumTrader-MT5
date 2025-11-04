@@ -6,10 +6,10 @@ sys.path.insert(0, '.')
 
 try:
     from core.supertrend_bot import SuperTrendBot
-    print("✅ SuperTrend Bot imported")
+    print(" SuperTrend Bot imported")
     
     from core.ict_bot import ICTBot
-    print("✅ ICT Bot imported")
+    print(" ICT Bot imported")
     
     print("\n" + "="*60)
     print("All bots successfully imported with crypto support!")
@@ -20,9 +20,9 @@ try:
     for crypto in cryptos:
         symbol = f"{crypto}USDm"
         is_crypto = any(c in symbol.upper() for c in ['BTC', 'ETH', 'LTC', 'XRP', 'ADA'])
-        print(f"  {symbol}: {'✅ Crypto' if is_crypto else '❌ Not crypto'}")
+        print(f"  {symbol}: {' Crypto' if is_crypto else ' Not crypto'}")
     
-    print("\n✅ Crypto position sizing logic is ready!")
+    print("\n Crypto position sizing logic is ready!")
     print("\nKey improvements:")
     print("  • Automatic crypto detection (BTC, ETH, LTC, XRP, ADA)")
     print("  • USD-based position sizing for crypto")
@@ -31,7 +31,7 @@ try:
     print("  • Contract size awareness")
     
 except Exception as e:
-    print(f"❌ Error: {e}")
+    print(f" Error: {e}")
     import traceback
     traceback.print_exc()
     sys.exit(1)

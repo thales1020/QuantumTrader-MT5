@@ -113,6 +113,6 @@ if __name__ == "__main__":
     
     for symbol in symbols:
         if news_filter.is_news_time(symbol):
-            print(f"⚠️  {symbol}: HIGH IMPACT NEWS - AVOID TRADING")
+            print(f"  {symbol}: HIGH IMPACT NEWS - AVOID TRADING")
         else:
-            print(f"✅ {symbol}: Safe to trade")
+            print(f" {symbol}: Safe to trade")

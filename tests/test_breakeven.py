@@ -32,16 +32,16 @@ def main():
         timeframe=getattr(mt5, f"TIMEFRAME_{symbol_config.get('timeframe', 'M5')}"),
         risk_percent=symbol_config.get('risk_percent', 1.0),
         rr_ratio=symbol_config.get('rr_ratio', 2.0),
-        move_sl_to_breakeven=True,  # ✅ BẬT tính năng
+        move_sl_to_breakeven=True,  #  BẬT tính năng
         max_positions=1,
         magic_number=123457
     )
     
-    print(f"\n📊 Configuration:")
+    print(f"\n Configuration:")
     print(f"  Symbol: {bot_config.symbol}")
     print(f"  Risk: {bot_config.risk_percent}%")
     print(f"  RR Ratio: {bot_config.rr_ratio}:1")
-    print(f"  Move SL to Breakeven: {bot_config.move_sl_to_breakeven} ✅")
+    print(f"  Move SL to Breakeven: {bot_config.move_sl_to_breakeven} ")
     
     # Create bot
     bot = ICTBot(bot_config)
@@ -53,15 +53,15 @@ def main():
         password=account_config['password'],
         server=account_config['server']
     ):
-        print("❌ Connection failed!")
+        print(" Connection failed!")
         return
     
-    print("✅ Connected successfully!")
+    print(" Connected successfully!")
     
     # Get account info
     account_info = mt5.account_info()
     if account_info:
-        print(f"\n💰 Account Info:")
+        print(f"\n Account Info:")
         print(f"  Balance: ${account_info.balance:.2f}")
         print(f"  Equity: ${account_info.equity:.2f}")
         print(f"  Margin: ${account_info.margin:.2f}")
@@ -69,9 +69,9 @@ def main():
     print("\n" + "="*70)
     print("🤖 BOT ĐANG CHẠY - Monitoring for breakeven opportunities...")
     print("="*70)
-    print("\n📝 Chú ý:")
-    print("  1. Khi có tín hiệu → Mở 2 lệnh (Order 1: RR 1:1, Order 2: Main RR)")
-    print("  2. Khi Order 1 hit TP → Tự động move SL Order 2 về breakeven")
+    print("\n Chú ý:")
+    print("  1. Khi có tín hiệu  Mở 2 lệnh (Order 1: RR 1:1, Order 2: Main RR)")
+    print("  2. Khi Order 1 hit TP  Tự động move SL Order 2 về breakeven")
     print("  3. Xem log để theo dõi quá trình")
     print("\n🛑 Nhấn Ctrl+C để dừng bot\n")
     
@@ -92,7 +92,7 @@ def main():
                 print(f"[{current_time}] Cycle {cycle_count} - Open positions: {open_positions}")
                 
                 if bot.current_trade:
-                    print(f"  📊 Current Trade:")
+                    print(f"   Current Trade:")
                     print(f"     Entry: {bot.current_trade.entry_price:.5f}")
                     print(f"     SL: {bot.current_trade.stop_loss:.5f}")
                     print(f"     TP1 Hit: {bot.current_trade.tp1_hit}")
@@ -108,7 +108,7 @@ def main():
         # Print stats
         stats = bot.get_stats()
         if stats['total_trades'] > 0:
-            print(f"\n📊 FINAL STATISTICS:")
+            print(f"\n FINAL STATISTICS:")
             print(f"  Total Trades: {stats['total_trades']}")
             print(f"  Win Rate: {stats['win_rate']:.2f}%")
             print(f"  Profit Factor: {stats['profit_factor']:.2f}")
