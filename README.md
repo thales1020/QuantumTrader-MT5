@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🚀 QuantumTrader-MT5
+#  QuantumTrader-MT5
 
 **Next-Generation Algorithmic Trading Platform for MetaTrader 5**
 
@@ -20,53 +20,71 @@ QuantumTrader-MT5 is a professional algorithmic trading platform that combines c
 
 > 📜 **ATTRIBUTION**: This project was inspired by open-source MT5-SuperTrend community implementations and has been substantially developed (95%+ original code) by Trần Trọng Hiếu with ML optimization, ICT strategies, dual orders, and advanced architecture. See [ATTRIBUTION.md](docs/ATTRIBUTION.md) for full details.
 
-> ⚠️ **DISCLAIMER**: This project is for **EDUCATIONAL PURPOSES ONLY**. Trading forex/CFDs involves substantial risk of loss and is not suitable for all investors. Past performance is not indicative of future results.
+>  **DISCLAIMER**: This project is for **EDUCATIONAL PURPOSES ONLY**. Trading forex/CFDs involves substantial risk of loss and is not suitable for all investors. Past performance is not indicative of future results.
 
-## 🎉 What's New - Dual Orders Strategy
+##  What's New - Dual Orders Strategy
 
 **Latest Update**: All trading bots now support **Dual Orders** feature!
 
 Each trading signal now opens **2 positions** instead of 1:
-- 🎯 **Order 1**: Quick profit at **RR 1:1** (Risk:Reward = 1:1)
-- 🚀 **Order 2**: Main profit at configured RR ratio (e.g., RR 2:1, RR 3:1)
+-  **Order 1**: Quick profit at **RR 1:1** (Risk:Reward = 1:1)
+-  **Order 2**: Main profit at configured RR ratio (e.g., RR 2:1, RR 3:1)
 
 **Benefits**:
-- ✅ Secure quick profits while maintaining exposure to larger moves
-- ✅ Better win rate optimization (RR 1:1 has ~60-70% success rate)
-- ✅ Reduced psychological pressure ("I should have held longer")
+-  Secure quick profits while maintaining exposure to larger moves
+-  Better win rate optimization (RR 1:1 has ~60-70% success rate)
+-  Reduced psychological pressure ("I should have held longer")
 
-**⚠️ Important**: Total risk per signal is now **2 × risk_percent**. Adjust your configuration accordingly!
+** Important**: Total risk per signal is now **2 × risk_percent**. Adjust your configuration accordingly!
 
 See [docs/DUAL_ORDERS_IMPLEMENTATION.md](docs/DUAL_ORDERS_IMPLEMENTATION.md) for full details.
 
 ---
 
-## 🌟 Features
+##  Features
 
 ### Core Algorithm
 - **🧠 ML-Optimized SuperTrend**: Dynamic factor selection using K-means clustering
-- **📊 Multi-Factor Analysis**: Tests multiple ATR factors simultaneously
-- **🎯 Volatility-Adjusted Performance**: Adapts to market conditions
-- **📈 Adaptive Moving Average**: Performance-weighted signal filtering
+- ** Multi-Factor Analysis**: Tests multiple ATR factors simultaneously
+- ** Volatility-Adjusted Performance**: Adapts to market conditions
+- ** Adaptive Moving Average**: Performance-weighted signal filtering
+
+### 🔌 Plugin System (Phase 2) - NEW!
+- **Modular Architecture**: Extend functionality without modifying core code
+- **7 Event Hooks**: `before_trade`, `after_trade`, `on_position_close`, `daily_start`, `daily_end`, `on_error`, `on_shutdown`
+- **Built-in Plugins**: Risk management, trade analytics, notifications
+- **Custom Plugins**: Easy to create your own (see `examples/plugins/`)
+- **Hot-reload Support**: Add/remove plugins at runtime
+
+### 📝 Strategy Templates (Phase 3) - NEW!
+- **5 Professional Templates**: Momentum, Trend Following, Mean Reversion, Breakout, Scalping
+- **CLI Generator**: Create new strategies in seconds with `python scripts/generate_strategy.py`
+- **Customizable Code**: Generated strategies are fully editable
+- **Best Practices**: Each template includes risk management and proper structure
+- **Example Strategies**: See `examples/strategies/` for advanced implementations
 
 ### Risk Management
-- **💰 Dynamic Position Sizing**: Based on account risk percentage
+- ** Dynamic Position Sizing**: Based on account risk percentage
 - **🛡️ Trailing Stop Loss**: Protects profits in trending markets
-- **🎯 Automated TP/SL**: ATR-based take profit and stop loss levels
-- **⚡ Daily Loss Limits**: Prevents excessive drawdown
+- ** Automated TP/SL**: ATR-based take profit and stop loss levels
+- ** Daily Loss Limits**: Prevents excessive drawdown
+- **Advanced Risk Plugin**: Volatility sizing, streak adjustments, drawdown protection
 
 ### Trading Features
-- **🎯 Dual Orders Strategy**: Each signal opens 2 orders (RR 1:1 + Main RR) for profit optimization
-- **📊 Volume Confirmation**: Filters low-quality signals
+- ** Dual Orders Strategy**: Each signal opens 2 orders (RR 1:1 + Main RR) for profit optimization
+- ** Volume Confirmation**: Filters low-quality signals
 - **🕐 Session Management**: Trade during optimal market hours
 - **📰 News Filter Ready**: Framework for economic event filtering
 - **🔄 Multi-Symbol Support**: Trade multiple pairs simultaneously
+- **Portfolio Trading**: Manage multiple symbols with correlation analysis
 
 ### Monitoring & Analysis
-- **📈 Real-time Performance Dashboard**: Live statistics display
-- **📊 Comprehensive Backtesting**: Historical performance analysis
-- **📉 Equity Curve Visualization**: Track your growth
-- **🎯 Win Rate Analytics**: Hourly and daily performance breakdown
+- ** Real-time Performance Dashboard**: Live statistics display
+- ** Comprehensive Backtesting**: Historical performance analysis
+- ** Equity Curve Visualization**: Track your growth
+- ** Win Rate Analytics**: Hourly and daily performance breakdown
+- **Trade Analytics Plugin**: Advanced performance metrics and reporting
+- **Telegram Notifications**: Real-time alerts to your phone
 
 ## 📋 Table of Contents
 
@@ -90,26 +108,35 @@ All documentation has been organized in the [`docs/`](docs/) folder:
 - 📜 [Attribution & Credits](docs/ATTRIBUTION.md) - **Project history and original author credits**
 
 ### Strategy Guides
-- 🎯 [ICT Bot](docs/ICT_README.md) - Inner Circle Trader strategy
+-  [ICT Bot](docs/ICT_README.md) - Inner Circle Trader strategy
 - ₿ [Crypto Trading Guide](docs/CRYPTO_TRADING_GUIDE.md) - BTC, ETH trading specifics
 
 ### Customization & Architecture
-- 🔧 [Customization Guide](docs/CUSTOMIZATION_GUIDE.md) - Make the project your own
-- 🏗️ [Project Scope](docs/PROJECT_SCOPE.md) - Vision and boundaries
+-  [Customization Guide](docs/CUSTOMIZATION_GUIDE.md) - Complete system overview
+-  [Plugin System](docs/PLUGIN_QUICK_START.md) - Build custom plugins (Phase 2)
+-  [Strategy Templates](docs/STRATEGY_TEMPLATES.md) - Generate strategies quickly (Phase 3)
+-  [Project Scope](docs/PROJECT_SCOPE.md) - Vision and boundaries
+
+### 🎓 Examples & Tutorials
+- 📁 [Examples Directory](examples/README.md) - **12+ complete examples**
+  - **Use Cases**: Conservative trading, scalping, risk management
+  - **Advanced Strategies**: Multi-timeframe, portfolio, custom indicators
+  - **Plugins**: Risk manager, analytics, Telegram notifier
+  - **Complete Workflow**: From idea to production in 7 steps
 
 ### Features & Implementation
-- 🎯 [Dual Orders Implementation](docs/DUAL_ORDERS_IMPLEMENTATION.md) - RR 1:1 + Main RR strategy
-- 🔧 [Dual Orders Changes](docs/DUAL_ORDERS_CHANGES.md) - Technical changelog
-- 🎯 [Breakeven SL Feature](docs/BREAKEVEN_SL_FEATURE.md) - Automatic risk-free trades
+-  [Dual Orders Implementation](docs/DUAL_ORDERS_IMPLEMENTATION.md) - RR 1:1 + Main RR strategy
+-  [Dual Orders Changes](docs/DUAL_ORDERS_CHANGES.md) - Technical changelog
+-  [Breakeven SL Feature](docs/BREAKEVEN_SL_FEATURE.md) - Automatic risk-free trades
 
 ### Performance & Optimization
-- 📈 [Performance Guide](docs/PERFORMANCE.md) - Optimization and metrics
-- ⚡ [Optimization Summary](docs/OPTIMIZATION_SUMMARY.md) - Performance improvements
-- 📝 [Changelog](docs/CHANGELOG.md) - Version history
+-  [Performance Guide](docs/PERFORMANCE.md) - Optimization and metrics
+-  [Optimization Summary](docs/OPTIMIZATION_SUMMARY.md) - Performance improvements
+-  [Changelog](docs/CHANGELOG.md) - Version history
 
-> 💡 **Tip**: Start with [QUICKSTART.md](docs/QUICKSTART.md) for a quick introduction!
+>  **Tip**: Start with [QUICKSTART.md](docs/QUICKSTART.md) for a quick introduction!
 
-## �🚀 Installation
+## � Installation
 
 ### Prerequisites
 
@@ -181,7 +208,7 @@ Test your installation:
 ml-supertrend --help
 
 # Python import test
-python -c "from ml_supertrend_mt5 import SuperTrendBot; print('✅ Installation successful!')"
+python -c "from ml_supertrend_mt5 import SuperTrendBot; print(' Installation successful!')"
 ```
 
 ### 🔄 PyPI vs GitHub Installation
@@ -191,18 +218,18 @@ python -c "from ml_supertrend_mt5 import SuperTrendBot; print('✅ Installation 
 | **Target Users** | End users, traders | Developers, contributors |
 | **Installation** | `pip install ml-supertrend-mt5` | `git clone` + `pip install -e .` |
 | **Updates** | `pip install --upgrade ml-supertrend-mt5` | `git pull` |
-| **Stability** | ✅ Stable releases only | ⚠️ Latest development code |
-| **Command Line** | ✅ `ml-supertrend` command | ✅ `python run_bot.py` |
+| **Stability** |  Stable releases only |  Latest development code |
+| **Command Line** |  `ml-supertrend` command |  `python run_bot.py` |
 | **Import Style** | `from ml_supertrend_mt5 import ...` | `from core.supertrend_bot import ...` |
-| **Customization** | ⚠️ Limited | ✅ Full source code access |
-| **Contributing** | ❌ Not applicable | ✅ Can submit PRs |
-| **Size** | 📦 Smaller download | 📁 Full repository |
+| **Customization** |  Limited |  Full source code access |
+| **Contributing** |  Not applicable |  Can submit PRs |
+| **Size** |  Smaller download |  Full repository |
 
 **Recommendation:**
 - **Use PyPI** if you want to use the bot as-is for trading
 - **Use GitHub** if you want to modify, contribute, or need latest features
 
-## ⚡ Quick Start
+##  Quick Start
 
 ### Method 1: Command Line Interface (Easiest)
 
@@ -292,7 +319,7 @@ from core.performance_monitor import PerformanceMonitor
 # Same usage as above
 ```
 
-### 🖥️ Command Line Options
+###  Command Line Options
 
 ```bash
 ml-supertrend [OPTIONS]
@@ -314,7 +341,7 @@ Examples:
   ml-supertrend --backtest --symbol USDJPY --monitor
 ```
 
-## ⚙️ Configuration
+##  Configuration
 
 ### Basic Parameters
 
@@ -355,7 +382,7 @@ config = Config(
 )
 ```
 
-## 🏗️ Architecture
+##  Architecture
 
 ```
 ML-SuperTrend-MT5/
@@ -394,7 +421,7 @@ ML-SuperTrend-MT5/
 └── README.md                  # This file
 ```
 
-## 📊 Usage Examples
+##  Usage Examples
 
 ### Running Multiple Symbols
 
@@ -493,7 +520,7 @@ print(f"Profit Factor: {stats['profit_factor']:.2f}")
 print(f"Total Trades: {stats['total_trades']}")
 ```
 
-## 📈 Performance Metrics
+##  Performance Metrics
 
 ### Expected Performance (Based on Backtesting)
 
@@ -512,7 +539,7 @@ print(f"Total Trades: {stats['total_trades']}")
 - **Monthly Return**: 5-15% (varies by market conditions)
 - **Recovery Factor**: 2.5-3.5
 
-## 🛠️ Troubleshooting
+##  Troubleshooting
 
 ### Common Issues
 
@@ -579,11 +606,11 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - MetaTrader 5 Python API by MetaQuotes
 - Open-source MT5-SuperTrend community for inspiration
 
-## �‍💻 Author
+## �‍ Author
 
 **Trần Trọng Hiếu**
 
-- 🌐 Personal GitHub: [@thales1020](https://github.com/thales1020)
+-  Personal GitHub: [@thales1020](https://github.com/thales1020)
 - 📂 This Project: [ML-SuperTrend-MT5](https://github.com/xPOURY4/ML-SuperTrend-MT5)
 - 🐦 Twitter: [@TheRealPourya](https://twitter.com/TheRealPourya)
 
