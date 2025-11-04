@@ -1,0 +1,303 @@
+"""
+{{STRATEGY_NAME}} - {{STRATEGY_DESCRIPTION}}
+
+Template: Multi-Indicator Confluence
+Generated: {{GENERATED_DATE}}
+Author: {{AUTHOR}}
+Version: {{VERSION}}
+
+Strategy Logic:
+- Combine multiple indicators with weighted scoring
+- Enter when total score exceeds threshold
+- Higher confidence = stronger signal
+
+Indicators and Weights:
+- RSI ({{RSI_WEIGHT}}): Momentum
+- MACD ({{MACD_WEIGHT}}): Trend direction
+- Bollinger Bands ({{BB_WEIGHT}}): Volatility/Breakout
+- Stochastic ({{STOCH_WEIGHT}}): Overbought/Oversold
+
+Entry Threshold: {{THRESHOLD}} (0.0 - 1.0)
+"""
+
+from core.base_bot import BaseTradingBot
+from core.strategy_registry import StrategyRegistry
+import talib
+import pandas as pd
+from typing import Dict, Optional
+import MetaTrader5 as mt5
+
+
+@StrategyRegistry.register("{{STRATEGY_ID}}")
+class {{STRATEGY_CLASS_NAME}}(BaseTradingBot):
+    """
+    {{STRATEGY_DESCRIPTION}}
+    
+    Multi-Indicator Confluence System:
+    
+    Each indicator provides a signal:
+    - Bullish: +1
+    - Bearish: -1
+    - Neutral: 0
+    
+    Signals are weighted and combined:
+    Total Score = Σ(indicator_signal × weight)
+    
+    Entry Rules:
+    - BUY: Score > +{{THRESHOLD}}
+    - SELL: Score < -{{THRESHOLD}}
+    
+    Indicators:
+    - RSI{{RSI_PERIOD}} (weight: {{RSI_WEIGHT}})
+    - MACD{{MACD_FAST}}/{{MACD_SLOW}}/{{MACD_SIGNAL}} (weight: {{MACD_WEIGHT}})
+    - BB{{BB_PERIOD}} (weight: {{BB_WEIGHT}})
+    - Stoch{{STOCH_K}}/{{STOCH_D}} (weight: {{STOCH_WEIGHT}})
+    """
+    
+    def __init__(self, config: Dict):
+        super().__init__(config)
+        
+        # RSI parameters
+        self.rsi_period = config.get('rsi_period', {{RSI_PERIOD}})
+        self.rsi_weight = config.get('rsi_weight', {{RSI_WEIGHT}})
+        
+        # MACD parameters
+        self.macd_fast = config.get('macd_fast', {{MACD_FAST}})
+        self.macd_slow = config.get('macd_slow', {{MACD_SLOW}})
+        self.macd_signal = config.get('macd_signal', {{MACD_SIGNAL}})
+        self.macd_weight = config.get('macd_weight', {{MACD_WEIGHT}})
+        
+        # Bollinger Bands parameters
+        self.bb_period = config.get('bb_period', {{BB_PERIOD}})
+        self.bb_std = config.get('bb_std', {{BB_STD}})
+        self.bb_weight = config.get('bb_weight', {{BB_WEIGHT}})
+        
+        # Stochastic parameters
+        self.stoch_k = config.get('stoch_k', {{STOCH_K}})
+        self.stoch_d = config.get('stoch_d', {{STOCH_D}})
+        self.stoch_weight = config.get('stoch_weight', {{STOCH_WEIGHT}})
+        
+        # Entry threshold
+        self.threshold = config.get('threshold', {{THRESHOLD}})
+        self.confirmation_bars = config.get('confirmation_bars', {{CONFIRMATION_BARS}})
+        
+        # Validate weights sum to 1.0
+        total_weight = self.rsi_weight + self.macd_weight + self.bb_weight + self.stoch_weight
+        if abs(total_weight - 1.0) > 0.01:
+            self.logger.warning(f"Weights don't sum to 1.0 (total: {total_weight})")
+        
+        self.logger.info(f"Initialized {self.__class__.__name__}")
+        self.logger.info(f"Weights: RSI={self.rsi_weight}, MACD={self.macd_weight}, "
+                        f"BB={self.bb_weight}, Stoch={self.stoch_weight}")
+        self.logger.info(f"Entry threshold: {self.threshold}")
+    
+    def calculate_indicators(self, df: pd.DataFrame) -> pd.DataFrame:
+        """Calculate all indicators"""
+        if len(df) < max(self.rsi_period, self.macd_slow, self.bb_period, self.stoch_k):
+            return df
+        
+        # RSI
+        df['rsi'] = talib.RSI(df['close'], timeperiod=self.rsi_period)
+        
+        # MACD
+        df['macd'], df['macd_signal'], df['macd_hist'] = talib.MACD(
+            df['close'],
+            fastperiod=self.macd_fast,
+            slowperiod=self.macd_slow,
+            signalperiod=self.macd_signal
+        )
+        
+        # Bollinger Bands
+        df['bb_upper'], df['bb_middle'], df['bb_lower'] = talib.BBANDS(
+            df['close'],
+            timeperiod=self.bb_period,
+            nbdevup=self.bb_std,
+            nbdevdn=self.bb_std
+        )
+        
+        # Stochastic
+        df['stoch_k'], df['stoch_d'] = talib.STOCH(
+            df['high'], df['low'], df['close'],
+            fastk_period=self.stoch_k,
+            slowk_period=self.stoch_d,
+            slowd_period=self.stoch_d
+        )
+        
+        return df
+    
+    def calculate_signals(self, df: pd.DataFrame) -> Dict[str, int]:
+        """
+        Calculate signal from each indicator
+        
+        Returns:
+            Dict with indicator_name: signal (-1, 0, +1)
+        """
+        signals = {}
+        
+        # Get current values
+        rsi = df['rsi'].iloc[-1]
+        macd_hist = df['macd_hist'].iloc[-1]
+        macd_hist_prev = df['macd_hist'].iloc[-2]
+        close = df['close'].iloc[-1]
+        bb_upper = df['bb_upper'].iloc[-1]
+        bb_lower = df['bb_lower'].iloc[-1]
+        bb_middle = df['bb_middle'].iloc[-1]
+        stoch_k = df['stoch_k'].iloc[-1]
+        stoch_d = df['stoch_d'].iloc[-1]
+        
+        # RSI Signal
+        if rsi < 30:
+            signals['rsi'] = 1  # Oversold = Bullish
+        elif rsi > 70:
+            signals['rsi'] = -1  # Overbought = Bearish
+        else:
+            signals['rsi'] = 0  # Neutral
+        
+        # MACD Signal (histogram crossing zero)
+        if macd_hist > 0 and macd_hist_prev <= 0:
+            signals['macd'] = 1  # Bullish crossover
+        elif macd_hist < 0 and macd_hist_prev >= 0:
+            signals['macd'] = -1  # Bearish crossover
+        elif macd_hist > 0:
+            signals['macd'] = 1  # Above zero = Bullish
+        elif macd_hist < 0:
+            signals['macd'] = -1  # Below zero = Bearish
+        else:
+            signals['macd'] = 0
+        
+        # Bollinger Bands Signal
+        bb_position = (close - bb_lower) / (bb_upper - bb_lower) if (bb_upper - bb_lower) > 0 else 0.5
+        if bb_position < 0.2:
+            signals['bb'] = 1  # Near lower band = Bullish
+        elif bb_position > 0.8:
+            signals['bb'] = -1  # Near upper band = Bearish
+        else:
+            signals['bb'] = 0
+        
+        # Stochastic Signal
+        if stoch_k < 20 and stoch_k > stoch_d:
+            signals['stoch'] = 1  # Oversold + K crossing above D = Bullish
+        elif stoch_k > 80 and stoch_k < stoch_d:
+            signals['stoch'] = -1  # Overbought + K crossing below D = Bearish
+        else:
+            signals['stoch'] = 0
+        
+        return signals
+    
+    def calculate_score(self, signals: Dict[str, int]) -> float:
+        """
+        Calculate weighted score from all signals
+        
+        Args:
+            signals: Dict of indicator signals
+            
+        Returns:
+            Weighted score (-1.0 to +1.0)
+        """
+        score = 0.0
+        score += signals.get('rsi', 0) * self.rsi_weight
+        score += signals.get('macd', 0) * self.macd_weight
+        score += signals.get('bb', 0) * self.bb_weight
+        score += signals.get('stoch', 0) * self.stoch_weight
+        
+        return score
+    
+    def generate_signal(self, df: pd.DataFrame) -> Optional[Dict]:
+        """Generate signal based on multi-indicator confluence"""
+        df = self.calculate_indicators(df)
+        
+        if len(df) < 2:
+            return None
+        
+        # Calculate signals from each indicator
+        signals = self.calculate_signals(df)
+        
+        # Calculate weighted score
+        score = self.calculate_score(signals)
+        
+        current_price = df['close'].iloc[-1]
+        
+        # BUY Signal: Score exceeds positive threshold
+        if score > self.threshold:
+            signal = {
+                'type': 'BUY',
+                'price': current_price,
+                'time': df['time'].iloc[-1] if 'time' in df.columns else pd.Timestamp.now(),
+                'score': score,
+                'signals': signals,
+                'confidence': score,  # 0.0 - 1.0
+                'reason': f'Multi-indicator BUY (score: {score:.2f})'
+            }
+            
+            self.logger.info(f"📈 BUY Signal - Score: {score:.2f}")
+            self.logger.info(f"   Indicators: {signals}")
+            return signal
+        
+        # SELL Signal: Score exceeds negative threshold
+        elif score < -self.threshold:
+            signal = {
+                'type': 'SELL',
+                'price': current_price,
+                'time': df['time'].iloc[-1] if 'time' in df.columns else pd.Timestamp.now(),
+                'score': score,
+                'signals': signals,
+                'confidence': abs(score),  # 0.0 - 1.0
+                'reason': f'Multi-indicator SELL (score: {score:.2f})'
+            }
+            
+            self.logger.info(f"📉 SELL Signal - Score: {score:.2f}")
+            self.logger.info(f"   Indicators: {signals}")
+            return signal
+        
+        return None
+    
+    def should_close_position(self, df: pd.DataFrame, position_type: str) -> bool:
+        """Close when score reverses significantly"""
+        df = self.calculate_indicators(df)
+        
+        if len(df) < 2:
+            return False
+        
+        signals = self.calculate_signals(df)
+        score = self.calculate_score(signals)
+        
+        # Close LONG if score becomes very negative
+        if position_type == 'BUY' and score < -self.threshold:
+            self.logger.info(f"Closing BUY: Score reversed to {score:.2f}")
+            return True
+        
+        # Close SHORT if score becomes very positive
+        elif position_type == 'SELL' and score > self.threshold:
+            self.logger.info(f"Closing SELL: Score reversed to {score:.2f}")
+            return True
+        
+        return False
+    
+    def get_strategy_info(self) -> Dict:
+        return {
+            'name': '{{STRATEGY_NAME}}',
+            'class': '{{STRATEGY_CLASS_NAME}}',
+            'id': '{{STRATEGY_ID}}',
+            'description': '{{STRATEGY_DESCRIPTION}}',
+            'type': 'Multi-Indicator Confluence',
+            'difficulty': 'Advanced',
+            'parameters': {
+                'rsi_period': self.rsi_period,
+                'rsi_weight': self.rsi_weight,
+                'macd_fast': self.macd_fast,
+                'macd_slow': self.macd_slow,
+                'macd_signal': self.macd_signal,
+                'macd_weight': self.macd_weight,
+                'bb_period': self.bb_period,
+                'bb_std': self.bb_std,
+                'bb_weight': self.bb_weight,
+                'stoch_k': self.stoch_k,
+                'stoch_d': self.stoch_d,
+                'stoch_weight': self.stoch_weight,
+                'threshold': self.threshold,
+                'confirmation_bars': self.confirmation_bars
+            },
+            'template': 'multi_indicator',
+            'version': '{{VERSION}}',
+            'author': '{{AUTHOR}}'
+        }

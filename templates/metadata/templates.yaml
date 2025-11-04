@@ -1,0 +1,185 @@
+templates:
+  ma_crossover:
+    name: "MA Crossover"
+    category: "Trend Following"
+    difficulty: "beginner"
+    description: "Moving average crossover strategy - buy when fast MA crosses above slow MA, sell when crosses below"
+    tags: ["trend", "crossover", "beginner", "moving-average"]
+    file: "strategies/ma_crossover.py.template"
+    required_variables:
+      - STRATEGY_NAME
+      - STRATEGY_CLASS_NAME
+      - STRATEGY_ID
+      - STRATEGY_DESCRIPTION
+    optional_variables:
+      FAST_PERIOD: 10
+      SLOW_PERIOD: 30
+      MA_TYPE: "SMA"
+      AUTHOR: "QuantumTrader"
+      VERSION: "1.0.0"
+    examples:
+      - name: "EMA Golden Cross"
+        description: "Classic 50/200 EMA crossover"
+        variables:
+          FAST_PERIOD: 50
+          SLOW_PERIOD: 200
+          MA_TYPE: "EMA"
+      - name: "SMA Quick Scalp"
+        description: "Fast 5/15 SMA crossover for scalping"
+        variables:
+          FAST_PERIOD: 5
+          SLOW_PERIOD: 15
+          MA_TYPE: "SMA"
+
+  rsi_mean_reversion:
+    name: "RSI Mean Reversion"
+    category: "Mean Reversion"
+    difficulty: "beginner"
+    description: "RSI-based mean reversion strategy - buy when oversold, sell when overbought"
+    tags: ["rsi", "mean-reversion", "beginner", "oscillator"]
+    file: "strategies/rsi_mean_reversion.py.template"
+    required_variables:
+      - STRATEGY_NAME
+      - STRATEGY_CLASS_NAME
+      - STRATEGY_ID
+      - STRATEGY_DESCRIPTION
+    optional_variables:
+      RSI_PERIOD: 14
+      OVERSOLD_LEVEL: 30
+      OVERBOUGHT_LEVEL: 70
+      TP_MULTIPLIER: 2.0
+      SL_MULTIPLIER: 1.5
+      AUTHOR: "QuantumTrader"
+      VERSION: "1.0.0"
+    examples:
+      - name: "Conservative RSI"
+        description: "Conservative levels (25/75) with wide stops"
+        variables:
+          OVERSOLD_LEVEL: 25
+          OVERBOUGHT_LEVEL: 75
+          TP_MULTIPLIER: 3.0
+          SL_MULTIPLIER: 2.0
+      - name: "Aggressive RSI"
+        description: "Aggressive levels (35/65) with tight stops"
+        variables:
+          OVERSOLD_LEVEL: 35
+          OVERBOUGHT_LEVEL: 65
+          TP_MULTIPLIER: 1.5
+          SL_MULTIPLIER: 1.0
+
+  breakout:
+    name: "Breakout Strategy"
+    category: "Breakout"
+    difficulty: "intermediate"
+    description: "Bollinger Bands breakout strategy with volume confirmation"
+    tags: ["breakout", "bollinger-bands", "volume", "intermediate"]
+    file: "strategies/breakout.py.template"
+    required_variables:
+      - STRATEGY_NAME
+      - STRATEGY_CLASS_NAME
+      - STRATEGY_ID
+      - STRATEGY_DESCRIPTION
+    optional_variables:
+      BB_PERIOD: 20
+      BB_STD: 2.0
+      VOLUME_MULTIPLIER: 1.5
+      TRAILING_ATR: 2.0
+      MAX_BARS: 50
+      ATR_PERIOD: 14
+      AUTHOR: "QuantumTrader"
+      VERSION: "1.0.0"
+    examples:
+      - name: "Volatility Breakout"
+        description: "Wide bands (2.5 std) for high volatility"
+        variables:
+          BB_STD: 2.5
+          VOLUME_MULTIPLIER: 2.0
+          TRAILING_ATR: 3.0
+      - name: "Tight Breakout"
+        description: "Tight bands (1.5 std) for quick moves"
+        variables:
+          BB_STD: 1.5
+          VOLUME_MULTIPLIER: 1.2
+          TRAILING_ATR: 1.5
+
+  grid_trading:
+    name: "Grid Trading"
+    category: "Grid"
+    difficulty: "advanced"
+    description: "Grid trading system - place buy/sell orders at regular intervals"
+    tags: ["grid", "range", "advanced", "automated"]
+    file: "strategies/grid_trading.py.template"
+    required_variables:
+      - STRATEGY_NAME
+      - STRATEGY_CLASS_NAME
+      - STRATEGY_ID
+      - STRATEGY_DESCRIPTION
+    optional_variables:
+      GRID_SIZE: 50
+      NUM_LEVELS: 10
+      LOT_SIZE: 0.01
+      TAKE_PROFIT: 50
+      MAX_POSITIONS: 20
+      GRID_TYPE: "fixed"
+      AUTHOR: "QuantumTrader"
+      VERSION: "1.0.0"
+    examples:
+      - name: "Conservative Grid"
+        description: "Wide grid (100 pips) with fewer levels"
+        variables:
+          GRID_SIZE: 100
+          NUM_LEVELS: 5
+          TAKE_PROFIT: 100
+          MAX_POSITIONS: 10
+      - name: "Aggressive Grid"
+        description: "Tight grid (20 pips) with many levels"
+        variables:
+          GRID_SIZE: 20
+          NUM_LEVELS: 20
+          TAKE_PROFIT: 30
+          MAX_POSITIONS: 40
+
+  multi_indicator:
+    name: "Multi-Indicator Confluence"
+    category: "Hybrid"
+    difficulty: "advanced"
+    description: "Combine multiple indicators with weighted scoring for high-confidence signals"
+    tags: ["multi-indicator", "confluence", "advanced", "hybrid"]
+    file: "strategies/multi_indicator.py.template"
+    required_variables:
+      - STRATEGY_NAME
+      - STRATEGY_CLASS_NAME
+      - STRATEGY_ID
+      - STRATEGY_DESCRIPTION
+    optional_variables:
+      RSI_PERIOD: 14
+      RSI_WEIGHT: 0.25
+      MACD_FAST: 12
+      MACD_SLOW: 26
+      MACD_SIGNAL: 9
+      MACD_WEIGHT: 0.30
+      BB_PERIOD: 20
+      BB_STD: 2.0
+      BB_WEIGHT: 0.25
+      STOCH_K: 14
+      STOCH_D: 3
+      STOCH_WEIGHT: 0.20
+      THRESHOLD: 0.7
+      CONFIRMATION_BARS: 2
+      AUTHOR: "QuantumTrader"
+      VERSION: "1.0.0"
+    examples:
+      - name: "MACD Focused"
+        description: "Higher weight on MACD for trend following"
+        variables:
+          MACD_WEIGHT: 0.50
+          RSI_WEIGHT: 0.20
+          BB_WEIGHT: 0.15
+          STOCH_WEIGHT: 0.15
+      - name: "Balanced Multi"
+        description: "Equal weight on all indicators"
+        variables:
+          RSI_WEIGHT: 0.25
+          MACD_WEIGHT: 0.25
+          BB_WEIGHT: 0.25
+          STOCH_WEIGHT: 0.25

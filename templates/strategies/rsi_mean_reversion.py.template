@@ -1,0 +1,333 @@
+"""
+{{STRATEGY_NAME}} - {{STRATEGY_DESCRIPTION}}
+
+Template: RSI Mean Reversion
+Generated: {{GENERATED_DATE}}
+Author: {{AUTHOR}}
+Version: {{VERSION}}
+
+Strategy Logic:
+- Buy when RSI < Oversold level (mean reversion from bottom)
+- Sell when RSI > Overbought level (mean reversion from top)
+- Exit with take profit or stop loss based on ATR
+
+Parameters:
+- RSI Period: {{RSI_PERIOD}}
+- Oversold Level: {{OVERSOLD_LEVEL}}
+- Overbought Level: {{OVERBOUGHT_LEVEL}}
+- TP Multiplier: {{TP_MULTIPLIER}}x ATR
+- SL Multiplier: {{SL_MULTIPLIER}}x ATR
+"""
+
+from core.base_bot import BaseTradingBot
+from core.strategy_registry import StrategyRegistry
+import talib
+import pandas as pd
+from typing import Dict, Optional
+import MetaTrader5 as mt5
+
+
+@StrategyRegistry.register("{{STRATEGY_ID}}")
+class {{STRATEGY_CLASS_NAME}}(BaseTradingBot):
+    """
+    {{STRATEGY_DESCRIPTION}}
+    
+    Indicators:
+    - RSI: {{RSI_PERIOD}} periods
+    - ATR: 14 periods (for TP/SL calculation)
+    
+    Entry Rules:
+    - BUY: RSI < {{OVERSOLD_LEVEL}} (oversold, expect bounce up)
+    - SELL: RSI > {{OVERBOUGHT_LEVEL}} (overbought, expect bounce down)
+    
+    Exit Rules:
+    - Take Profit: {{TP_MULTIPLIER}}x ATR from entry
+    - Stop Loss: {{SL_MULTIPLIER}}x ATR from entry
+    """
+    
+    def __init__(self, config: Dict):
+        """
+        Initialize RSI Mean Reversion Strategy
+        
+        Args:
+            config: Strategy configuration dictionary
+        """
+        super().__init__(config)
+        
+        # Strategy parameters
+        self.rsi_period = config.get('rsi_period', {{RSI_PERIOD}})
+        self.oversold_level = config.get('oversold_level', {{OVERSOLD_LEVEL}})
+        self.overbought_level = config.get('overbought_level', {{OVERBOUGHT_LEVEL}})
+        self.tp_multiplier = config.get('tp_multiplier', {{TP_MULTIPLIER}})
+        self.sl_multiplier = config.get('sl_multiplier', {{SL_MULTIPLIER}})
+        self.atr_period = config.get('atr_period', 14)
+        
+        # Validate parameters
+        if self.oversold_level >= self.overbought_level:
+            raise ValueError("Oversold level must be less than overbought level")
+        
+        if self.oversold_level >= 50 or self.overbought_level <= 50:
+            self.logger.warning("Unusual RSI levels - typically oversold<30, overbought>70")
+        
+        self.logger.info(f"Initialized {self.__class__.__name__}")
+        self.logger.info(f"RSI Period: {self.rsi_period}")
+        self.logger.info(f"Levels: Oversold={self.oversold_level}, Overbought={self.overbought_level}")
+        self.logger.info(f"TP/SL: {self.tp_multiplier}x/{self.sl_multiplier}x ATR")
+    
+    def calculate_indicators(self, df: pd.DataFrame) -> pd.DataFrame:
+        """
+        Calculate RSI and ATR indicators
+        
+        Args:
+            df: DataFrame with OHLCV data
+            
+        Returns:
+            DataFrame with added indicator columns
+        """
+        if len(df) < max(self.rsi_period, self.atr_period):
+            self.logger.warning(f"Insufficient data for indicators")
+            return df
+        
+        # Calculate RSI
+        df['rsi'] = talib.RSI(df['close'], timeperiod=self.rsi_period)
+        
+        # Calculate ATR for dynamic TP/SL
+        df['atr'] = talib.ATR(df['high'], df['low'], df['close'], timeperiod=self.atr_period)
+        
+        return df
+    
+    def generate_signal(self, df: pd.DataFrame) -> Optional[Dict]:
+        """
+        Generate trading signal based on RSI mean reversion
+        
+        Args:
+            df: DataFrame with OHLCV and indicator data
+            
+        Returns:
+            Signal dictionary or None
+        """
+        # Calculate indicators
+        df = self.calculate_indicators(df)
+        
+        if len(df) < 2:
+            return None
+        
+        # Get current values
+        current_rsi = df['rsi'].iloc[-1]
+        current_atr = df['atr'].iloc[-1]
+        current_price = df['close'].iloc[-1]
+        prev_rsi = df['rsi'].iloc[-2]
+        
+        # Check for NaN
+        if pd.isna([current_rsi, current_atr, prev_rsi]).any():
+            return None
+        
+        # BUY Signal: RSI crosses below oversold level (entering oversold zone)
+        if current_rsi < self.oversold_level and prev_rsi >= self.oversold_level:
+            # Calculate TP/SL levels
+            atr_value = current_atr
+            tp_distance = atr_value * self.tp_multiplier
+            sl_distance = atr_value * self.sl_multiplier
+            
+            signal = {
+                'type': 'BUY',
+                'price': current_price,
+                'time': df['time'].iloc[-1] if 'time' in df.columns else pd.Timestamp.now(),
+                'rsi': current_rsi,
+                'atr': atr_value,
+                'take_profit': current_price + tp_distance,
+                'stop_loss': current_price - sl_distance,
+                'reason': f'RSI oversold ({current_rsi:.1f} < {self.oversold_level})'
+            }
+            
+            self.logger.info(f"📈 BUY Signal: {signal['reason']}")
+            self.logger.info(f"   Entry: {current_price:.5f}")
+            self.logger.info(f"   TP: {signal['take_profit']:.5f} (+{tp_distance:.5f})")
+            self.logger.info(f"   SL: {signal['stop_loss']:.5f} (-{sl_distance:.5f})")
+            
+            return signal
+        
+        # SELL Signal: RSI crosses above overbought level (entering overbought zone)
+        elif current_rsi > self.overbought_level and prev_rsi <= self.overbought_level:
+            # Calculate TP/SL levels
+            atr_value = current_atr
+            tp_distance = atr_value * self.tp_multiplier
+            sl_distance = atr_value * self.sl_multiplier
+            
+            signal = {
+                'type': 'SELL',
+                'price': current_price,
+                'time': df['time'].iloc[-1] if 'time' in df.columns else pd.Timestamp.now(),
+                'rsi': current_rsi,
+                'atr': atr_value,
+                'take_profit': current_price - tp_distance,
+                'stop_loss': current_price + sl_distance,
+                'reason': f'RSI overbought ({current_rsi:.1f} > {self.overbought_level})'
+            }
+            
+            self.logger.info(f"📉 SELL Signal: {signal['reason']}")
+            self.logger.info(f"   Entry: {current_price:.5f}")
+            self.logger.info(f"   TP: {signal['take_profit']:.5f} (-{tp_distance:.5f})")
+            self.logger.info(f"   SL: {signal['stop_loss']:.5f} (+{sl_distance:.5f})")
+            
+            return signal
+        
+        return None
+    
+    def should_close_position(self, df: pd.DataFrame, position_type: str) -> bool:
+        """
+        Check if current position should be closed
+        
+        Mean reversion strategies typically exit when RSI returns to neutral (50)
+        or when TP/SL is hit (handled by bot's risk management)
+        
+        Args:
+            df: DataFrame with OHLCV and indicator data
+            position_type: 'BUY' or 'SELL'
+            
+        Returns:
+            True if position should be closed
+        """
+        # Calculate indicators
+        df = self.calculate_indicators(df)
+        
+        if len(df) < 1:
+            return False
+        
+        current_rsi = df['rsi'].iloc[-1]
+        
+        if pd.isna(current_rsi):
+            return False
+        
+        # Optional: Close when RSI returns to neutral zone
+        # This is aggressive - typically let TP/SL handle exits
+        
+        # Close long if RSI crosses above overbought (reversal exhausted)
+        if position_type == 'BUY' and current_rsi > self.overbought_level:
+            self.logger.info(f"Closing BUY: RSI reached overbought ({current_rsi:.1f})")
+            return True
+        
+        # Close short if RSI crosses below oversold (reversal exhausted)
+        elif position_type == 'SELL' and current_rsi < self.oversold_level:
+            self.logger.info(f"Closing SELL: RSI reached oversold ({current_rsi:.1f})")
+            return True
+        
+        return False
+    
+    def calculate_position_size(self, signal: Dict) -> float:
+        """
+        Calculate position size based on risk and ATR-based stop loss
+        
+        Args:
+            signal: Signal dictionary with 'stop_loss' and 'price'
+            
+        Returns:
+            Position size in lots
+        """
+        if 'stop_loss' not in signal or 'price' not in signal:
+            # Fallback to base implementation
+            return super().calculate_position_size(signal)
+        
+        # Calculate risk distance
+        entry_price = signal['price']
+        stop_loss = signal['stop_loss']
+        risk_distance = abs(entry_price - stop_loss)
+        
+        # Get account info
+        account_info = mt5.account_info()
+        if account_info is None:
+            self.logger.error("Failed to get account info")
+            return 0.01  # Default minimum
+        
+        balance = account_info.balance
+        
+        # Calculate risk amount
+        risk_amount = balance * (self.risk_percent / 100.0)
+        
+        # Get symbol info
+        symbol_info = mt5.symbol_info(self.symbol)
+        if symbol_info is None:
+            return 0.01
+        
+        # Calculate position size
+        # Risk amount / (risk distance in points * point value)
+        point_value = symbol_info.trade_tick_value
+        risk_points = risk_distance / symbol_info.point
+        
+        lot_size = risk_amount / (risk_points * point_value)
+        
+        # Round to step
+        lot_step = symbol_info.volume_step
+        lot_size = round(lot_size / lot_step) * lot_step
+        
+        # Apply limits
+        lot_size = max(symbol_info.volume_min, min(lot_size, symbol_info.volume_max))
+        
+        self.logger.info(f"Position size: {lot_size} lots (risk: ${risk_amount:.2f})")
+        
+        return lot_size
+    
+    def get_strategy_info(self) -> Dict:
+        """
+        Get strategy information
+        
+        Returns:
+            Dictionary with strategy details
+        """
+        return {
+            'name': '{{STRATEGY_NAME}}',
+            'class': '{{STRATEGY_CLASS_NAME}}',
+            'id': '{{STRATEGY_ID}}',
+            'description': '{{STRATEGY_DESCRIPTION}}',
+            'type': 'Mean Reversion',
+            'difficulty': 'Beginner',
+            'parameters': {
+                'rsi_period': self.rsi_period,
+                'oversold_level': self.oversold_level,
+                'overbought_level': self.overbought_level,
+                'tp_multiplier': self.tp_multiplier,
+                'sl_multiplier': self.sl_multiplier,
+                'atr_period': self.atr_period
+            },
+            'template': 'rsi_mean_reversion',
+            'version': '{{VERSION}}',
+            'author': '{{AUTHOR}}'
+        }
+
+
+# ============================================================================
+# EXAMPLE USAGE
+# ============================================================================
+
+if __name__ == '__main__':
+    """
+    Example usage of {{STRATEGY_CLASS_NAME}}
+    """
+    import json
+    
+    # Example configuration
+    config = {
+        'symbol': 'EURUSD',
+        'timeframe': 'M15',
+        'rsi_period': {{RSI_PERIOD}},
+        'oversold_level': {{OVERSOLD_LEVEL}},
+        'overbought_level': {{OVERBOUGHT_LEVEL}},
+        'tp_multiplier': {{TP_MULTIPLIER}},
+        'sl_multiplier': {{SL_MULTIPLIER}},
+        'risk_percent': 1.0,
+        'magic_number': 123457
+    }
+    
+    print("=" * 60)
+    print("{{STRATEGY_NAME}} - Example")
+    print("=" * 60)
+    print(json.dumps(config, indent=2))
+    print("=" * 60)
+    
+    # Initialize strategy
+    bot = {{STRATEGY_CLASS_NAME}}(config)
+    
+    # Display strategy info
+    info = bot.get_strategy_info()
+    print("\nStrategy Info:")
+    print(json.dumps(info, indent=2))

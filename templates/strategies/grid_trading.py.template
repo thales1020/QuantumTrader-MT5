@@ -1,0 +1,232 @@
+"""
+{{STRATEGY_NAME}} - {{STRATEGY_DESCRIPTION}}
+
+Template: Grid Trading
+Generated: {{GENERATED_DATE}}
+Author: {{AUTHOR}}
+Version: {{VERSION}}
+
+⚠️  WARNING: Grid trading carries HIGH RISK
+- Requires large capital
+- Can accumulate many positions
+- Vulnerable to trending markets
+- Use small lot sizes and proper risk management
+
+Strategy Logic:
+- Place buy orders below current price at grid intervals
+- Place sell orders above current price at grid intervals
+- Close opposite orders when price moves
+- Adjust grid when volatility changes
+
+Parameters:
+- Grid Size: {{GRID_SIZE}} pips
+- Number of Levels: {{NUM_LEVELS}}
+- Lot Size per Level: {{LOT_SIZE}}
+- Take Profit: {{TAKE_PROFIT}} pips
+- Max Positions: {{MAX_POSITIONS}}
+"""
+
+from core.base_bot import BaseTradingBot
+from core.strategy_registry import StrategyRegistry
+import talib
+import pandas as pd
+from typing import Dict, Optional, List
+import MetaTrader5 as mt5
+
+
+@StrategyRegistry.register("{{STRATEGY_ID}}")
+class {{STRATEGY_CLASS_NAME}}(BaseTradingBot):
+    """
+    {{STRATEGY_DESCRIPTION}}
+    
+    ⚠️ ADVANCED STRATEGY - Use with caution!
+    
+    Grid Parameters:
+    - Grid Size: {{GRID_SIZE}} pips
+    - Levels: {{NUM_LEVELS}} buy + {{NUM_LEVELS}} sell
+    - Lot Size: {{LOT_SIZE}} per level
+    - TP: {{TAKE_PROFIT}} pips per trade
+    - Max Positions: {{MAX_POSITIONS}}
+    
+    How it works:
+    1. Places grid of pending orders around current price
+    2. When order fills, places new order at next grid level
+    3. Closes opposite orders for profit
+    4. Works best in ranging markets
+    """
+    
+    def __init__(self, config: Dict):
+        super().__init__(config)
+        
+        self.grid_size = config.get('grid_size', {{GRID_SIZE}})  # pips
+        self.num_levels = config.get('num_levels', {{NUM_LEVELS}})
+        self.lot_size = config.get('lot_size', {{LOT_SIZE}})
+        self.take_profit = config.get('take_profit', {{TAKE_PROFIT}})  # pips
+        self.max_positions = config.get('max_positions', {{MAX_POSITIONS}})
+        self.grid_type = config.get('grid_type', '{{GRID_TYPE}}')  # fixed or dynamic
+        
+        # Track grid levels
+        self.buy_levels: List[float] = []
+        self.sell_levels: List[float] = []
+        self.grid_center: Optional[float] = None
+        
+        self.logger.warning("⚠️  Grid Trading Strategy - HIGH RISK!")
+        self.logger.info(f"Grid: {self.grid_size} pips x {self.num_levels} levels")
+        self.logger.info(f"Lot size: {self.lot_size}, TP: {self.take_profit} pips")
+        self.logger.info(f"Max positions: {self.max_positions}")
+    
+    def calculate_indicators(self, df: pd.DataFrame) -> pd.DataFrame:
+        """Calculate ATR for dynamic grid sizing"""
+        if len(df) < 14:
+            return df
+        
+        # ATR for dynamic grid adjustment
+        df['atr'] = talib.ATR(df['high'], df['low'], df['close'], timeperiod=14)
+        
+        return df
+    
+    def initialize_grid(self, current_price: float, atr: Optional[float] = None):
+        """
+        Initialize grid levels around current price
+        
+        Args:
+            current_price: Current market price
+            atr: ATR value for dynamic grid sizing
+        """
+        # Get symbol info for pip value
+        symbol_info = mt5.symbol_info(self.symbol)
+        if symbol_info is None:
+            return
+        
+        pip_size = symbol_info.point * 10  # 1 pip = 10 points for 5-digit broker
+        
+        # Calculate grid size in price units
+        if self.grid_type == 'dynamic' and atr is not None:
+            # Dynamic: Base grid size on ATR
+            grid_distance = atr
+        else:
+            # Fixed: Use configured pip value
+            grid_distance = self.grid_size * pip_size
+        
+        self.grid_center = current_price
+        self.buy_levels = []
+        self.sell_levels = []
+        
+        # Create buy levels below current price
+        for i in range(1, self.num_levels + 1):
+            level = current_price - (grid_distance * i)
+            self.buy_levels.append(level)
+        
+        # Create sell levels above current price
+        for i in range(1, self.num_levels + 1):
+            level = current_price + (grid_distance * i)
+            self.sell_levels.append(level)
+        
+        self.logger.info(f"Grid initialized at {current_price:.5f}")
+        self.logger.info(f"Buy levels: {len(self.buy_levels)}, Sell levels: {len(self.sell_levels)}")
+    
+    def generate_signal(self, df: pd.DataFrame) -> Optional[Dict]:
+        """
+        Generate grid trading signals
+        
+        NOTE: Grid trading typically uses pending orders, not market orders.
+        This simplified version generates signals when price reaches grid levels.
+        """
+        df = self.calculate_indicators(df)
+        
+        if len(df) < 1:
+            return None
+        
+        current_price = df['close'].iloc[-1]
+        atr = df['atr'].iloc[-1] if 'atr' in df.columns else None
+        
+        # Initialize grid on first run
+        if self.grid_center is None:
+            self.initialize_grid(current_price, atr)
+            return None  # Wait for next bar after initialization
+        
+        # Check if we're at max positions
+        positions = mt5.positions_get(symbol=self.symbol, magic=self.magic_number)
+        if positions is not None and len(positions) >= self.max_positions:
+            return None
+        
+        # Check if price reached any buy level
+        for level in self.buy_levels:
+            if abs(current_price - level) < (level * 0.001):  # Within 0.1%
+                signal = {
+                    'type': 'BUY',
+                    'price': current_price,
+                    'time': df['time'].iloc[-1] if 'time' in df.columns else pd.Timestamp.now(),
+                    'grid_level': level,
+                    'lot_size': self.lot_size,
+                    'take_profit_pips': self.take_profit,
+                    'reason': f'Grid BUY at {level:.5f}'
+                }
+                
+                self.logger.info(f"📈 Grid BUY Signal at level {level:.5f}")
+                return signal
+        
+        # Check if price reached any sell level
+        for level in self.sell_levels:
+            if abs(current_price - level) < (level * 0.001):  # Within 0.1%
+                signal = {
+                    'type': 'SELL',
+                    'price': current_price,
+                    'time': df['time'].iloc[-1] if 'time' in df.columns else pd.Timestamp.now(),
+                    'grid_level': level,
+                    'lot_size': self.lot_size,
+                    'take_profit_pips': self.take_profit,
+                    'reason': f'Grid SELL at {level:.5f}'
+                }
+                
+                self.logger.info(f"📉 Grid SELL Signal at level {level:.5f}")
+                return signal
+        
+        return None
+    
+    def should_close_position(self, df: pd.DataFrame, position_type: str) -> bool:
+        """
+        Grid positions typically close via TP
+        This method can implement additional exit logic
+        """
+        # Example: Close all if price moves too far from grid center
+        if self.grid_center is None:
+            return False
+        
+        current_price = df['close'].iloc[-1]
+        distance_from_center = abs(current_price - self.grid_center)
+        
+        # If price moves > 3x grid size away, consider closing
+        symbol_info = mt5.symbol_info(self.symbol)
+        if symbol_info:
+            pip_size = symbol_info.point * 10
+            max_distance = self.grid_size * pip_size * 3
+            
+            if distance_from_center > max_distance:
+                self.logger.warning(f"Price too far from grid center - consider closing")
+                # Optionally: return True to close position
+                # For now, just warning
+        
+        return False
+    
+    def get_strategy_info(self) -> Dict:
+        return {
+            'name': '{{STRATEGY_NAME}}',
+            'class': '{{STRATEGY_CLASS_NAME}}',
+            'id': '{{STRATEGY_ID}}',
+            'description': '{{STRATEGY_DESCRIPTION}}',
+            'type': 'Grid Trading',
+            'difficulty': 'Advanced',
+            'risk_level': 'HIGH',
+            'parameters': {
+                'grid_size': self.grid_size,
+                'num_levels': self.num_levels,
+                'lot_size': self.lot_size,
+                'take_profit': self.take_profit,
+                'max_positions': self.max_positions,
+                'grid_type': self.grid_type
+            },
+            'template': 'grid_trading',
+            'version': '{{VERSION}}',
+            'author': '{{AUTHOR}}'
+        }
