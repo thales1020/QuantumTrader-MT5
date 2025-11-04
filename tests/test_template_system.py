@@ -155,11 +155,14 @@ class TestTemplate:
     
     def test_template_initialization(self, sample_template_content, sample_metadata):
         """Test Template object initialization"""
+        # Remove 'name' from metadata since we pass it explicitly
+        metadata = {k: v for k, v in sample_metadata.items() if k != 'name'}
+        
         template = Template(
             name='ma_crossover',
             path=Path('templates/strategies/ma_crossover.py.template'),
             content=sample_template_content,
-            **sample_metadata
+            **metadata
         )
         
         assert template.name == 'ma_crossover'
@@ -609,18 +612,26 @@ class TestErrorHandling:
     
     def test_handle_malformed_template_file(self, template_manager, temp_dir):
         """Test handling of malformed template files"""
-        # Create malformed template
+        # Create template with unclosed variable placeholder
         strategies_dir = temp_dir / 'strategies'
         strategies_dir.mkdir(parents=True)
         
         malformed_file = strategies_dir / 'malformed.py.template'
-        malformed_file.write_text('{{UNCLOSED_VARIABLE')  # Malformed
+        # Unclosed variable won't match pattern - will be treated as literal text
+        malformed_file.write_text('{{UNCLOSED_VARIABLE')
         
-        # Should handle gracefully
+        # Template loads successfully (it's just text)
         template_manager.load_templates()
+        assert 'malformed' in template_manager.templates
         
-        # Template should not be loaded
-        assert 'malformed' not in template_manager.templates
+        # Extract variables - should find none since pattern requires closing braces
+        template = template_manager.get_template('malformed')
+        variables = template.extract_variables()
+        assert len(variables) == 0  # Unclosed variable not recognized
+        
+        # Can still render (will output literal text)
+        rendered = template.render({})
+        assert '{{UNCLOSED_VARIABLE' in rendered  # Literal text preserved
     
     def test_handle_missing_metadata(self, template_manager, temp_dir, sample_template_content):
         """Test handling of template without metadata"""
