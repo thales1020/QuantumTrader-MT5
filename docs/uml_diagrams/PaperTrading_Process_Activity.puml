@@ -1,0 +1,180 @@
+@startuml PaperTrading_Process_Activity
+
+title Paper Trading Process - Activity Diagram
+
+|Trader|
+start
+:Start Paper Trading Session;
+:Select Strategy;
+:Configure Parameters;
+
+|System|
+:Initialize Virtual Account;
+note right: Default: $10,000
+:Create Database Tables;
+note right
+  Tables created:
+  - orders
+  - fills
+  - positions
+  - trades
+  - account_history
+end note
+
+|MT5|
+:Connect to MT5;
+:Subscribe to Real-time Feed;
+
+if (Connection Success?) then (no)
+  |Trader|
+  :Show Connection Error;
+  :Retry Connection;
+  stop
+else (yes)
+  |Paper Trading Engine|
+  :Start Monitoring Loop;
+  
+  repeat
+    |MT5|
+    :Get Current Tick;
+    :Update OHLC Data;
+    
+    |Strategy|
+    :Analyze Current Market;
+    
+    if (Signal Generated?) then (yes)
+      |Paper Trading API|
+      :Create Virtual Order;
+      
+      fork
+        :Validate Order;
+        note right
+          Checks:
+          - Sufficient balance
+          - Valid symbol
+          - Valid lot size
+          - Max positions limit
+        end note
+        
+        if (Valid?) then (yes)
+          |Database|
+          :INSERT INTO orders;
+          :Set status = PENDING;
+          
+          |Broker Matching|
+          :Match Order with Market;
+          :Apply Spread;
+          :Apply Slippage;
+          :Calculate Commission;
+          
+          |Database|
+          :INSERT INTO fills;
+          :UPDATE orders SET status = FILLED;
+          :INSERT INTO positions;
+          :UPDATE account_history;
+          
+          |Supabase|
+          :Sync to Cloud;
+          :Trigger Real-time Event;
+          note right: Real-time subscribers\nget notified instantly
+          
+          |Dashboard|
+          :Update UI;
+          :Show New Position;
+          
+        else (no)
+          |Database|
+          :UPDATE orders SET status = REJECTED;
+          :Log rejection reason;
+        endif
+        
+      fork again
+        |Monitoring|
+        :Update Position List;
+        :Calculate Floating P&L;
+      end fork
+      
+    endif
+    
+    |Position Manager|
+    :Check All Open Positions;
+    
+    repeat
+      :Get position;
+      :Get current price;
+      :Calculate unrealized P&L;
+      
+      if (Stop Loss Hit?) then (yes)
+        |Database|
+        :Close position;
+        :INSERT INTO trades;
+        :UPDATE account_history;
+        :DELETE FROM positions;
+        
+        |Supabase|
+        :Sync closure to cloud;
+        
+        |Dashboard|
+        :Update equity curve;
+        :Show trade result;
+        
+      elseif (Take Profit Hit?) then (yes)
+        |Database|
+        :Close position;
+        :Record trade;
+        :Update balance;
+        
+      elseif (Manual Close?) then (yes)
+        |Trader|
+        :Request position close;
+        
+        |Paper Trading API|
+        :Execute close order;
+        :Update database;
+        
+      else (Position Active)
+        |Database|
+        :UPDATE positions\nSET unrealized_pnl;
+      endif
+      
+    repeat while (More positions?)
+    
+    |System|
+    :Sleep 1 second;
+    note right: Configurable\npolling interval
+    
+  repeat while (Session Active?)
+  
+  |Trader|
+  :Stop Paper Trading;
+  
+  |System|
+  :Close all positions;
+  :Generate final report;
+  
+  fork
+    |Database|
+    :Backup session data;
+  fork again
+    |Supabase|
+    :Final cloud sync;
+  fork again
+    |Excel|
+    :Export trades;
+  end fork
+  
+  :Show Session Summary;
+  note right
+    Summary includes:
+    - Total trades
+    - Win rate
+    - P&L
+    - Best/worst trades
+    - Sharpe ratio
+  end note
+  
+endif
+
+stop
+
+@enduml

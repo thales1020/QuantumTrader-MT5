@@ -1,0 +1,297 @@
+@startuml Strategy_Development_Process
+
+title Strategy Development & Optimization Process
+
+|Developer|
+start
+
+:Define Strategy Idea;
+note right
+  Examples:
+  - SuperTrend crossover
+  - ICT Smart Money Concepts
+  - Moving Average convergence
+end note
+
+:Create new strategy class;
+:Inherit from BaseStrategy;
+
+|System|
+:Validate BaseStrategy interface;
+
+if (Has prepare_data()?) then (yes)
+  if (Has analyze()?) then (yes)
+    :Register strategy in\nStrategyRegistry;
+  else (no)
+    |Developer|
+    :Implement analyze()\nmethod;
+    stop
+  endif
+else (no)
+  |Developer|
+  :Implement prepare_data()\nmethod;
+  stop
+endif
+
+|Developer|
+:Implement prepare_data();
+note right
+  Add indicators:
+  - SuperTrend
+  - EMA
+  - ATR
+  - RSI
+  etc.
+end note
+
+:Implement analyze();
+note right
+  Signal logic:
+  - Entry conditions
+  - Exit conditions
+  - Position sizing
+  - SL/TP calculation
+end note
+
+:Configure strategy parameters;
+note right
+  config.json:
+  {
+    "symbol": "EURUSDm",
+    "timeframe": "1H",
+    "sl_pips": 50,
+    "tp_pips": 100,
+    "lot_size": 0.1,
+    "indicator_params": {
+      "atr_period": 14,
+      "st_multiplier": 3.0
+    }
+  }
+end note
+
+== Testing Phase ==
+
+|Developer|
+:Create test configuration;
+
+fork
+  |System|
+  :Load historical data\nfrom MT5;
+  
+  :Run backtest;
+  note right
+    Period: 2020-01-01 to 2024-12-31
+    Initial capital: $10,000
+    Realistic costs enabled
+  end note
+  
+  :Generate performance report;
+  
+fork again
+  |Dashboard|
+  :Visualize results;
+  
+  :Display equity curve;
+  :Show trade distribution;
+  :Calculate metrics;
+  note right
+    - Win rate
+    - Profit factor
+    - Max drawdown
+    - Sharpe ratio
+    - Total trades
+  end note
+  
+end fork
+
+|Developer|
+:Review backtest results;
+
+if (Performance acceptable?) then (yes)
+  :Proceed to optimization;
+else (no)
+  :Analyze failure reasons;
+  
+  if (Logic error?) then (yes)
+    :Fix signal logic;
+    :Re-run backtest;
+    stop
+  else (poor parameters)
+    :Adjust parameters;
+    :Re-run backtest;
+    stop
+  endif
+endif
+
+== Optimization Phase ==
+
+|Developer|
+:Define parameter ranges;
+note right
+  Example:
+  sl_pips: [30, 40, 50, 60, 70]
+  tp_pips: [80, 100, 120, 150]
+  st_multiplier: [2.0, 2.5, 3.0, 3.5]
+  
+  Total combinations: 5 × 4 × 4 = 80
+end note
+
+|System|
+:Initialize optimization engine;
+
+fork
+  :Run parallel backtests;
+  
+  repeat
+    :Test parameter combination;
+    :Record metrics;
+  repeat while (More combinations?) is (yes)
+  ->no;
+  
+fork again
+  |Dashboard|
+  :Update optimization progress;
+  :Show parameter heatmap;
+  
+end fork
+
+:Rank results by metric;
+note right
+  Sort by:
+  - Profit factor (primary)
+  - Max drawdown (filter)
+  - Total trades (filter)
+  - Sharpe ratio (secondary)
+end note
+
+:Identify best parameters;
+note right
+  Best result:
+  sl_pips: 50
+  tp_pips: 100
+  st_multiplier: 3.0
+  
+  Metrics:
+  - Profit factor: 1.45
+  - Win rate: 48.5%
+  - Max DD: -15.3%
+  - Total trades: 156
+end note
+
+|Developer|
+:Review optimization results;
+
+if (Overfitting detected?) then (yes)
+  :Simplify parameters;
+  :Re-optimize with fewer variables;
+  stop
+else (no)
+  :Update strategy config;
+endif
+
+== Validation Phase ==
+
+|Developer|
+:Run out-of-sample test;
+note right
+  Training: 2020-2023
+  Testing: 2024
+  
+  Verify performance holds
+  on unseen data
+end note
+
+|System|
+:Run validation backtest;
+
+:Compare in-sample vs out-of-sample;
+
+|Developer|
+:Check performance degradation;
+
+if (Metrics similar?) then (yes)
+  :Strategy validated;
+else (no)
+  :Strategy overfit;
+  :Return to development;
+  stop
+endif
+
+== Paper Trading Phase ==
+
+|Developer|
+:Deploy to paper trading;
+
+|System|
+:Initialize virtual account;
+:Connect to real-time MT5 feed;
+
+:Run strategy in simulation;
+note right
+  Duration: 1-2 weeks
+  Monitor:
+  - Order execution
+  - Slippage impact
+  - Fill rates
+  - Real-time performance
+end note
+
+|Dashboard|
+:Display live metrics;
+
+|Developer|
+:Monitor daily;
+
+if (Paper trading successful?) then (yes)
+  :Approve for live trading;
+else (no)
+  :Identify issues;
+  
+  if (Execution problems?) then (yes)
+    :Adjust order parameters;
+  else (strategy problems)
+    :Return to development;
+  endif
+  stop
+endif
+
+== Production Deployment ==
+
+|Developer|
+:Create production config;
+note right
+  Production settings:
+  - Lower lot sizes initially
+  - Tighter risk limits
+  - Enable health monitoring
+  - Set up alerts
+end note
+
+:Deploy to live account;
+
+|System|
+:Initialize production bot;
+:Connect to broker;
+:Enable monitoring;
+
+|Developer|
+:Monitor closely for 1 week;
+
+:Gradually increase position sizes;
+
+:Regular performance review;
+
+stop
+
+note right of Developer
+  **Strategy Lifecycle Complete**
+  
+  Development → Testing → 
+  Optimization → Validation → 
+  Paper Trading → Production
+  
+  Continuous monitoring and
+  refinement ongoing
+end note
+
+@enduml

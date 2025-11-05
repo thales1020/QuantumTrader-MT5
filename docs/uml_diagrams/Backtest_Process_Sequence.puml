@@ -1,0 +1,179 @@
+@startuml Backtest_Process_Sequence
+
+title Backtest Process - Sequence Diagram
+
+actor Trader
+participant "BaseBacktestEngine" as Engine
+participant "BrokerSimulator" as Broker
+participant "Strategy" as Strategy
+participant "PerformanceAnalyzer" as Analyzer
+database "MT5" as MT5
+participant "Excel Export" as Excel
+
+== Initialization ==
+
+Trader -> Engine: run_backtest(symbol, start, end, timeframe, lot_size)
+activate Engine
+
+Engine -> MT5: copy_rates_range(symbol, timeframe, start, end)
+activate MT5
+MT5 --> Engine: historical_data[]
+deactivate MT5
+
+Engine -> Engine: df = pd.DataFrame(rates)
+Engine -> Engine: df.set_index('time', inplace=True)
+note right: CRITICAL FIX\nTime index required\nfor signal detection
+
+Engine -> Strategy: prepare_data(df)
+activate Strategy
+Strategy -> Strategy: Calculate indicators\n(SMA, ATR, etc.)
+Strategy --> Engine: prepared_data
+deactivate Strategy
+
+Engine -> Broker: new BrokerSimulator(config, balance)
+activate Broker
+Broker -> Broker: Initialize positions = []
+Broker -> Broker: Initialize trades = []
+Broker --> Engine: broker_instance
+deactivate Broker
+
+Engine -> Analyzer: new PerformanceAnalyzer(balance)
+activate Analyzer
+Analyzer --> Engine: analyzer_instance
+deactivate Analyzer
+
+== Main Trading Loop ==
+
+loop For each bar in historical data
+    Engine -> Engine: current_bar = df.iloc[idx].to_dict()
+    Engine -> Engine: current_bar['time'] = df.index[idx]
+    note right: Add datetime to bar\nfor strategy analysis
+    
+    Engine -> Strategy: analyze(df, current_bar)
+    activate Strategy
+    
+    Strategy -> Strategy: Check if current_time in df.index
+    
+    alt Signal Detected
+        Strategy -> Strategy: Check entry conditions\n(crossover, pattern, etc.)
+        Strategy --> Engine: {'action': 'BUY', 'sl_pips': 50, 'tp_pips': 100}
+        
+        Engine -> Broker: execute_order(direction, symbol, lot_size, current_bar, sl_pips, tp_pips)
+        activate Broker
+        
+        Broker -> Broker: random_rejection_check(5%)
+        
+        alt Order Accepted (95%)
+            Broker -> Broker: entry_price = close + spread
+            Broker -> Broker: slippage = random(0, 2 pips)
+            Broker -> Broker: commission = 7 * lot_size
+            
+            Broker -> Broker: Create position\n{entry_price, sl, tp, lot_size}
+            Broker -> Broker: positions.append(position)
+            Broker -> Broker: balance -= commission + spread_cost
+            
+            Broker --> Engine: order_filled
+            note right: Order ID: ORD_000001\nEntry: 1.1000\nSL: 1.0950\nTP: 1.1100
+            
+        else Order Rejected (5%)
+            Broker -> Broker: Log rejection reason
+            Broker --> Engine: order_rejected
+            note right: Rejection reasons:\n- Broker error\n- Low liquidity\n- Max slippage
+        end
+        
+        deactivate Broker
+        
+    else No Signal
+        Strategy --> Engine: None
+    end
+    
+    deactivate Strategy
+    
+    == Position Management ==
+    
+    Engine -> Broker: update_positions(current_bar)
+    activate Broker
+    
+    loop For each open position
+        Broker -> Broker: Check if SL hit\n(low <= stop_loss)
+        
+        alt Stop Loss Hit
+            Broker -> Broker: exit_price = stop_loss + sl_slippage
+            Broker -> Broker: Calculate P&L
+            Broker -> Broker: pnl = (exit - entry) * lot_size * pip_value
+            Broker -> Broker: net_pnl = pnl - costs
+            
+            Broker -> Broker: Close position
+            Broker -> Broker: trades.append(trade)
+            Broker -> Broker: balance += net_pnl
+            
+            note right: Position closed\nReason: Stop Loss\nNet P&L: -$95.18
+            
+        else Check Take Profit
+            Broker -> Broker: Check if TP hit\n(high >= take_profit)
+            
+            alt Take Profit Hit
+                Broker -> Broker: exit_price = take_profit - tp_slippage
+                Broker -> Broker: Calculate P&L
+                Broker -> Broker: Close position
+                Broker -> Broker: trades.append(trade)
+                Broker -> Broker: balance += net_pnl
+                
+                note right: Position closed\nReason: Take Profit\nNet P&L: +$163.70
+                
+            else Position Remains Open
+                Broker -> Broker: Update floating P&L
+            end
+        end
+    end
+    
+    Broker --> Engine: positions_updated
+    deactivate Broker
+    
+end
+
+== Finalization ==
+
+Engine -> Broker: close_all_positions()
+activate Broker
+Broker -> Broker: Close remaining positions
+Broker -> Broker: Record final trades
+Broker --> Engine: all_positions_closed
+deactivate Broker
+
+Engine -> Broker: get_closed_trades()
+activate Broker
+Broker --> Engine: trades[]
+deactivate Broker
+
+Engine -> Analyzer: add_trades(trades)
+activate Analyzer
+Analyzer -> Analyzer: Calculate metrics
+note right: Metrics calculated:\n- Win rate: 41.2%\n- Profit factor: 0.84\n- Sharpe ratio: -1.363\n- Max drawdown: 68.13%\n- Total return: -65.20%
+
+Analyzer --> Engine: metrics{}
+deactivate Analyzer
+
+Engine -> Excel: create_excel_report(trades, metrics, symbol)
+activate Excel
+
+Excel -> Excel: Create Workbook
+Excel -> Excel: Create "Trades" sheet
+Excel -> Excel: Add trade data
+Excel -> Excel: Format columns
+Excel -> Excel: Create "Performance Metrics" sheet
+Excel -> Excel: Add metrics data
+Excel -> Excel: Create "Monthly Returns" sheet
+Excel -> Excel: Calculate monthly breakdown
+
+Excel -> Excel: Save to reports/backtest_{symbol}_{timestamp}.xlsx
+Excel --> Engine: report_saved
+deactivate Excel
+
+Engine --> Trader: metrics, report_path
+
+note over Trader: Trader reviews:\n- Excel report\n- Dashboard\n- Performance charts
+
+deactivate Engine
+
+@enduml

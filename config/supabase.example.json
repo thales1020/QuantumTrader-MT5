@@ -1,0 +1,112 @@
+{
+  "_comment": "Supabase Configuration Template",
+  "_setup_instructions": [
+    "1. Go to https://supabase.com and create a free account",
+    "2. Create a new project (FREE plan: 500MB DB + 5GB storage)",
+    "3. Run the SQL from database/supabase_schema.sql in SQL Editor",
+    "4. Go to Settings > API to get your credentials",
+    "5. Copy this file to config/supabase.json and fill in your credentials",
+    "6. Never commit supabase.json to git (already in .gitignore)"
+  ],
+  
+  "database": {
+    "backend": "supabase",
+    
+    "supabase": {
+      "_comment": "Get these from Supabase Dashboard > Settings > API",
+      "url": "https://your-project-ref.supabase.co",
+      "anon_key": "your-anon-public-key-here",
+      
+      "_security_notes": [
+        "The anon key is safe to use in client code",
+        "Row Level Security (RLS) protects your data",
+        "Service role key is NOT needed for this app"
+      ]
+    },
+    
+    "sqlite_fallback": {
+      "_comment": "Local SQLite database as fallback if Supabase unavailable",
+      "enabled": true,
+      "db_path": "data/paper_trading.db"
+    }
+  },
+  
+  "paper_trading": {
+    "broker_api": {
+      "_comment": "Paper trading broker configuration",
+      "use_supabase": true,
+      "auto_update_interval": 1.0,
+      "max_retries": 3
+    },
+    
+    "order_matching": {
+      "default_time_in_force": "GTC",
+      "allow_partial_fills": true,
+      "volume_match_percentage": 10.0
+    },
+    
+    "realtime": {
+      "_comment": "Supabase real-time subscriptions",
+      "enabled": true,
+      "subscribe_to_trades": true,
+      "subscribe_to_positions": true,
+      "reconnect_on_error": true
+    }
+  },
+  
+  "initial_account": {
+    "balance": 10000.0,
+    "currency": "USD",
+    "leverage": 100
+  },
+  
+  "broker_costs": {
+    "_comment": "Realistic broker costs for paper trading",
+    "spread_pips": 1.5,
+    "commission_per_lot": 7.0,
+    "min_slippage_pips": 0.0,
+    "max_slippage_pips": 2.0,
+    "swap_long_per_lot": -5.0,
+    "swap_short_per_lot": -5.0,
+    "rejection_rate": 0.01
+  },
+  
+  "logging": {
+    "level": "INFO",
+    "log_to_file": true,
+    "log_dir": "logs",
+    "log_supabase_errors": true
+  },
+  
+  "monitoring": {
+    "_comment": "Optional: Web dashboard and alerts",
+    "enable_dashboard": false,
+    "dashboard_port": 8080,
+    "email_alerts": false,
+    "telegram_alerts": false
+  },
+  
+  "backup": {
+    "_comment": "Supabase has auto-backup, but you can export manually",
+    "enable_local_backup": false,
+    "backup_interval_hours": 24,
+    "backup_dir": "backups/supabase",
+    "max_backups": 7
+  },
+  
+  "performance": {
+    "_comment": "Supabase connection pooling and caching",
+    "connection_timeout": 10,
+    "query_timeout": 30,
+    "max_retries": 3,
+    "retry_delay": 1.0,
+    "cache_ttl": 60
+  },
+  
+  "development": {
+    "_comment": "Dev mode settings",
+    "debug_sql": false,
+    "log_all_queries": false,
+    "local_mode": false
+  }
+}

@@ -1,0 +1,427 @@
+@startuml Dashboard_Monitoring_Process
+
+title Dashboard & Monitoring Process
+
+|Trader|
+start
+
+:Launch monitoring dashboard;
+
+|System|
+:Initialize Streamlit app;
+
+:Load configuration;
+
+fork
+  :Connect to local database;
+  note right
+    SQLite for paper trading
+    C:\QuantumTrader\paper_trading.db
+  end note
+fork again
+  :Connect to Supabase;
+  note right
+    Cloud database
+    Real-time subscriptions
+  end note
+end fork
+
+:Render dashboard UI;
+
+== Dashboard Tabs ==
+
+|Dashboard|
+
+split
+  
+  -> **Overview Tab**;
+  
+  :Display account summary;
+  note right
+    - Current balance
+    - Total equity
+    - Unrealized P&L
+    - Realized P&L
+    - Total trades
+    - Win rate
+  end note
+  
+  :Show quick stats cards;
+  
+  :Render equity curve chart;
+  note right
+    Plotly line chart
+    - Balance over time
+    - Equity over time
+    - Drawdown periods highlighted
+  end note
+  
+split again
+  
+  -> **Performance Tab**;
+  
+  :Calculate performance metrics;
+  note right
+    Key Metrics:
+    - Sharpe ratio
+    - Sortino ratio
+    - Calmar ratio
+    - Max drawdown
+    - Recovery factor
+    - Profit factor
+    - Expectancy
+  end note
+  
+  :Generate monthly returns table;
+  
+  :Create returns distribution;
+  note right
+    Histogram of trade P&L
+    - Winners in green
+    - Losers in red
+    - Average marked
+  end note
+  
+  :Plot drawdown chart;
+  
+split again
+  
+  -> **Trades Tab**;
+  
+  :Query all trades from database;
+  
+  :Display trades table;
+  note right
+    Columns:
+    - Trade ID
+    - Symbol
+    - Direction
+    - Entry price/time
+    - Exit price/time
+    - Lot size
+    - P&L
+    - Duration
+  end note
+  
+  :Add filters;
+  note right
+    Filter by:
+    - Symbol
+    - Direction (BUY/SELL)
+    - Date range
+    - P&L (winners/losers)
+  end note
+  
+  :Enable sorting;
+  
+  :Show trade details on click;
+  
+split again
+  
+  -> **Risk Analysis Tab**;
+  
+  :Calculate risk metrics;
+  note right
+    Risk Metrics:
+    - Current drawdown
+    - Max consecutive losses
+    - Risk of ruin
+    - Position sizing
+    - Exposure %
+  end note
+  
+  :Display risk gauge charts;
+  
+  :Show position correlation;
+  note right
+    If multiple positions open:
+    - Correlation matrix
+    - Concentrated exposure
+  end note
+  
+  :Risk alerts;
+  
+split again
+  
+  -> **Advanced Tab**;
+  
+  :Load backtest results;
+  
+  :Upload Excel report;
+  
+  :Parse and visualize;
+  note right
+    Parse sheets:
+    1. Trades
+    2. Monthly Returns
+    3. Performance Metrics
+  end note
+  
+  :Compare strategies;
+  note right
+    Side-by-side comparison:
+    - SuperTrend vs ICT
+    - Different parameters
+    - Different symbols
+  end note
+  
+  :Export functionality;
+  note right
+    Export formats:
+    - Excel
+    - CSV
+    - JSON
+  end note
+  
+end split
+
+== Real-time Updates ==
+
+|System|
+
+fork
+  
+  :Subscribe to Supabase changes;
+  note right
+    Realtime channels:
+    - trades
+    - positions
+    - account_history
+  end note
+  
+  repeat
+    
+    :Listen for database events;
+    
+    if (New trade event?) then (yes)
+      :Fetch new trade data;
+      
+      |Dashboard|
+      :Update trades table;
+      :Recalculate metrics;
+      :Update equity curve;
+      :Show notification;
+      note right
+        Toast notification:
+        "New trade closed: +$125.50"
+      end note
+    endif
+    
+    |System|
+    if (Position update event?) then (yes)
+      :Fetch position data;
+      
+      |Dashboard|
+      :Update positions list;
+      :Recalculate unrealized P&L;
+      :Update equity;
+    endif
+    
+    |System|
+    if (Balance update event?) then (yes)
+      :Fetch account data;
+      
+      |Dashboard|
+      :Update balance display;
+      :Update equity curve;
+    endif
+    
+  repeat while (Dashboard active?)
+  
+fork again
+  
+  :Poll local database (1 sec);
+  note right
+    For paper trading
+    without Supabase
+  end note
+  
+  repeat
+    
+    :Query latest data;
+    
+    |Dashboard|
+    :Refresh all components;
+    
+    :Update timestamp;
+    note right
+      "Last update: 2 seconds ago"
+    end note
+    
+    |System|
+    :Sleep 1 second;
+    
+  repeat while (Dashboard active?)
+  
+end fork
+
+== User Interactions ==
+
+|Trader|
+
+:Interact with dashboard;
+
+alt View Trade Details
+  
+  :Click on trade row;
+  
+  |Dashboard|
+  :Show trade detail modal;
+  note right
+    Trade #45
+    ---------------
+    Symbol: EURUSDm
+    Direction: BUY
+    Entry: 1.1000 @ 10:30
+    Exit: 1.1050 @ 14:15
+    Lot size: 0.1
+    SL: 1.0950
+    TP: 1.1100
+    Duration: 3h 45m
+    Gross P&L: +$50.00
+    Costs: -$8.30
+    Net P&L: +$41.70
+  end note
+  
+else Filter Trades
+  
+  :Select filters;
+  
+  |Dashboard|
+  :Apply filters to query;
+  :Refresh table;
+  :Update statistics;
+  
+else Export Data
+  
+  :Click export button;
+  
+  |Dashboard|
+  :Generate export file;
+  :Trigger download;
+  note right
+    backtest_results_20251105.xlsx
+  end note
+  
+  |Trader|
+  :Save file locally;
+  
+else Compare Strategies
+  
+  :Upload multiple reports;
+  
+  |Dashboard|
+  :Parse all reports;
+  :Align metrics;
+  :Generate comparison charts;
+  note right
+    Bar charts:
+    - Profit factor
+    - Win rate
+    - Max DD
+    - Total trades
+    
+    Line charts:
+    - Equity curves overlaid
+    - Drawdown comparison
+  end note
+  
+else Refresh Data
+  
+  :Click refresh button;
+  
+  |Dashboard|
+  :Clear cache;
+  :Re-query database;
+  :Rebuild all components;
+  
+end
+
+== Health Monitoring ==
+
+|System|
+
+fork
+  
+  :Monitor system health;
+  
+  repeat
+    
+    :Check database connection;
+    
+    if (Connection lost?) then (yes)
+      |Dashboard|
+      :Show error banner;
+      note right
+        "⚠ Database connection lost
+         Reconnecting..."
+      end note
+      
+      |System|
+      :Attempt reconnection;
+    endif
+    
+    :Check MT5 connection;
+    
+    if (MT5 disconnected?) then (yes)
+      |Dashboard|
+      :Show warning;
+      note right
+        "⚠ MT5 connection lost
+         Real-time data unavailable"
+      end note
+    endif
+    
+    :Sleep 5 seconds;
+    
+  repeat while (True)
+  
+fork again
+  
+  :Performance monitoring;
+  
+  repeat
+    
+    :Check render time;
+    :Check memory usage;
+    
+    if (Performance degraded?) then (yes)
+      |Dashboard|
+      :Reduce update frequency;
+      :Show performance warning;
+    endif
+    
+    :Sleep 10 seconds;
+    
+  repeat while (True)
+  
+end fork
+
+|Trader|
+
+:Close dashboard;
+
+|System|
+:Save user preferences;
+:Close connections;
+:Shutdown Streamlit;
+
+stop
+
+note right of Dashboard
+  **Dashboard Features:**
+  
+  ✅ Real-time updates
+  ✅ Interactive charts
+  ✅ Multi-tab organization
+  ✅ Export functionality
+  ✅ Strategy comparison
+  ✅ Health monitoring
+  ✅ Mobile responsive
+  ✅ Dark/Light theme
+  
+  **Access:**
+  http://localhost:8501
+end note
+
+@enduml

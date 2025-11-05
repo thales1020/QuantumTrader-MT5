@@ -1,0 +1,71 @@
+@startuml PaperTrading_Module_Detail
+
+actor Trader
+actor "MT5" as MT5
+actor "Supabase" as DB
+
+rectangle "Paper Trading Module" {
+    usecase "Start Paper Trading" as UC7
+    usecase "Initialize Virtual Account" as UC7_1
+    usecase "Connect to MT5" as UC7_2
+    usecase "Load Strategy" as UC7_3
+    usecase "Start Monitoring" as UC7_4
+    
+    usecase "Place Virtual Orders" as UC9
+    usecase "Generate Signal" as UC9_1
+    usecase "Validate Order" as UC9_2
+    usecase "Execute in Database" as UC9_3
+    usecase "Update Position" as UC9_4
+    
+    usecase "Monitor Positions" as UC8
+    usecase "Check Open Positions" as UC8_1
+    usecase "Update Stop Loss/TP" as UC8_2
+    usecase "Close Positions" as UC8_3
+    
+    usecase "Sync to Cloud" as UC11
+    usecase "Upload Trades" as UC11_1
+    usecase "Backup State" as UC11_2
+    usecase "Enable Real-time Updates" as UC11_3
+}
+
+' Main flow
+Trader --> UC7
+UC7 .> UC7_1 : <<include>>
+UC7 .> UC7_2 : <<include>>
+UC7 .> UC7_3 : <<include>>
+UC7 .> UC7_4 : <<include>>
+
+UC7_2 ..> MT5 : <<uses>>
+
+' Order flow
+UC7 --> UC9
+UC9 .> UC9_1 : <<include>>
+UC9 .> UC9_2 : <<include>>
+UC9 .> UC9_3 : <<include>>
+UC9 .> UC9_4 : <<include>>
+
+UC9_3 ..> DB : <<uses>>
+
+' Monitoring flow
+Trader --> UC8
+UC8 .> UC8_1 : <<include>>
+UC8 .> UC8_2 : <<include>>
+UC8 .> UC8_3 : <<include>>
+
+' Sync flow
+UC8 --> UC11
+UC11 .> UC11_1 : <<include>>
+UC11 .> UC11_2 : <<include>>
+UC11 .> UC11_3 : <<include>>
+
+UC11_1 ..> DB : <<uses>>
+
+note right of UC9
+  Virtual execution:
+  - No real money
+  - Real market data
+  - Realistic simulation
+  - Database tracking
+end note
+
+@enduml

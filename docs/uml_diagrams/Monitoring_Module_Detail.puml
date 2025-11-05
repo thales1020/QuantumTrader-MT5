@@ -1,0 +1,70 @@
+@startuml Monitoring_Module_Detail
+
+actor Trader
+actor "Supabase" as DB
+
+rectangle "Monitoring Module" {
+    usecase "View Dashboard" as UC20
+    usecase "Show Equity Chart" as UC20_1
+    usecase "Display Trade History" as UC20_2
+    usecase "Show Performance Metrics" as UC20_3
+    usecase "Display Risk Indicators" as UC20_4
+    
+    usecase "Check Health" as UC21
+    usecase "Verify MT5 Connection" as UC21_1
+    usecase "Check Database Status" as UC21_2
+    usecase "Monitor Memory Usage" as UC21_3
+    usecase "Check System Load" as UC21_4
+    
+    usecase "Receive Alerts" as UC22
+    usecase "High Drawdown Alert" as UC22_1
+    usecase "Connection Lost Alert" as UC22_2
+    usecase "Large Loss Alert" as UC22_3
+    usecase "System Error Alert" as UC22_4
+    
+    usecase "Review Logs" as UC23
+    usecase "View Error Logs" as UC23_1
+    usecase "Check Trade Logs" as UC23_2
+    usecase "Review System Logs" as UC23_3
+    usecase "Export Logs" as UC23_4
+}
+
+' Dashboard flow
+Trader --> UC20
+UC20 .> UC20_1 : <<include>>
+UC20 .> UC20_2 : <<include>>
+UC20 .> UC20_3 : <<include>>
+UC20 .> UC20_4 : <<include>>
+
+UC20_2 ..> DB : <<uses>>
+
+' Health check flow
+Trader --> UC21
+UC21 .> UC21_1 : <<include>>
+UC21 .> UC21_2 : <<include>>
+UC21 .> UC21_3 : <<include>>
+UC21 .> UC21_4 : <<include>>
+
+' Alert flow
+UC21 --> UC22
+UC22 .> UC22_1 : <<extend>>
+UC22 .> UC22_2 : <<extend>>
+UC22 .> UC22_3 : <<extend>>
+UC22 .> UC22_4 : <<extend>>
+
+' Logging flow
+UC22 --> UC23
+UC23 .> UC23_1 : <<include>>
+UC23 .> UC23_2 : <<include>>
+UC23 .> UC23_3 : <<include>>
+UC23 .> UC23_4 : <<include>>
+
+note right of UC20
+  Dashboard features:
+  - Real-time updates
+  - Interactive charts
+  - Filterable data
+  - Export capabilities
+end note
+
+@enduml

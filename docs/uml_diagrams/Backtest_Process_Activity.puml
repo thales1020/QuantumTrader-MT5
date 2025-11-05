@@ -1,0 +1,138 @@
+@startuml Backtest_Process_Activity
+
+title Backtest Process - Activity Diagram
+
+|Trader|
+start
+:Select Strategy;
+:Configure Parameters;
+note right
+  - Symbol (e.g., EURUSDm)
+  - Timeframe (H1, M15, etc.)
+  - Date range
+  - Lot size
+  - SL/TP settings
+end note
+
+|System|
+:Validate Configuration;
+
+if (Valid?) then (no)
+  |Trader|
+  :Show Error;
+  stop
+else (yes)
+  |MT5|
+  :Load Historical Data;
+  
+  if (Data Available?) then (no)
+    |Trader|
+    :Show "No Data" Error;
+    stop
+  else (yes)
+    |Backtest Engine|
+    :Initialize Components;
+    note right
+      - BrokerSimulator
+      - PerformanceAnalyzer
+      - Strategy instance
+    end note
+    
+    :Set DataFrame Time Index;
+    note right: CRITICAL FIX: df.set_index('time')
+    
+    :Prepare Strategy Data;
+    note right
+      Calculate indicators:
+      - SMA, EMA
+      - ATR, RSI
+      - Custom indicators
+    end note
+    
+    repeat
+      :Get Current Bar;
+      :Add time to current_bar;
+      
+      |Strategy|
+      :Analyze Market;
+      
+      if (Signal Generated?) then (yes)
+        |Broker Simulator|
+        :Check Rejection (5%);
+        
+        if (Rejected?) then (yes)
+          :Log Rejection;
+        else (no)
+          :Calculate Entry Price;
+          note right
+            - Apply spread
+            - Add slippage
+            - Calculate commission
+          end note
+          
+          :Execute Virtual Order;
+          :Update Balance;
+          :Open Position;
+        endif
+      endif
+      
+      |Broker Simulator|
+      :Update Open Positions;
+      
+      repeat
+        :Check each position;
+        
+        if (Stop Loss Hit?) then (yes)
+          :Close Position;
+          :Apply SL Slippage;
+          :Record Trade;
+        elseif (Take Profit Hit?) then (yes)
+          :Close Position;
+          :Apply TP Slippage;
+          :Record Trade;
+        endif
+      repeat while (More positions?)
+      
+    repeat while (More bars?) is (yes)
+    
+    |Backtest Engine|
+    :Close Remaining Positions;
+    
+    |Performance Analyzer|
+    :Calculate Metrics;
+    note right
+      50+ metrics:
+      - Win rate
+      - Profit factor
+      - Sharpe ratio
+      - Max drawdown
+      - Risk/Reward
+    end note
+    
+    :Generate Excel Report;
+    fork
+      :Create Trades Sheet;
+    fork again
+      :Create Metrics Sheet;
+    fork again
+      :Create Monthly Returns Sheet;
+    end fork
+    
+    :Save to reports/;
+    
+    |Trader|
+    :Review Results;
+    :Analyze Performance;
+    
+    if (Satisfied?) then (no)
+      :Adjust Parameters;
+      note right: Optimization loop
+    else (yes)
+      :Deploy Strategy;
+    endif
+  endif
+endif
+
+stop
+
+@enduml

@@ -1,0 +1,274 @@
+@startuml PaperTrading_Process_Sequence
+
+title Paper Trading Process - Sequence Diagram
+
+actor Trader
+participant "PaperTradingAPI" as API
+participant "Strategy" as Strategy
+participant "OrderMatcher" as Matcher
+database "SQLite/Supabase" as DB
+participant "MT5" as MT5
+participant "Dashboard" as Dashboard
+
+== Session Start ==
+
+Trader -> API: start_paper_trading(strategy, config)
+activate API
+
+API -> DB: CREATE TABLES IF NOT EXISTS
+activate DB
+DB -> DB: Create orders table
+DB -> DB: Create fills table
+DB -> DB: Create positions table
+DB -> DB: Create trades table
+DB -> DB: Create account_history table
+DB --> API: tables_ready
+deactivate DB
+
+API -> API: Initialize virtual_balance = $10,000
+API -> DB: INSERT INTO account_history\n(balance, equity, timestamp)
+activate DB
+DB --> API: inserted
+deactivate DB
+
+API -> MT5: connect()
+activate MT5
+MT5 --> API: connected
+deactivate MT5
+
+API --> Trader: session_started\n(session_id: "SES_20251105_001")
+
+== Real-time Monitoring Loop ==
+
+loop Every 1 second
+    
+    API -> MT5: get_current_tick(symbol)
+    activate MT5
+    MT5 --> API: tick{bid, ask, last, time}
+    deactivate MT5
+    
+    API -> API: Update OHLC candle
+    
+    API -> Strategy: analyze(current_data, current_bar)
+    activate Strategy
+    
+    Strategy -> Strategy: Check indicators
+    Strategy -> Strategy: Evaluate conditions
+    
+    alt Signal Detected
+        Strategy --> API: signal{action: 'BUY', sl_pips: 50, tp_pips: 100}
+        
+        API -> API: Generate order_id = "ORD_000001"
+        
+        API -> DB: INSERT INTO orders\n(order_id, symbol, direction, lot_size, status)
+        activate DB
+        DB --> API: order_created
+        deactivate DB
+        
+        API -> Matcher: match_order(order, current_tick)
+        activate Matcher
+        
+        Matcher -> Matcher: entry_price = ask (for BUY)\nentry_price = bid (for SELL)
+        Matcher -> Matcher: spread_cost = (ask - bid) * lot_size * pip_value
+        Matcher -> Matcher: commission = 7 * lot_size
+        Matcher -> Matcher: slippage = random(0, 2 pips)
+        
+        alt Order Validation Passed
+            Matcher -> Matcher: Calculate total_cost\n= spread + commission
+            Matcher -> Matcher: Check balance >= total_cost
+            
+            alt Sufficient Balance
+                Matcher -> DB: INSERT INTO fills\n(order_id, fill_price, fill_time, costs)
+                activate DB
+                DB --> Matcher: fill_recorded
+                deactivate DB
+                
+                Matcher -> DB: UPDATE orders\nSET status = 'FILLED'
+                activate DB
+                DB --> Matcher: updated
+                deactivate DB
+                
+                Matcher -> Matcher: position_id = "POS_ORD_000001"
+                Matcher -> Matcher: stop_loss = entry - (sl_pips * pip_size)
+                Matcher -> Matcher: take_profit = entry + (tp_pips * pip_size)
+                
+                Matcher -> DB: INSERT INTO positions\n(position_id, entry_price, sl, tp, lot_size)
+                activate DB
+                DB --> Matcher: position_opened
+                deactivate DB
+                
+                Matcher -> DB: UPDATE account_history\nSET balance = balance - total_cost
+                activate DB
+                DB --> Matcher: balance_updated
+                deactivate DB
+                
+                Matcher --> API: order_filled{position_id}
+                
+                API -> DB: Sync to Supabase (if enabled)
+                activate DB
+                DB -> DB: Replicate to cloud
+                DB --> API: synced
+                deactivate DB
+                
+                API -> Dashboard: notify_new_position(position_id)
+                activate Dashboard
+                Dashboard -> Dashboard: Update position list
+                Dashboard -> Dashboard: Refresh equity chart
+                Dashboard --> API: ui_updated
+                deactivate Dashboard
+                
+            else Insufficient Balance
+                Matcher -> DB: UPDATE orders\nSET status = 'REJECTED'\nSET reason = 'Insufficient balance'
+                activate DB
+                DB --> Matcher: updated
+                deactivate DB
+                
+                Matcher --> API: order_rejected
+            end
+            
+        else Order Validation Failed
+            Matcher -> DB: UPDATE orders\nSET status = 'REJECTED'\nSET reason = 'Invalid parameters'
+            activate DB
+            DB --> Matcher: updated
+            deactivate DB
+            
+            Matcher --> API: order_rejected
+        end
+        
+        deactivate Matcher
+        
+    else No Signal
+        Strategy --> API: None
+    end
+    
+    deactivate Strategy
+    
+    == Position Management ==
+    
+    API -> DB: SELECT * FROM positions\nWHERE status = 'OPEN'
+    activate DB
+    DB --> API: open_positions[]
+    deactivate DB
+    
+    loop For each open position
+        
+        API -> MT5: get_current_price(symbol)
+        activate MT5
+        MT5 --> API: current_price
+        deactivate MT5
+        
+        API -> API: Calculate unrealized_pnl\n= (current - entry) * lot_size * pip_value
+        
+        alt Stop Loss Check
+            
+            alt SL Hit (for BUY: price <= sl)
+                API -> API: exit_price = stop_loss + sl_slippage
+                API -> API: Calculate realized_pnl
+                API -> API: net_pnl = realized_pnl - costs
+                
+                API -> DB: INSERT INTO trades\n(position_id, entry, exit, pnl, reason)
+                activate DB
+                DB --> API: trade_recorded
+                deactivate DB
+                
+                API -> DB: UPDATE positions\nSET status = 'CLOSED'\nSET exit_reason = 'Stop Loss'
+                activate DB
+                DB --> API: position_closed
+                deactivate DB
+                
+                API -> DB: UPDATE account_history\nSET balance = balance + net_pnl
+                activate DB
+                DB --> API: balance_updated
+                deactivate DB
+                
+                API -> Dashboard: notify_trade_closed(trade)
+                activate Dashboard
+                Dashboard -> Dashboard: Update trade list
+                Dashboard -> Dashboard: Update equity curve
+                Dashboard -> Dashboard: Calculate new metrics
+                Dashboard --> API: ui_updated
+                deactivate Dashboard
+                
+            else TP Check
+                
+                alt TP Hit (for BUY: price >= tp)
+                    API -> API: exit_price = take_profit - tp_slippage
+                    API -> API: Calculate realized_pnl (positive)
+                    
+                    API -> DB: INSERT INTO trades
+                    activate DB
+                    DB --> API: trade_recorded
+                    deactivate DB
+                    
+                    API -> DB: UPDATE positions\nSET exit_reason = 'Take Profit'
+                    activate DB
+                    DB --> API: updated
+                    deactivate DB
+                    
+                    API -> DB: UPDATE account_history\nSET balance = balance + net_pnl
+                    activate DB
+                    DB --> API: updated
+                    deactivate DB
+                    
+                else Position Active
+                    API -> DB: UPDATE positions\nSET unrealized_pnl = calculated_pnl
+                    activate DB
+                    DB --> API: updated
+                    deactivate DB
+                end
+            end
+        end
+    end
+    
+    API -> API: Sleep 1 second
+    
+end
+
+== Manual Stop ==
+
+Trader -> API: stop_paper_trading()
+
+API -> DB: SELECT * FROM positions\nWHERE status = 'OPEN'
+activate DB
+DB --> API: remaining_positions[]
+deactivate DB
+
+loop Close all positions
+    API -> MT5: get_current_price()
+    activate MT5
+    MT5 --> API: current_price
+    deactivate MT5
+    
+    API -> API: Close position at market
+    API -> DB: UPDATE positions, trades, account_history
+    activate DB
+    DB --> API: updated
+    deactivate DB
+end
+
+API -> DB: SELECT * FROM trades
+activate DB
+DB --> API: all_trades[]
+deactivate DB
+
+API -> API: Calculate session metrics
+note right
+  Final metrics:
+  - Total trades: 45
+  - Win rate: 53.3%
+  - Net P&L: +$345.67
+  - Max drawdown: -12.5%
+end note
+
+API -> DB: Sync final state to Supabase
+activate DB
+DB --> API: synced
+deactivate DB
+
+API --> Trader: session_summary{metrics, trades}
+
+deactivate API
+
+note over Trader: Trader reviews:\n- Session performance\n- Individual trades\n- Equity curve\n- Strategy effectiveness
+
+@enduml

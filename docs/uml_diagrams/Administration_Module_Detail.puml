@@ -1,0 +1,78 @@
+@startuml Administration_Module_Detail
+
+actor Admin
+actor "Supabase" as DB
+actor "VPS Server" as VPS
+
+rectangle "Administration Module" {
+    usecase "Configure System" as UC27
+    usecase "Set API Keys" as UC27_1
+    usecase "Configure Broker" as UC27_2
+    usecase "Set Trading Parameters" as UC27_3
+    usecase "Manage Strategies" as UC27_4
+    
+    usecase "Manage Database" as UC28
+    usecase "Create Schema" as UC28_1
+    usecase "Backup Database" as UC28_2
+    usecase "Restore Database" as UC28_3
+    usecase "Migrate Data" as UC28_4
+    usecase "Monitor Queries" as UC28_5
+    
+    usecase "Deploy to VPS" as UC29
+    usecase "Setup VPS Environment" as UC29_1
+    usecase "Install Dependencies" as UC29_2
+    usecase "Upload Code" as UC29_3
+    usecase "Configure Firewall" as UC29_4
+    usecase "Start Services" as UC29_5
+    
+    usecase "Backup Data" as UC30
+    usecase "Backup Configuration" as UC30_1
+    usecase "Backup Trades Database" as UC30_2
+    usecase "Backup Logs" as UC30_3
+    usecase "Schedule Auto Backup" as UC30_4
+}
+
+' Configuration flow
+Admin --> UC27
+UC27 .> UC27_1 : <<include>>
+UC27 .> UC27_2 : <<include>>
+UC27 .> UC27_3 : <<include>>
+UC27 .> UC27_4 : <<include>>
+
+' Database management
+Admin --> UC28
+UC28 .> UC28_1 : <<include>>
+UC28 .> UC28_2 : <<include>>
+UC28 .> UC28_3 : <<include>>
+UC28 .> UC28_4 : <<include>>
+UC28 .> UC28_5 : <<include>>
+
+UC28_1 ..> DB : <<uses>>
+UC28_2 ..> DB : <<uses>>
+
+' VPS deployment
+Admin --> UC29
+UC29 .> UC29_1 : <<include>>
+UC29 .> UC29_2 : <<include>>
+UC29 .> UC29_3 : <<include>>
+UC29 .> UC29_4 : <<include>>
+UC29 .> UC29_5 : <<include>>
+
+UC29_1 ..> VPS : <<uses>>
+
+' Backup flow
+Admin --> UC30
+UC30 .> UC30_1 : <<include>>
+UC30 .> UC30_2 : <<include>>
+UC30 .> UC30_3 : <<include>>
+UC30 .> UC30_4 : <<include>>
+
+note right of UC29
+  VPS deployment:
+  - Automated setup
+  - Docker support
+  - Monitoring included
+  - Auto-restart
+end note
+
+@enduml

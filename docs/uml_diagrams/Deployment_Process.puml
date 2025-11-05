@@ -1,0 +1,424 @@
+@startuml Deployment_Process
+
+title Production Deployment Process
+
+|Developer|
+start
+
+:Complete development & testing;
+note right
+  Prerequisites:
+  ✅ Backtest validated
+  ✅ Paper trading successful
+  ✅ Code reviewed
+  ✅ Documentation complete
+end note
+
+== Pre-Deployment Checklist ==
+
+:Review deployment checklist;
+
+partition "Environment Preparation" {
+  
+  if (Deploy to VPS?) then (yes)
+    
+    |DevOps|
+    :Select VPS provider;
+    note right
+      Recommended:
+      - AWS EC2
+      - DigitalOcean
+      - Vultr
+      - Contabo
+      
+      Requirements:
+      - Windows Server 2019+
+      - 4GB+ RAM
+      - SSD storage
+      - Low latency to broker
+    end note
+    
+    :Provision VPS instance;
+    
+    :Configure Windows Server;
+    note right
+      Settings:
+      - Disable sleep mode
+      - Disable automatic updates
+      - Configure firewall
+      - Set timezone
+      - Enable RDP
+    end note
+    
+    :Install MetaTrader 5;
+    
+    :Install Python 3.11+;
+    
+    :Install dependencies;
+    note right
+      pip install -r requirements.txt
+      
+      Key packages:
+      - MetaTrader5
+      - pandas
+      - numpy
+      - ta-lib
+      - openpyxl
+      - psutil
+      - supabase
+    end note
+    
+  else (local machine)
+    |Developer|
+    :Verify local environment;
+    :Update dependencies;
+  endif
+  
+}
+
+== Configuration ==
+
+|Developer|
+
+:Create production config;
+note right
+  config.production.json:
+  {
+    "environment": "production",
+    "symbol": "EURUSDm",
+    "timeframe": "1H",
+    "lot_size": 0.1,
+    "max_positions": 3,
+    "sl_pips": 50,
+    "tp_pips": 100,
+    "enable_monitoring": true,
+    "enable_alerts": true,
+    "supabase_enabled": true,
+    "health_check_interval": 300
+  }
+end note
+
+:Set broker credentials;
+note right
+  .env file (DO NOT COMMIT):
+  MT5_LOGIN=12345678
+  MT5_PASSWORD=SecurePass123
+  MT5_SERVER=ICMarkets-Demo
+  
+  SUPABASE_URL=https://...
+  SUPABASE_KEY=eyJh...
+  
+  TELEGRAM_BOT_TOKEN=...
+  TELEGRAM_CHAT_ID=...
+end note
+
+:Configure risk limits;
+note right
+  Risk management:
+  - Max daily loss: $500
+  - Max drawdown: 20%
+  - Max open positions: 3
+  - Position size: 1% per trade
+  - Max exposure: 5%
+end note
+
+== Database Setup ==
+
+|Developer|
+
+fork
+  :Initialize local SQLite;
+  note right
+    C:\QuantumTrader\production.db
+    
+    Tables:
+    - orders
+    - fills
+    - positions
+    - trades
+    - account_history
+    - system_logs
+  end note
+  
+fork again
+  :Setup Supabase project;
+  note right
+    Cloud PostgreSQL:
+    1. Create project
+    2. Run SQL migrations
+    3. Enable realtime
+    4. Configure RLS policies
+    5. Test connection
+  end note
+  
+end fork
+
+== Deployment ==
+
+|DevOps|
+
+if (VPS Deployment?) then (yes)
+  
+  :Upload project files via RDP;
+  note right
+    Transfer:
+    - Source code
+    - Config files
+    - .env file
+    - requirements.txt
+  end note
+  
+  :Set up directory structure;
+  note right
+    C:\QuantumTrader\
+    ├── core\
+    ├── engines\
+    ├── utils\
+    ├── config\
+    ├── logs\
+    ├── data\
+    └── reports\
+  end note
+  
+  :Configure Windows Service;
+  note right
+    Using NSSM (Non-Sucking Service Manager):
+    
+    nssm install QuantumTrader
+    Path: C:\Python311\python.exe
+    Arguments: C:\QuantumTrader\main.py
+    Startup: Automatic
+    
+    Recovery:
+    - First failure: Restart
+    - Second failure: Restart
+    - Subsequent: Restart
+    - Delay: 60000 ms
+  end note
+  
+  :Start service;
+  
+else (local)
+  |Developer|
+  :Run manually or scheduled task;
+endif
+
+== Monitoring Setup ==
+
+|DevOps|
+
+fork
+  :Configure health checks;
+  note right
+    health_check.py:
+    - MT5 connection
+    - Database connection
+    - Supabase connection
+    - Memory usage
+    - Disk space
+    - Process running
+    
+    Run every 5 minutes
+  end note
+  
+fork again
+  :Setup logging;
+  note right
+    logging.conf:
+    - Level: INFO
+    - Rotation: Daily
+    - Max size: 50MB
+    - Keep: 30 days
+    - Format: JSON
+  end note
+  
+fork again
+  :Configure alerts;
+  note right
+    Telegram alerts for:
+    - Bot start/stop
+    - Trade execution
+    - Errors/exceptions
+    - Daily summary
+    - Health check failures
+  end note
+  
+end fork
+
+== Testing in Production ==
+
+|Developer|
+
+:Start bot in production;
+
+|System|
+:Initialize trading bot;
+
+fork
+  :Connect to MT5;
+  note right
+    Verify:
+    - Login successful
+    - Symbol available
+    - Account type correct
+  end note
+fork again
+  :Connect to database;
+fork again
+  :Initialize strategy;
+fork again
+  :Start monitoring;
+end fork
+
+:Wait for first signal;
+
+|Developer|
+:Monitor closely;
+
+repeat
+  
+  :Check logs;
+  :Verify connections;
+  :Monitor performance;
+  
+  if (Issue detected?) then (yes)
+    :Analyze issue;
+    
+    if (Critical?) then (yes)
+      :Stop bot immediately;
+      :Rollback deployment;
+      :Fix issue;
+      :Re-deploy;
+      stop
+    else (minor)
+      :Log for later fix;
+    endif
+  endif
+  
+repeat while (24 hours elapsed?) is (no)
+->yes;
+
+== Post-Deployment ==
+
+|Developer|
+
+:Review first 24h performance;
+
+if (Performance acceptable?) then (yes)
+  :Increase monitoring interval;
+  note right
+    From every 15 min
+    to every 1 hour
+  end note
+else (no)
+  :Investigate discrepancies;
+  
+  if (Strategy issue?) then (yes)
+    :Pause bot;
+    :Return to development;
+    stop
+  else (execution issue)
+    :Adjust parameters;
+    :Continue monitoring;
+  endif
+endif
+
+:Week 1: Daily review;
+:Week 2-4: Every 2 days;
+:Month 2+: Weekly review;
+
+== Maintenance ==
+
+|DevOps|
+
+:Schedule regular maintenance;
+
+partition "Ongoing Tasks" {
+  
+  fork
+    :Daily:;
+    :- Check bot status;
+    :- Review trades;
+    :- Check alerts;
+  fork again
+    :Weekly:;
+    :- Analyze performance;
+    :- Review logs;
+    :- Database cleanup;
+  fork again
+    :Monthly:;
+    :- Update dependencies;
+    :- Backup database;
+    :- Performance optimization;
+    :- Generate reports;
+  fork again
+    :Quarterly:;
+    :- Strategy review;
+    :- System audit;
+    :- Security update;
+  end fork
+  
+}
+
+== Scaling ==
+
+if (Expand to more symbols?) then (yes)
+  
+  :Deploy additional bot instances;
+  note right
+    Multi-symbol deployment:
+    - Separate config per symbol
+    - Shared database
+    - Coordinated risk management
+    - Correlation monitoring
+  end note
+  
+  :Configure portfolio management;
+  
+endif
+
+if (Increase capital?) then (yes)
+  
+  :Gradually increase lot sizes;
+  note right
+    Incremental scaling:
+    Week 1-2: 0.1 lots
+    Week 3-4: 0.2 lots
+    Month 2: 0.5 lots
+    Month 3+: 1.0 lots
+    
+    Monitor slippage impact
+  end note
+  
+  :Adjust risk limits;
+  
+endif
+
+stop
+
+note right of DevOps
+  **Deployment Checklist**
+  
+  ✅ VPS configured
+  ✅ MT5 installed & logged in
+  ✅ Python environment ready
+  ✅ Dependencies installed
+  ✅ Config files set
+  ✅ Database initialized
+  ✅ Monitoring enabled
+  ✅ Alerts configured
+  ✅ Service installed
+  ✅ Logs rotating
+  ✅ Backups scheduled
+  ✅ Health checks running
+  
+  **Post-Deployment**
+  
+  ✅ 24h close monitoring
+  ✅ First week daily review
+  ✅ Performance tracking
+  ✅ Regular maintenance
+  ✅ Continuous optimization
+end note
+
+@enduml

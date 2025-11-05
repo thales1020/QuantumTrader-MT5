@@ -1,0 +1,130 @@
+@startuml QuantumTrader_Main_UseCase
+
+' Actors
+actor "Trader/Analyst" as Trader
+actor "System Administrator" as Admin
+actor "MetaTrader 5" as MT5
+actor "Supabase Cloud" as Supabase
+actor "VPS Server" as VPS
+
+' System boundary
+rectangle "QuantumTrader MT5 System" {
+    
+    ' === BACKTEST MODULE ===
+    package "Backtest Module" {
+        usecase "Run Backtest" as UC1
+        usecase "Configure Strategy" as UC2
+        usecase "Analyze Performance" as UC3
+        usecase "Generate Reports" as UC4
+        usecase "Optimize Parameters" as UC5
+        usecase "Export Results" as UC6
+    }
+    
+    ' === PAPER TRADING MODULE ===
+    package "Paper Trading Module" {
+        usecase "Start Paper Trading" as UC7
+        usecase "Monitor Positions" as UC8
+        usecase "Place Virtual Orders" as UC9
+        usecase "Track Performance" as UC10
+        usecase "Sync to Cloud" as UC11
+    }
+    
+    ' === LIVE TRADING MODULE ===
+    package "Live Trading Module" {
+        usecase "Execute Live Orders" as UC12
+        usecase "Manage Risk" as UC13
+        usecase "Monitor Account" as UC14
+        usecase "Emergency Stop" as UC15
+    }
+    
+    ' === STRATEGY MODULE ===
+    package "Strategy Module" {
+        usecase "Create Strategy" as UC16
+        usecase "Test Strategy" as UC17
+        usecase "Deploy Strategy" as UC18
+        usecase "Update Strategy" as UC19
+    }
+    
+    ' === MONITORING MODULE ===
+    package "Monitoring Module" {
+        usecase "View Dashboard" as UC20
+        usecase "Check Health" as UC21
+        usecase "Receive Alerts" as UC22
+        usecase "Review Logs" as UC23
+    }
+    
+    ' === DATA MODULE ===
+    package "Data Module" {
+        usecase "Load Market Data" as UC24
+        usecase "Cache Data" as UC25
+        usecase "Validate Data" as UC26
+    }
+    
+    ' === ADMIN MODULE ===
+    package "Administration" {
+        usecase "Configure System" as UC27
+        usecase "Manage Database" as UC28
+        usecase "Deploy to VPS" as UC29
+        usecase "Backup Data" as UC30
+    }
+}
+
+' === RELATIONSHIPS ===
+
+' Trader interactions
+Trader --> UC1
+Trader --> UC2
+Trader --> UC3
+Trader --> UC4
+Trader --> UC5
+Trader --> UC6
+Trader --> UC7
+Trader --> UC8
+Trader --> UC16
+Trader --> UC17
+Trader --> UC18
+Trader --> UC20
+Trader --> UC21
+Trader --> UC22
+
+' Admin interactions
+Admin --> UC27
+Admin --> UC28
+Admin --> UC29
+Admin --> UC30
+
+' MT5 interactions
+UC1 ..> MT5 : <<uses>>
+UC7 ..> MT5 : <<uses>>
+UC12 ..> MT5 : <<uses>>
+UC24 ..> MT5 : <<uses>>
+
+' Supabase interactions
+UC11 ..> Supabase : <<uses>>
+UC28 ..> Supabase : <<uses>>
+
+' VPS interactions
+UC29 ..> VPS : <<uses>>
+
+' Include relationships
+UC1 .> UC2 : <<include>>
+UC1 .> UC24 : <<include>>
+UC1 .> UC4 : <<include>>
+
+UC7 .> UC9 : <<include>>
+UC7 .> UC8 : <<include>>
+
+UC12 .> UC13 : <<include>>
+UC12 .> UC14 : <<include>>
+
+UC17 .> UC1 : <<include>>
+
+UC20 .> UC21 : <<include>>
+
+' Extend relationships
+UC3 .> UC6 : <<extend>>
+UC10 .> UC11 : <<extend>>
+UC15 .> UC12 : <<extend>>
+UC22 .> UC23 : <<extend>>
+
+@enduml

@@ -1,0 +1,63 @@
+@startuml Backtest_Module_Detail
+
+actor Trader
+actor "MT5" as MT5
+
+rectangle "Backtest Module" {
+    usecase "Run Backtest" as UC1
+    usecase "Configure Strategy Parameters" as UC1_1
+    usecase "Select Time Period" as UC1_2
+    usecase "Choose Symbol" as UC1_3
+    usecase "Load Historical Data" as UC1_4
+    usecase "Simulate Trading" as UC1_5
+    usecase "Calculate Metrics" as UC1_6
+    usecase "Generate Excel Report" as UC1_7
+    
+    usecase "Analyze Performance" as UC3
+    usecase "View Equity Curve" as UC3_1
+    usecase "Review Trade List" as UC3_2
+    usecase "Check Drawdown" as UC3_3
+    usecase "Calculate Risk Metrics" as UC3_4
+    
+    usecase "Optimize Parameters" as UC5
+    usecase "Define Parameter Range" as UC5_1
+    usecase "Run Grid Search" as UC5_2
+    usecase "Compare Results" as UC5_3
+    usecase "Select Best Parameters" as UC5_4
+}
+
+' Main flow
+Trader --> UC1
+UC1 .> UC1_1 : <<include>>
+UC1 .> UC1_2 : <<include>>
+UC1 .> UC1_3 : <<include>>
+UC1 .> UC1_4 : <<include>>
+UC1 .> UC1_5 : <<include>>
+UC1 .> UC1_6 : <<include>>
+UC1 .> UC1_7 : <<include>>
+
+UC1_4 ..> MT5 : <<uses>>
+
+' Analysis flow
+Trader --> UC3
+UC3 .> UC3_1 : <<include>>
+UC3 .> UC3_2 : <<include>>
+UC3 .> UC3_3 : <<include>>
+UC3 .> UC3_4 : <<include>>
+
+' Optimization flow
+Trader --> UC5
+UC5 .> UC5_1 : <<include>>
+UC5 .> UC5_2 : <<include>>
+UC5 .> UC5_3 : <<include>>
+UC5 .> UC5_4 : <<include>>
+
+note right of UC1
+  Backtest Engine v2.0:
+  - Realistic broker simulation
+  - Transaction costs
+  - Slippage & rejection
+  - Stop loss/Take profit
+end note
+
+@enduml

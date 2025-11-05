@@ -1,0 +1,69 @@
+@startuml Strategy_Module_Detail
+
+actor Trader
+actor Developer
+
+rectangle "Strategy Module" {
+    usecase "Create Strategy" as UC16
+    usecase "Define Entry Rules" as UC16_1
+    usecase "Define Exit Rules" as UC16_2
+    usecase "Set Risk Management" as UC16_3
+    usecase "Configure Indicators" as UC16_4
+    
+    usecase "Test Strategy" as UC17
+    usecase "Run Unit Tests" as UC17_1
+    usecase "Run Backtest" as UC17_2
+    usecase "Validate Signals" as UC17_3
+    usecase "Check Performance" as UC17_4
+    
+    usecase "Deploy Strategy" as UC18
+    usecase "Package Strategy" as UC18_1
+    usecase "Register in System" as UC18_2
+    usecase "Set Parameters" as UC18_3
+    usecase "Activate Strategy" as UC18_4
+    
+    usecase "Update Strategy" as UC19
+    usecase "Modify Logic" as UC19_1
+    usecase "Test Changes" as UC19_2
+    usecase "Version Control" as UC19_3
+    usecase "Redeploy" as UC19_4
+}
+
+' Create flow
+Developer --> UC16
+UC16 .> UC16_1 : <<include>>
+UC16 .> UC16_2 : <<include>>
+UC16 .> UC16_3 : <<include>>
+UC16 .> UC16_4 : <<include>>
+
+' Test flow
+Trader --> UC17
+Developer --> UC17
+UC17 .> UC17_1 : <<include>>
+UC17 .> UC17_2 : <<include>>
+UC17 .> UC17_3 : <<include>>
+UC17 .> UC17_4 : <<include>>
+
+' Deploy flow
+Trader --> UC18
+UC18 .> UC18_1 : <<include>>
+UC18 .> UC18_2 : <<include>>
+UC18 .> UC18_3 : <<include>>
+UC18 .> UC18_4 : <<include>>
+
+' Update flow
+Developer --> UC19
+UC19 .> UC19_1 : <<include>>
+UC19 .> UC19_2 : <<include>>
+UC19 .> UC19_3 : <<include>>
+UC19 .> UC19_4 : <<include>>
+
+note right of UC16
+  Supported Strategies:
+  - SMA Crossover
+  - ICT Strategy
+  - SuperTrend
+  - Custom strategies
+end note
+
+@enduml
