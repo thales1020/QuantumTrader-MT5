@@ -1,53 +1,185 @@
-# Unit Tests for ML-SuperTrend-MT5
+# Tests Directory
 
-## Overview
-Comprehensive unit test suite to ensure system stability and correctness before live/demo trading.
+Comprehensive test suite for ML-SuperTrend-MT5 trading system.
 
-## Test Files
+## Directory Structure
 
-### 1. test_supertrend_bot.py
-Tests for SuperTrend Bot core functionality:
--  Configuration creation and validation
--  SuperTrend indicator calculation
--  K-Means clustering for factor selection
--  Trade execution logic
--  SL/TP calculation
--  Risk-reward ratios
+```
+tests/
+├── unit/           # Unit tests for individual components
+├── integration/    # Integration tests with MT5 and system tests
+├── features/       # Feature-specific tests (crypto, plugins, templates)
+├── diagnostics/    # Diagnostic and troubleshooting tools
+├── helpers.py      # Shared test helper functions
+└── README.md       # This file
+```
 
-**Key Tests:**
-- `test_sl_tp_calculation_buy()` - Validates BUY order SL/TP
-- `test_sl_tp_calculation_sell()` - Validates SELL order SL/TP
-- `test_cluster_choice_*()` - Validates cluster selection logic
+## Test Categories
 
-### 3. test_backtest_engines.py
-Tests for backtest simulation accuracy:
--  Backtest engine initialization
--  Trade simulation (wins and losses)
--  Profit calculation (BUY/SELL, wins/losses)
--  Metrics calculation (WR, PF, DD)
--  Quality tracking and buckets
--  Dual order tracking
+### 📦 Unit Tests (`unit/`)
+Test individual components in isolation:
+- Configuration management
+- Symbol handling
+- Risk management
+- Breakeven logic
+- Paper trading broker API
 
-**Key Tests:**
-- `test_calculate_profit_*()` - Validates P&L calculations
-- `test_win_rate_calculation()` - Validates WR calculation
-- `test_profit_factor_calculation()` - Validates PF calculation
-- `test_dual_order_total_profit()` - Validates dual order P&L
+[→ See unit/README.md for details](unit/README.md)
 
-### 4. test_configuration.py
-Tests for configuration loading and validation:
--  Config file exists and valid JSON
--  Required sections present (accounts, symbols)
--  Symbol configuration validation
--  Timeframe validation
--  Risk percent range validation
--  RR ratio validation
--  ICT parameters validation
--  Dual order risk awareness
+### 🔗 Integration Tests (`integration/`)
+Test components working together:
+- MT5 connectivity and trading
+- Backtest system integration
+- Live trading workflows
+- Order execution pipelines
 
-**Key Tests:**
-- `test_config_file_valid_json()` - Ensures config is valid JSON
-- `test_symbol_has_required_fields()` - Ensures all symbols configured properly
+[→ See integration/README.md for details](integration/README.md)
+
+### ⭐ Feature Tests (`features/`)
+Test specific features and capabilities:
+- Cryptocurrency trading
+- Plugin system
+- Strategy templates
+- Test helpers
+
+[→ See features/README.md for details](features/README.md)
+
+### 🔍 Diagnostics (`diagnostics/`)
+Tools for troubleshooting and verification:
+- ICT signal diagnostics
+- Crypto dual order verification
+- Manual testing utilities
+
+[→ See diagnostics/README.md for details](diagnostics/README.md)
+
+## Quick Start
+
+### Run All Tests
+```bash
+pytest tests/
+```
+
+### Run Specific Test Category
+```bash
+# Unit tests only
+pytest tests/unit/
+
+# Integration tests only
+pytest tests/integration/
+
+# Feature tests only
+pytest tests/features/
+```
+
+### Run with Coverage
+```bash
+# All tests with coverage
+pytest tests/ --cov=core --cov=engines --cov-report=html
+
+# View coverage report
+start htmlcov/index.html  # Windows
+open htmlcov/index.html   # macOS
+```
+
+## Test Organization Principles
+
+### Unit Tests
+- ✅ Fast execution (< 1 second each)
+- ✅ No external dependencies (MT5, network)
+- ✅ Test one thing at a time
+- ✅ Use mocks for external services
+
+### Integration Tests
+- ⚠️ Slower execution (seconds to minutes)
+- ⚠️ May require MT5 running
+- ⚠️ Test multiple components together
+- ⚠️ Use real or simulated MT5 data
+
+### Feature Tests
+- ✅ Moderate speed
+- ✅ Test complete features
+- ✅ Independent of MT5 (mostly)
+- ✅ Focus on user-facing functionality
+
+## Test Helpers
+
+Common test utilities are in `helpers.py`:
+- `create_test_broker()` - Create paper trading broker for tests
+- `submit_and_fill_order()` - Submit and auto-fill test order
+- `create_position_with_sl_tp()` - Create test position with SL/TP
+- `trigger_stop_loss()` - Simulate SL trigger
+- `trigger_take_profit()` - Simulate TP trigger
+- `create_bar()` - Create price bar for testing
+
+[→ See helpers.py for full API](helpers.py)
+
+## Running Tests in Development
+
+### Pre-commit Testing
+```bash
+# Quick smoke test (< 30 seconds)
+pytest tests/unit/ -v
+
+# Full test suite before commit
+pytest tests/ --cov=core --cov=engines
+```
+
+### Continuous Testing
+```bash
+# Watch mode - rerun on file changes
+pytest-watch tests/unit/
+```
+
+### Debugging Tests
+```bash
+# Run with detailed output
+pytest tests/ -vv --tb=long
+
+# Run specific test
+pytest tests/unit/test_configuration.py::test_config_valid -vv
+
+# Drop into debugger on failure
+pytest tests/ --pdb
+```
+
+## Coverage Goals
+
+- **Unit Tests**: 80%+ coverage
+- **Integration Tests**: Key workflows covered
+- **Feature Tests**: All user-facing features tested
+
+Current coverage: ~15% (improving to 30%+)
+
+## Contributing Tests
+
+When adding new tests:
+1. Choose appropriate category (unit/integration/features)
+2. Follow existing naming conventions (`test_*.py`)
+3. Add docstrings explaining what is tested
+4. Update relevant README.md
+5. Ensure tests pass before committing
+
+## CI/CD Integration
+
+Tests run automatically on:
+- Every commit (unit tests)
+- Pull requests (full suite)
+- Nightly builds (integration + performance)
+
+## Notes
+
+⚠️ **MT5 Tests**: Require MetaTrader 5 running with valid account
+
+💡 **Tip**: Run unit tests frequently, integration tests before commits
+
+✅ **Best Practice**: Write tests for new features before implementation (TDD)
+
+---
+
+For more details on testing strategy, see:
+- [Testing Index](../docs/04-testing/TESTING_INDEX.md)
+- [Test Plan](../docs/04-testing/TEST_PLAN.md)
+- [Test Requirements](../docs/04-testing/TEST_REQUIREMENTS.md)
 - `test_dual_order_risk_awareness()` - Warns about 2x risk with dual orders
 
 ### 5. test_risk_management.py
