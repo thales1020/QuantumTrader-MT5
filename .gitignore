@@ -36,9 +36,17 @@ env/
 logs/*.log
 *.log
 
+# Test outputs
+backtest_output.txt
+test_output*.txt
+*.coverage
+htmlcov/
+.pytest_cache/
+
 # Reports
 reports/*.html
 reports/*.png
+reports/*.xlsx
 
 # Data
 data/*.csv
