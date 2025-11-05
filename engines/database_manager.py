@@ -16,8 +16,7 @@ Date: November 2025
 """
 
 from sqlalchemy import create_engine, Column, Integer, String, Float, DateTime, Boolean, ForeignKey, Text, Enum as SQLEnum
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker, relationship
+from sqlalchemy.orm import sessionmaker, relationship, declarative_base
 from datetime import datetime
 from typing import List, Dict, Optional
 import logging
