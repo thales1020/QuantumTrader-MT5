@@ -101,21 +101,31 @@ See [docs/DUAL_ORDERS_IMPLEMENTATION.md](docs/DUAL_ORDERS_IMPLEMENTATION.md) for
 
 All documentation has been organized in the [`docs/`](docs/) folder:
 
+### 🚀 Quick References
+- ⚡ [**QUICK_SCRIPTS.md**](QUICK_SCRIPTS.md) - **Fast script reference for daily use**
+- 📋 [**SCRIPTS_INDEX.md**](SCRIPTS_INDEX.md) - **Complete catalog of 60+ executable scripts**
+- 📖 [Quick Start Guide](docs/01-getting-started/QUICKSTART.md) - Get up and running in minutes
+- ❓ [FAQ](docs/04-testing/FAQ.md) - Frequently asked questions
+
 ### Getting Started
-- 📖 [Quick Start Guide](docs/QUICKSTART.md) - Get up and running in minutes
-- ❓ [FAQ](docs/FAQ.md) - Frequently asked questions
+- 🎥 [Video Tutorials](docs/01-getting-started/video-tutorials.md) - Visual learning guide
+- 🔄 [Migration Guide](docs/01-getting-started/migration-guide.md) - Upgrade from older versions
 - 🤝 [Contributing](docs/CONTRIBUTING.md) - How to contribute to the project
-- 📜 [Attribution & Credits](docs/ATTRIBUTION.md) - **Project history and original author credits**
+- 📜 [Attribution & Credits](docs/07-project-history/attribution/ATTRIBUTION.md) - **Project history and credits**
 
-### Strategy Guides
--  [ICT Bot](docs/ICT_README.md) - Inner Circle Trader strategy
-- ₿ [Crypto Trading Guide](docs/CRYPTO_TRADING_GUIDE.md) - BTC, ETH trading specifics
+### User Guides
+-  [ICT Bot](docs/09-reference/ICT_README.md) - Inner Circle Trader strategy
+- ₿ [Crypto Trading Guide](docs/02-user-guides/crypto-trading-guide.md) - BTC, ETH trading specifics
+-  [Customization Guide](docs/02-user-guides/customization-guide.md) - Personalize your setup
+- 🖥️ [VPS Deployment](docs/02-user-guides/vps-deployment-guide.md) - 24/7 cloud trading
+- 📊 [MT5 VPS Info](docs/02-user-guides/mt5-vps-info-update.md) - MetaTrader VPS setup
 
-### Customization & Architecture
--  [Customization Guide](docs/CUSTOMIZATION_GUIDE.md) - Complete system overview
--  [Plugin System](docs/PLUGIN_QUICK_START.md) - Build custom plugins (Phase 2)
--  [Strategy Templates](docs/STRATEGY_TEMPLATES.md) - Generate strategies quickly (Phase 3)
--  [Project Scope](docs/PROJECT_SCOPE.md) - Vision and boundaries
+### Development
+-  [Plugin System](docs/03-development/PLUGIN_SYSTEM.md) - Build custom plugins (Phase 2)
+-  [Strategy Templates](docs/03-development/STRATEGY_TEMPLATES.md) - Generate strategies quickly (Phase 3)
+-  [Project Scope](docs/03-development/PROJECT_SCOPE.md) - Vision and boundaries
+-  [Technology Stack](docs/03-development/TECHNOLOGY_STACK.md) - Technologies used
+- 🗄️ [Supabase Integration](docs/03-development/SUPABASE_INTEGRATION_GUIDE.md) - Cloud database setup
 
 ### 🎓 Examples & Tutorials
 - 📁 [Examples Directory](examples/README.md) - **12+ complete examples**
@@ -124,17 +134,30 @@ All documentation has been organized in the [`docs/`](docs/) folder:
   - **Plugins**: Risk manager, analytics, Telegram notifier
   - **Complete Workflow**: From idea to production in 7 steps
 
-### Features & Implementation
--  [Dual Orders Implementation](docs/DUAL_ORDERS_IMPLEMENTATION.md) - RR 1:1 + Main RR strategy
--  [Dual Orders Changes](docs/DUAL_ORDERS_CHANGES.md) - Technical changelog
--  [Breakeven SL Feature](docs/BREAKEVEN_SL_FEATURE.md) - Automatic risk-free trades
+### Testing & Quality
+- 🧪 [Testing Guide](docs/04-testing/README.md) - Complete testing documentation
+- 📝 [API Testing Guide](docs/04-testing/API_TESTING_GUIDE.md) - Test the trading API
+- ✅ [Test Requirements](docs/04-testing/TEST_REQUIREMENTS.md) - What to test
+- 📊 [Test Results](docs/04-testing/TEST_RESULTS.md) - Latest test outcomes
 
-### Performance & Optimization
--  [Performance Guide](docs/PERFORMANCE.md) - Optimization and metrics
--  [Optimization Summary](docs/OPTIMIZATION_SUMMARY.md) - Performance improvements
--  [Changelog](docs/CHANGELOG.md) - Version history
+### Architecture & Design
+- 🏗️ [Architecture Overview](docs/05-architecture/README.md) - System design
+- 📐 [UML Diagrams](docs/05-architecture/uml/UML_DOCUMENTATION_SUMMARY.md) - Visual system design
+- 🔄 [Backtest Architecture](docs/05-architecture/backtest-architecture.md) - Backtesting system
+- 📄 [Paper Trading System](docs/05-architecture/PAPER_TRADING_SYSTEM.md) - How paper trading works
 
->  **Tip**: Start with [QUICKSTART.md](docs/QUICKSTART.md) for a quick introduction!
+### Technical Specs
+-  [Dual Orders Implementation](docs/06-technical-specs/DUAL_ORDERS_IMPLEMENTATION.md) - RR 1:1 + Main RR
+-  [Breakeven SL Feature](docs/06-technical-specs/BREAKEVEN_SL_FEATURE.md) - Risk-free trades
+-  [Performance Guide](docs/06-technical-specs/PERFORMANCE.md) - Optimization and metrics
+-  [Memory Leak Fix](docs/06-technical-specs/BACKTEST_MEMORY_LEAK_FIX.md) - Stability improvements
+
+### Project History & Management
+- 📋 [Project Review](docs/08-project-management/PROJECT_REVIEW.md) - Current status
+- 📅 [Post-Launch Checklist](docs/08-project-management/POST_LAUNCH_CHECKLIST.md) - Production readiness
+- 📚 [Full Documentation Index](docs/README.md) - **Complete navigation guide**
+
+>  **Tip**: Start with [QUICK_SCRIPTS.md](QUICK_SCRIPTS.md) for instant productivity!
 
 ## � Installation
 
