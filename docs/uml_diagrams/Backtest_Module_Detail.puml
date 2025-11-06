@@ -1,7 +1,15 @@
 @startuml Backtest_Module_Detail
 
 actor Trader
-actor "MT5" as MT5
+actor "Data Module" as DataModule
+
+rectangle "Paper Trading Broker" as PaperBroker {
+    usecase "Place Virtual Orders" as UC9
+    usecase "Match Orders" as UC9_1
+    usecase "Manage Positions" as UC9_2
+    usecase "Calculate P&L" as UC9_3
+    usecase "Track SL/TP" as UC9_4
+}
 
 rectangle "Backtest Module" {
     usecase "Run Backtest" as UC1
@@ -36,7 +44,24 @@ UC1 .> UC1_5 : <<include>>
 UC1 .> UC1_6 : <<include>>
 UC1 .> UC1_7 : <<include>>
 
-UC1_4 ..> MT5 : <<uses>>
+' Backtest uses Data Module (not direct MT5)
+UC1_4 ..> DataModule : <<uses>>
+
+' Backtest uses Paper Trading Broker for simulation
+UC1_5 .> UC9 : <<include>>
+UC9 .> UC9_1 : <<include>>
+UC9 .> UC9_2 : <<include>>
+UC9 .> UC9_3 : <<include>>
+UC9 .> UC9_4 : <<include>>
+
+note right of UC1_5
+  Simulate Trading uses
+  Paper Trading Broker:
+  - Realistic order matching
+  - Position management
+  - SL/TP automation
+  - P&L calculation
+end note
 
 ' Analysis flow
 Trader --> UC3
@@ -54,10 +79,12 @@ UC5 .> UC5_4 : <<include>>
 
 note right of UC1
   Backtest Engine v2.0:
+  - Uses Paper Trading Broker
   - Realistic broker simulation
   - Transaction costs
   - Slippage & rejection
   - Stop loss/Take profit
+  - Shared code with Paper Trading
 end note
 
 @enduml

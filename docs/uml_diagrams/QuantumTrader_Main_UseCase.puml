@@ -93,11 +93,15 @@ Admin --> UC28
 Admin --> UC29
 Admin --> UC30
 
-' MT5 interactions
-UC1 ..> MT5 : <<uses>>
-UC7 ..> MT5 : <<uses>>
+' MT5 interactions (only real trading and data loading)
 UC12 ..> MT5 : <<uses>>
 UC24 ..> MT5 : <<uses>>
+
+note right of UC24
+  Only Data Module connects to MT5
+  for historical and real-time data.
+  Backtest/Paper use cached data.
+end note
 
 ' Supabase interactions
 UC11 ..> Supabase : <<uses>>
@@ -110,14 +114,36 @@ UC29 ..> VPS : <<uses>>
 UC1 .> UC2 : <<include>>
 UC1 .> UC24 : <<include>>
 UC1 .> UC4 : <<include>>
+UC1 .> UC9 : <<include>>
+
+note right of UC1
+  Backtest uses Paper Trading
+  Broker for order simulation
+  and position management
+end note
 
 UC7 .> UC9 : <<include>>
 UC7 .> UC8 : <<include>>
+UC7 .> UC24 : <<include>>
+
+note right of UC7
+  Paper Trading gets real-time
+  price feed from Data Module
+  but doesn't submit to MT5
+end note
 
 UC12 .> UC13 : <<include>>
 UC12 .> UC14 : <<include>>
+UC12 .> UC24 : <<include>>
 
 UC17 .> UC1 : <<include>>
+UC17 .> UC7 : <<include>>
+
+note right of UC17
+  Test Strategy uses both:
+  1. Backtest (historical)
+  2. Paper Trading (live simulation)
+end note
 
 UC20 .> UC21 : <<include>>
 

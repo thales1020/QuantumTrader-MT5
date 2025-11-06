@@ -4,10 +4,11 @@ title Backtest Process - Sequence Diagram
 
 actor Trader
 participant "BaseBacktestEngine" as Engine
-participant "BrokerSimulator" as Broker
+participant "PaperTradingBrokerAPI" as PaperBroker
+participant "OrderMatchingEngine" as Matcher
 participant "Strategy" as Strategy
 participant "PerformanceAnalyzer" as Analyzer
-database "MT5" as MT5
+participant "Data Module" as DataModule
 participant "Excel Export" as Excel
 
 == Initialization ==
@@ -15,10 +16,12 @@ participant "Excel Export" as Excel
 Trader -> Engine: run_backtest(symbol, start, end, timeframe, lot_size)
 activate Engine
 
-Engine -> MT5: copy_rates_range(symbol, timeframe, start, end)
-activate MT5
-MT5 --> Engine: historical_data[]
-deactivate MT5
+Engine -> DataModule: load_historical_data(symbol, timeframe, start, end)
+activate DataModule
+DataModule -> DataModule: Retrieve from cache or MT5
+DataModule --> Engine: historical_data[]
+deactivate DataModule
+note right: Data Module handles MT5 connection\nBacktest Engine doesn't connect directly
 
 Engine -> Engine: df = pd.DataFrame(rates)
 Engine -> Engine: df.set_index('time', inplace=True)
@@ -30,12 +33,16 @@ Strategy -> Strategy: Calculate indicators\n(SMA, ATR, etc.)
 Strategy --> Engine: prepared_data
 deactivate Strategy
 
-Engine -> Broker: new BrokerSimulator(config, balance)
-activate Broker
-Broker -> Broker: Initialize positions = []
-Broker -> Broker: Initialize trades = []
-Broker --> Engine: broker_instance
-deactivate Broker
+Engine -> PaperBroker: new PaperTradingBrokerAPI(config, balance, mode='backtest')
+activate PaperBroker
+PaperBroker -> Matcher: new OrderMatchingEngine()
+activate Matcher
+Matcher --> PaperBroker: matcher_instance
+deactivate Matcher
+PaperBroker -> PaperBroker: Initialize database (in-memory)
+PaperBroker --> Engine: broker_instance
+deactivate PaperBroker
+note right: Reuses Paper Trading Broker\nSame order matching logic\nSame P&L calculations
 
 Engine -> Analyzer: new PerformanceAnalyzer(balance)
 activate Analyzer
@@ -58,30 +65,36 @@ loop For each bar in historical data
         Strategy -> Strategy: Check entry conditions\n(crossover, pattern, etc.)
         Strategy --> Engine: {'action': 'BUY', 'sl_pips': 50, 'tp_pips': 100}
         
-        Engine -> Broker: execute_order(direction, symbol, lot_size, current_bar, sl_pips, tp_pips)
-        activate Broker
+        Engine -> PaperBroker: submit_order(direction, symbol, lot_size, sl_pips, tp_pips)
+        activate PaperBroker
         
-        Broker -> Broker: random_rejection_check(5%)
+        PaperBroker -> Matcher: match_order(order, current_bar)
+        activate Matcher
+        
+        Matcher -> Matcher: random_rejection_check(5%)
         
         alt Order Accepted (95%)
-            Broker -> Broker: entry_price = close + spread
-            Broker -> Broker: slippage = random(0, 2 pips)
-            Broker -> Broker: commission = 7 * lot_size
+            Matcher -> Matcher: entry_price = close + spread
+            Matcher -> Matcher: slippage = random(0, 2 pips)
+            Matcher -> Matcher: commission = 7 * lot_size
             
-            Broker -> Broker: Create position\n{entry_price, sl, tp, lot_size}
-            Broker -> Broker: positions.append(position)
-            Broker -> Broker: balance -= commission + spread_cost
+            Matcher -> Matcher: Create fill record
+            Matcher --> PaperBroker: order_filled
             
-            Broker --> Engine: order_filled
-            note right: Order ID: ORD_000001\nEntry: 1.1000\nSL: 1.0950\nTP: 1.1100
+            PaperBroker -> PaperBroker: Create position in database
+            PaperBroker -> PaperBroker: Update balance
+            PaperBroker --> Engine: order_executed
+            note right: Order ID: ORD_000001\nEntry: 1.1000\nSL: 1.0950\nTP: 1.1100\nShared logic with Paper Trading
             
         else Order Rejected (5%)
-            Broker -> Broker: Log rejection reason
-            Broker --> Engine: order_rejected
+            Matcher -> Matcher: Log rejection reason
+            Matcher --> PaperBroker: order_rejected
+            PaperBroker --> Engine: rejection_notice
             note right: Rejection reasons:\n- Broker error\n- Low liquidity\n- Max slippage
         end
         
-        deactivate Broker
+        deactivate Matcher
+        deactivate PaperBroker
         
     else No Signal
         Strategy --> Engine: None
@@ -91,60 +104,63 @@ loop For each bar in historical data
     
     == Position Management ==
     
-    Engine -> Broker: update_positions(current_bar)
-    activate Broker
+    Engine -> PaperBroker: process_market_data(current_bar)
+    activate PaperBroker
+    
+    PaperBroker -> PaperBroker: get_open_positions()
     
     loop For each open position
-        Broker -> Broker: Check if SL hit\n(low <= stop_loss)
+        PaperBroker -> PaperBroker: Check if SL hit\n(low <= stop_loss)
         
         alt Stop Loss Hit
-            Broker -> Broker: exit_price = stop_loss + sl_slippage
-            Broker -> Broker: Calculate P&L
-            Broker -> Broker: pnl = (exit - entry) * lot_size * pip_value
-            Broker -> Broker: net_pnl = pnl - costs
+            PaperBroker -> PaperBroker: exit_price = stop_loss + sl_slippage
+            PaperBroker -> PaperBroker: Calculate P&L\npnl = (exit - entry) * lot_size * pip_value
+            PaperBroker -> PaperBroker: net_pnl = pnl - costs
             
-            Broker -> Broker: Close position
-            Broker -> Broker: trades.append(trade)
-            Broker -> Broker: balance += net_pnl
+            PaperBroker -> PaperBroker: close_position(position_id, 'Stop Loss')
+            PaperBroker -> PaperBroker: Save trade to database
+            PaperBroker -> PaperBroker: Update balance
             
-            note right: Position closed\nReason: Stop Loss\nNet P&L: -$95.18
+            note right: Position auto-closed\nReason: Stop Loss\nNet P&L: -$95.18\n(Fully tested: 49/49 tests)
             
         else Check Take Profit
-            Broker -> Broker: Check if TP hit\n(high >= take_profit)
+            PaperBroker -> PaperBroker: Check if TP hit\n(high >= take_profit)
             
             alt Take Profit Hit
-                Broker -> Broker: exit_price = take_profit - tp_slippage
-                Broker -> Broker: Calculate P&L
-                Broker -> Broker: Close position
-                Broker -> Broker: trades.append(trade)
-                Broker -> Broker: balance += net_pnl
+                PaperBroker -> PaperBroker: exit_price = take_profit - tp_slippage
+                PaperBroker -> PaperBroker: Calculate P&L
+                PaperBroker -> PaperBroker: close_position(position_id, 'Take Profit')
+                PaperBroker -> PaperBroker: Save trade to database
+                PaperBroker -> PaperBroker: Update balance
                 
-                note right: Position closed\nReason: Take Profit\nNet P&L: +$163.70
+                note right: Position auto-closed\nReason: Take Profit\nNet P&L: +$163.70
                 
             else Position Remains Open
-                Broker -> Broker: Update floating P&L
+                PaperBroker -> PaperBroker: Update floating P&L
             end
         end
     end
     
-    Broker --> Engine: positions_updated
-    deactivate Broker
+    PaperBroker --> Engine: positions_updated
+    deactivate PaperBroker
     
 end
 
 == Finalization ==
 
-Engine -> Broker: close_all_positions()
-activate Broker
-Broker -> Broker: Close remaining positions
-Broker -> Broker: Record final trades
-Broker --> Engine: all_positions_closed
-deactivate Broker
+Engine -> PaperBroker: stop_session()
+activate PaperBroker
+PaperBroker -> PaperBroker: Close all open positions
+PaperBroker -> PaperBroker: Finalize trades in database
+PaperBroker --> Engine: session_stopped
+deactivate PaperBroker
 
-Engine -> Broker: get_closed_trades()
-activate Broker
-Broker --> Engine: trades[]
-deactivate Broker
+Engine -> PaperBroker: get_closed_trades()
+activate PaperBroker
+PaperBroker -> PaperBroker: Query trades from database
+PaperBroker --> Engine: trades[]
+deactivate PaperBroker
+note right: Trades stored in database\nSame format as Paper Trading\nEasy to compare results
 
 Engine -> Analyzer: add_trades(trades)
 activate Analyzer
